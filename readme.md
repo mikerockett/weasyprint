@@ -1,6 +1,6 @@
 # Laravel WeasyPrint
 
-A simple wrapper for the [WeasyPrint PDF Engine](https://weasyprint.org/).
+A simple wrapper for the [WeasyPrint PDF Engine](https://weasyprint.org/). Requires Laravel 5.8/6.0+.
 
 ### Installation
 
@@ -15,7 +15,17 @@ The package will be discovered and registered automatically.
 ```php
 use WeasyPrint\WeasyPrint;
 
+// Pass in a view or a URL …
 $pdf = WeasyPrint::make(view('my-pdf-view'))->convert();
+$pdf = WeasyPrint::make(file_get_contents('https://weasyprint.org'))->convert();
+
+// Or the name of a view …
+$pdf = WeasyPrint::view('my-pdf-view')->convert();
+
+// Perhaps some big data?
+$pdf = WeasyPrint::view('my-pdf-view', [
+  'data' => $this->getBigData()
+])->convert();
 ```
 
 ### Config
