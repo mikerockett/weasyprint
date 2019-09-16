@@ -18,19 +18,16 @@ final class WeasyPrint
 
   public function __construct($source)
   {
-    $this->processBinary = config('weasyprint.binary', '/usr/local/bin/weasyprint');
-    $this->processTimeout = config('weasyprint.timeout', 3600);
+    $this->processBinary = config('weasyprint.binary');
+    $this->processTimeout = config('weasyprint.timeout');
     $this->source = $source;
   }
 
   public static function version(): string
   {
-    $process = new Process([
-      config('weasyprint.binary', '/usr/local/bin/weasyprint'),
-      '--version'
-    ]);
+    $process = new Process([config('weasyprint.binary'), '--version']);
 
-    $process->setTimeout(config('weasyprint.timeout', 3600));
+    $process->setTimeout(config('weasyprint.timeout'));
     $process->run();
 
     if (!$process->isSuccessful()) {
