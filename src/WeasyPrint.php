@@ -23,6 +23,23 @@ final class WeasyPrint
     $this->source = $source;
   }
 
+  public static function version(): string
+  {
+    $process = new Process([
+      config('weasyprint.binary', '/usr/local/bin/weasyprint'),
+      '--version'
+    ]);
+
+    $process->setTimeout(config('weasyprint.timeout', 3600));
+    $process->run();
+
+    if (!$process->isSuccessful()) {
+      throw new ProcessFailedException($process);
+    }
+
+    return $process->getOutput();
+  }
+
   public static function make(): WeasyPrint
   {
     return new static(...func_get_args());

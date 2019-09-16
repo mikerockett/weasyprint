@@ -11,9 +11,18 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     return [WeasyPrintProvider::class];
   }
 
-  public function testWeasyPrint()
+  public function testWeasyPrintVersion()
   {
-    $pdf = WeasyPrint::make(file_get_contents('https://google.com'))->convert();
+    $version = WeasyPrint::version();
+
+    $this->assertNotNull($version);
+    $this->assertNotEmpty($version);
+    $this->assertStringStartsWith('WeasyPrint', $version);
+  }
+
+  public function testWeasyPrintConvert()
+  {
+    $pdf = WeasyPrint::make(file_get_contents('https://weasyprint.org'))->convert();
     $output = $pdf->get();
 
     $this->assertNotNull($output);
