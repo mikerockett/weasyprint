@@ -26,6 +26,9 @@ $pdf = WeasyPrint::view('my-pdf-view')->convert();
 $pdf = WeasyPrint::view('my-pdf-view', [
   'data' => $this->getBigData()
 ])->convert();
+
+// Would you like a PNG?
+$png = WeasyPrint::view('my-png-view')->convert('png');
 ```
 
 ### Config
