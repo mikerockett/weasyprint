@@ -9,8 +9,10 @@ final class WeasyPrint
 {
   private $source;
   private $inputPath;
-  private $outputPath;
   private $output;
+  private $outputMode;
+  private $outputEncoding;
+  private $outputPath;
   private $processBinary;
   private $processTimeout;
 
@@ -26,14 +28,22 @@ final class WeasyPrint
     return new static(...func_get_args());
   }
 
+  public function view($view, array $data = [], array $mergeData = []): WeasyPrint
+  {
+    return new static(view($view, $data, $mergeData));
+  }
+
   public function setTimeout(int $timeout): WeasyPrint
   {
     $this->processTimeout = $timeout;
     return $this;
   }
 
-  public function convert(): WeasyPrint
+  public function convert(string $outputMode = 'pdf', string $outputEncoding = 'utf8'): WeasyPrint
   {
+    $this->outputMode = $outputMode;
+    $this->outputEncoding = $outputEncoding;
+
     $this->preflight();
     $this->process();
     $this->fetch();
@@ -77,8 +87,8 @@ final class WeasyPrint
         $this->processBinary,
         $this->inputPath,
         $this->outputPath,
-        '-f', 'pdf',
-        '-e', 'utf8',
+        '-f', $this->outputMode,
+        '-e', $this->outputEncoding,
       ],
       null,
       ['LC_ALL' => 'en_US.UTF-8']
