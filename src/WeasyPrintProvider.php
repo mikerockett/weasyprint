@@ -10,7 +10,7 @@ class WeasyPrintProvider extends ServiceProvider
     if ($this->app->runningInConsole()) {
       $this->publishes([
         __DIR__ . '/../config/weasyprint.php' => config_path('weasyprint.php')
-      ], 'config');
+      ], 'weasyprint-config');
     }
   }
 }
