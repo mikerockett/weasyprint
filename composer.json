@@ -1,5 +1,5 @@
 {
-  "name": "mikerockett/weasyprint",
+  "name": "rockett/weasyprint",
   "description": "A simple Laravel wrapper for the WeasyPrint PDF Engine.",
   "type": "library",
   "license": "ISC",
