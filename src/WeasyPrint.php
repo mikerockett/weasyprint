@@ -18,6 +18,8 @@ final class WeasyPrint
   private $processTimeout;
   private $baseUrl;
 
+  private $stylesheets = [];
+
   public function __construct($source)
   {
     $this->processBinary = config('weasyprint.binary');
@@ -58,6 +60,13 @@ final class WeasyPrint
   public function setBaseUrl(string $url): WeasyPrint
   {
     $this->baseUrl = $url;
+
+    return $this;
+  }
+
+  public function addStylesheet(string $path): WeasyPrint
+  {
+    array_push($this->stylesheets, $path);
 
     return $this;
   }
@@ -142,6 +151,12 @@ final class WeasyPrint
 
     if ($this->baseUrl) {
       array_push($command, '--base-url', $this->baseUrl);
+    }
+
+    if (count($this->stylesheets)) {
+      foreach ($this->stylesheets as $stylesheet) {
+        array_push($command, '--stylesheet', $stylesheet);
+      }
     }
 
     $process = new Process($command, null, ['LC_ALL' => 'en_US.UTF-8']);

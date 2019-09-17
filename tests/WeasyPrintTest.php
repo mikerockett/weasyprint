@@ -138,7 +138,21 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
 
   public function testCanAcceptBaseUrl()
   {
-    $pdf = WeasyPrint::view('test-pdf')->setBaseUrl('https://example.com')->convert();
+    $pdf = WeasyPrint::view('test-pdf')
+      ->setBaseUrl('https://example.com')
+      ->convert();
+
+    $output = $pdf->get();
+
+    $this->runPdfAssertions($output);
+  }
+
+  public function testCanAcceptStylesheets()
+  {
+    $pdf = WeasyPrint::view('test-pdf')
+      ->addStylesheet('https://fonts.googleapis.com/css?family=Manjari&display=swap')
+      ->addStylesheet('https://fonts.googleapis.com/css?family=Roboto&display=swap')
+      ->convert();
 
     $output = $pdf->get();
 
