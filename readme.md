@@ -16,19 +16,19 @@ The package will be discovered and registered automatically.
 use WeasyPrint\WeasyPrint;
 
 // Pass in a view or a URL …
-$pdf = WeasyPrint::make(view('my-pdf-view'))->convert();
-$pdf = WeasyPrint::make(file_get_contents('https://weasyprint.org'))->convert();
+$pdf = WeasyPrint::make(view('my-pdf-view'))->convert()->get();
+$pdf = WeasyPrint::make(file_get_contents('https://weasyprint.org'))->convert()->get();
 
 // Or the name of a view …
-$pdf = WeasyPrint::view('my-pdf-view')->convert();
+$pdf = WeasyPrint::view('my-pdf-view')->convert()->get();
 
 // Perhaps some big data?
 $pdf = WeasyPrint::view('my-pdf-view', [
   'data' => $this->getBigData()
-])->convert();
+])->convert()->get();
 
 // Would you like a PNG?
-$png = WeasyPrint::view('my-png-view')->convert('png');
+$png = WeasyPrint::view('my-png-view')->convert('png')->get();
 ```
 
 ### Config
