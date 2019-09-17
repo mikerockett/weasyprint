@@ -42,7 +42,7 @@ final class WeasyPrint
     return new static(...func_get_args());
   }
 
-  public function view($view, array $data = [], array $mergeData = []): WeasyPrint
+  public static function view($view, array $data = [], array $mergeData = []): WeasyPrint
   {
     return new static(view($view, $data, $mergeData));
   }
