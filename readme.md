@@ -29,6 +29,10 @@ $pdf = WeasyPrint::view('my-pdf-view', [
 
 // Would you like a PNG?
 $png = WeasyPrint::view('my-png-view')->convert('png')->get();
+
+// How about a direct download / inline render?
+return WeasyPrint::view('some-pdf')->convert()->download('some-pdf.pdf');
+return WeasyPrint::view('some-pdf')->convert()->inline('some-pdf.pdf');
 ```
 
 ### Config
