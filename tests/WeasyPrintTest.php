@@ -135,4 +135,13 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
       $output, 'inline; filename=test.pdf'
     );
   }
+
+  public function testCanAcceptBaseUrl()
+  {
+    $pdf = WeasyPrint::view('test-pdf')->setBaseUrl('https://example.com')->convert();
+
+    $output = $pdf->get();
+
+    $this->runPdfAssertions($output);
+  }
 }

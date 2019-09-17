@@ -16,6 +16,7 @@ final class WeasyPrint
   private $outputPath;
   private $processBinary;
   private $processTimeout;
+  private $baseUrl;
 
   public function __construct($source)
   {
@@ -51,6 +52,13 @@ final class WeasyPrint
   public function setTimeout(int $timeout): WeasyPrint
   {
     $this->processTimeout = $timeout;
+    return $this;
+  }
+
+  public function setBaseUrl(string $url): WeasyPrint
+  {
+    $this->baseUrl = $url;
+
     return $this;
   }
 
@@ -124,13 +132,17 @@ final class WeasyPrint
 
   private function process(): void
   {
-    $command =  [
+    $command = [
       $this->processBinary,
       $this->inputPath,
       $this->outputPath,
-      '-f', $this->outputMode,
-      '-e', $this->outputEncoding,
+      '--format', $this->outputMode,
+      '--encoding', $this->outputEncoding,
     ];
+
+    if ($this->baseUrl) {
+      array_push($command, '--base-url', $this->baseUrl);
+    }
 
     $process = new Process($command, null, ['LC_ALL' => 'en_US.UTF-8']);
     $process->setTimeout($this->processTimeout)->run();
