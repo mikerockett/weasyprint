@@ -1,6 +1,6 @@
 # Laravel WeasyPrint
 
-A simple wrapper for the [WeasyPrint PDF Engine](https://weasyprint.org/). Requires Laravel 5.8/6.0+.
+A simple wrapper for the [WeasyPrint Document Factory](https://weasyprint.org/). Requires Laravel 5.8/6.0+.
 
 ### Installation
 
