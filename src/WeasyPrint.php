@@ -3,6 +3,7 @@
 namespace WeasyPrint;
 
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\Response;
 use Symfony\Component\Process\{ Process, Exception\ProcessFailedException };
 
 final class WeasyPrint
@@ -70,9 +71,36 @@ final class WeasyPrint
     return $this->output;
   }
 
+  private function responseHeaders(bool $inline, string $filename): array
+  {
+    $inline = $inline ? 'inline' : 'attachment';
+
+    return [
+      'Content-Disposition' => "$inline; filename=$filename",
+      'Content-Type' => 'application/pdf'
+    ];
+  }
+
+  public function download(string $filename): Response
+  {
+    return response(
+      $this->get(), 200, $this->responseHeaders(false, $filename)
+    );
+  }
+
+  public function inline(string $filename): Response
+  {
+    return response(
+      $this->get(), 200, $this->responseHeaders(true, $filename)
+    );
+  }
+
   private function tempFilename()
   {
-    return tempnam(sys_get_temp_dir(), config('weasyprint.cache_prefix', 'weasyprint-cache_'));
+    return tempnam(
+      sys_get_temp_dir(),
+      config('weasyprint.cache_prefix', 'weasyprint-cache_')
+    );
   }
 
   private function writeTempInputFile(): void
@@ -96,20 +124,16 @@ final class WeasyPrint
 
   private function process(): void
   {
-    $process = new Process(
-      [
-        $this->processBinary,
-        $this->inputPath,
-        $this->outputPath,
-        '-f', $this->outputMode,
-        '-e', $this->outputEncoding,
-      ],
-      null,
-      ['LC_ALL' => 'en_US.UTF-8']
-    );
+    $command =  [
+      $this->processBinary,
+      $this->inputPath,
+      $this->outputPath,
+      '-f', $this->outputMode,
+      '-e', $this->outputEncoding,
+    ];
 
-    $process->setTimeout($this->processTimeout);
-    $process->run();
+    $process = new Process($command, null, ['LC_ALL' => 'en_US.UTF-8']);
+    $process->setTimeout($this->processTimeout)->run();
 
     if (!$process->isSuccessful()) {
       throw new ProcessFailedException($process);
