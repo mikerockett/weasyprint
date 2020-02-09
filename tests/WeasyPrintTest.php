@@ -1,8 +1,8 @@
 <?php
 
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use WeasyPrint\WeasyPrint;
 use WeasyPrint\WeasyPrintProvider;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class WeasyPrintTest extends Orchestra\Testbench\TestCase
 {
@@ -22,6 +22,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
       sys_get_temp_dir(),
       config('weasyprint.cache_prefix', 'weasyprint-cache_')
     );
+
     file_put_contents($tempFilename, $contents);
 
     return $tempFilename;
@@ -79,10 +80,17 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     }
   }
 
+  public function testCanRenderPdfFromUrl()
+  {
+    $pdf = WeasyPrint::make('https://weasyprint.org')->convert();
+    $output = $pdf->get();
+
+    $this->runPdfAssertions($output);
+  }
+
   public function testCanRenderPdfFromText()
   {
     $pdf = WeasyPrint::make(file_get_contents('https://weasyprint.org'))->convert();
-
     $output = $pdf->get();
 
     $this->runPdfAssertions($output);
@@ -91,17 +99,30 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
   public function testCanRenderPdfFromView()
   {
     $pdf = WeasyPrint::view('test-pdf')->convert();
-
     $output = $pdf->get();
 
     $this->runPdfAssertions($output);
   }
 
+  public function testCanRenderPdfFromTextShortHand()
+  {
+    $output = WeasyPrint::make('Hello')->toPdf();
+
+    $this->runPdfAssertions($output);
+  }
+
+  public function testCanRenderPngFromUrl()
+  {
+    $pdf = WeasyPrint::make('https://weasyprint.org')->convert('png');
+
+    $output = $pdf->get();
+
+    $this->runPngAssertions($output);
+  }
+
   public function testCanRenderPngFromText()
   {
-    $pdf = WeasyPrint::make(
-      file_get_contents('https://weasyprint.org')
-    )->convert('png');
+    $pdf = WeasyPrint::make(file_get_contents('https://weasyprint.org'))->convert('png');
 
     $output = $pdf->get();
 
@@ -112,6 +133,13 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
   {
     $pdf = WeasyPrint::view('test-png')->convert('png');
     $output = $pdf->get();
+
+    $this->runPngAssertions($output);
+  }
+
+  public function testCanRenderPngFromTextShortHand()
+  {
+    $output = WeasyPrint::make('Hello')->toPng();
 
     $this->runPngAssertions($output);
   }

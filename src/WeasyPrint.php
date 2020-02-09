@@ -4,7 +4,8 @@ namespace WeasyPrint;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Response;
-use Symfony\Component\Process\{ Process, Exception\ProcessFailedException };
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 final class WeasyPrint
 {
@@ -54,6 +55,7 @@ final class WeasyPrint
   public function setTimeout(int $timeout): WeasyPrint
   {
     $this->processTimeout = $timeout;
+
     return $this;
   }
 
@@ -73,6 +75,10 @@ final class WeasyPrint
 
   public function convert(string $outputMode = 'pdf', string $outputEncoding = 'utf8'): WeasyPrint
   {
+    if ($this->output) {
+      return $this;
+    }
+
     $this->outputMode = $outputMode;
     $this->outputEncoding = $outputEncoding;
 
@@ -85,7 +91,19 @@ final class WeasyPrint
 
   public function get(): string
   {
+    $this->convert();
+
     return $this->output;
+  }
+
+  public function toPdf(): string
+  {
+    return $this->get();
+  }
+
+  public function toPng(): string
+  {
+    return $this->convert('png')->get();
   }
 
   private function responseHeaders(bool $inline, string $filename): array
@@ -94,7 +112,7 @@ final class WeasyPrint
 
     return [
       'Content-Disposition' => "$inline; filename=$filename",
-      'Content-Type' => 'application/pdf'
+      'Content-Type' => 'application/pdf',
     ];
   }
 
@@ -110,6 +128,11 @@ final class WeasyPrint
     return response(
       $this->get(), 200, $this->responseHeaders(true, $filename)
     );
+  }
+
+  private function sourceIsUrl(): bool
+  {
+    return filter_var($this->source, FILTER_VALIDATE_URL) !== false;
   }
 
   private function tempFilename()
@@ -133,10 +156,15 @@ final class WeasyPrint
       $this->source = $this->source->render();
     }
 
-    $this->inputPath = $this->tempFilename();
+    $this->inputPath = $isUrl = $this->sourceIsUrl()
+      ? $this->source
+      : $this->tempFilename();
+
     $this->outputPath = $this->tempFilename();
 
-    $this->writeTempInputFile();
+    if (!$isUrl) {
+      $this->writeTempInputFile();
+    }
   }
 
   private function process(): void
@@ -166,7 +194,9 @@ final class WeasyPrint
       throw new ProcessFailedException($process);
     }
 
-    unlink($this->inputPath);
+    if (!$this->sourceIsUrl()) {
+      unlink($this->inputPath);
+    }
   }
 
   private function fetch(): void
