@@ -240,7 +240,7 @@ class WeasyPrint
     }
   }
 
-  private function pushCommand(string $key, $value): void
+  private function pushToCommand(string $key, $value): void
   {
     if (is_bool($value) && $value) {
       array_push($this->command, $key);
@@ -260,20 +260,20 @@ class WeasyPrint
       '--encoding', $this->outputEncoding,
     ];
 
-    $this->pushCommand('--presentational-hints', $this->presentationalHints);
-    $this->pushCommand('--base-url', $this->baseUrl);
-    $this->pushCommand('--media-type', $this->mediaType);
+    $this->pushToCommand('--presentational-hints', $this->presentationalHints);
+    $this->pushToCommand('--base-url', $this->baseUrl);
+    $this->pushToCommand('--media-type', $this->mediaType);
 
     if ($this->outputMode === 'png') {
-      $this->pushCommand('--resolution', $this->resolution);
+      $this->pushToCommand('--resolution', $this->resolution);
     }
 
     foreach ($this->attachments as $attachment) {
-      $this->pushCommand('--attachment', $attachment);
+      $this->pushToCommand('--attachment', $attachment);
     }
 
     foreach ($this->stylesheets as $stylesheet) {
-      $this->pushCommand('--stylesheet', $stylesheet);
+      $this->pushToCommand('--stylesheet', $stylesheet);
     }
   }
 
