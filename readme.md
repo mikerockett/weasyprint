@@ -19,30 +19,51 @@ The package will be discovered and registered automatically.
 
 ```php
 use WeasyPrint\WeasyPrint;
+```
 
+### Input
+
+```php
 // Pass in a renderable, some text, or a URL …
-$pdf = WeasyPrint::make(view('report'));
-$pdf = WeasyPrint::make('Hello!');
-$pdf = WeasyPrint::make('https://weasyprint.org');
+$weasyprint = WeasyPrint::make(view('report'));
+$weasyprint = WeasyPrint::make('Hello!');
+$weasyprint = WeasyPrint::make('https://weasyprint.org');
 
 // Or the name of a view …
-$pdf = WeasyPrint::view('report');
+$weasyprint = WeasyPrint::view('report');
 
 // Perhaps some big data?
-$pdf = WeasyPrint::view('report', [
+$weasyprint = WeasyPrint::view('report', [
   'bigData' => $this->getBigData()
 ]);
+```
 
+### Output
+
+```php
 // Render the file and get the data …
-return $pdf->convert()->get(); // as a PDF
-return $pdf->convert('png')->get(); // as a PNG
-return $pdf->get(); // shorthand as a PDF
-return $pdf->toPdf(); // shorthand as a PDF
-return $pdf->toPng(); // shorthand as a PNG
+return $weasyprint->toPdf();
+return $weasyprint->toPng();
 
-// How about a direct download / inline render?
-return WeasyPrint::view('report')->download('report.pdf');
-return WeasyPrint::view('report')->inline('report.pdf');
+// How about a direct download / inline render? (extension determines file type)
+return $weasyprint->download('report.pdf');
+return $weasyprint->inline('report.png');
+```
+
+### Other Options
+
+```php
+// Set a base URL for links …
+$weasyprint->setBaseUrl('https://example.com/resources');
+
+// Add a stylesheet …
+$weasyprint->addStylesheet('https://fonts.googleapis.com/css?family=Roboto&display=swap')
+
+// Less common, but handy when you need them …
+$weasyprint->setResolution($resolution);
+$weasyprint->setMediaType($mediaType);
+$weasyprint->setPresentationalHints(true);
+$weasyprint->addAttachment('/path/to/file');
 ```
 
 ## Config
@@ -70,7 +91,8 @@ If you’d like to make a contribution to Laravel WeasyPrint, you’re more than
 Should it be required, please make sure that any impacted tests are updated, or new tests are created. Then run the tests before submitting your request to merge.
 
 ```shell
-$ vendor/bin/phpunit --testdox
+$ composer run-script test # or
+$ ./vendor/bin/phpunit --testdox
 ```
 
 Your commit message should be clear and concise. If you’re fixing a bug, start the message with `bugfix:`. If it’s a feature: `feature:`. If it’s a chore, like formatting code: `chore:`.

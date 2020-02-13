@@ -6,19 +6,28 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Response;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
+use WeasyPrint\Exceptions\InvalidOutputModeException;
 
-final class WeasyPrint
+class WeasyPrint
 {
   private $source;
+  private $isUrl;
   private $inputPath;
-  private $output;
   private $outputMode;
-  private $outputEncoding;
   private $outputPath;
+  private $output;
+
+  private $baseUrl;
+  private $resolution;
+  private $mediaType;
+  private $presentationalHints;
+
   private $processBinary;
   private $processTimeout;
-  private $baseUrl;
 
+  private $command = [];
+  private $outputEncoding = 'utf-8';
+  private $attachments = [];
   private $stylesheets = [];
 
   public function __construct($source)
@@ -26,6 +35,7 @@ final class WeasyPrint
     $this->processBinary = config('weasyprint.binary');
     $this->processTimeout = config('weasyprint.timeout');
     $this->source = $source;
+    $this->isUrl = $this->sourceIsUrl($source);
   }
 
   public static function version(): string
@@ -59,9 +69,44 @@ final class WeasyPrint
     return $this;
   }
 
-  public function setBaseUrl(string $url): WeasyPrint
+  public function setBaseUrl(string $baseUrl): WeasyPrint
   {
-    $this->baseUrl = $url;
+    $this->baseUrl = $baseUrl;
+
+    return $this;
+  }
+
+  public function setResolution(string $resolution): WeasyPrint
+  {
+    $this->resolution = $resolution;
+
+    return $this;
+  }
+
+  public function setMediaType(string $mediaType): WeasyPrint
+  {
+    $this->mediaType = $mediaType;
+
+    return $this;
+  }
+
+  public function setAttachment(string $attachment): WeasyPrint
+  {
+    $this->attachment = $attachment;
+
+    return $this;
+  }
+
+  public function setPresentationalHints(bool $presentationalHints): WeasyPrint
+  {
+    $this->presentationalHints = $presentationalHints;
+
+    return $this;
+  }
+
+  public function setOutputEncoding(string $outputEncoding): WeasyPrint
+  {
+    $this->outputEncoding = $outputEncoding;
 
     return $this;
   }
@@ -73,61 +118,89 @@ final class WeasyPrint
     return $this;
   }
 
-  public function convert(string $outputMode = 'pdf', string $outputEncoding = 'utf8'): WeasyPrint
+  public function addAttachment(string $path): WeasyPrint
   {
-    if ($this->output) {
-      return $this;
-    }
-
-    $this->outputMode = $outputMode;
-    $this->outputEncoding = $outputEncoding;
-
-    $this->preflight();
-    $this->process();
-    $this->fetch();
+    array_push($this->attachments, $path);
 
     return $this;
   }
 
-  public function get(): string
+  private function convertTo(string $outputMode = 'pdf'): WeasyPrint
   {
-    $this->convert();
+    throw_if(
+      !in_array($outputMode, ['png', 'pdf']),
+      new InvalidOutputModeException
+    );
 
+    if (!$this->output) {
+      $this->outputMode = $outputMode;
+
+      $this->preflight();
+      $this->process();
+      $this->fetch();
+    }
+
+    return $this;
+  }
+
+  private function getOutput(): string
+  {
     return $this->output;
   }
 
   public function toPdf(): string
   {
-    return $this->get();
+    return $this->convertTo('pdf')->getOutput();
   }
 
   public function toPng(): string
   {
-    return $this->convert('png')->get();
+    return $this->convertTo('png')->getOutput();
   }
 
-  private function responseHeaders(bool $inline, string $filename): array
+  private function getDispositionType(bool $inline): string
   {
-    $inline = $inline ? 'inline' : 'attachment';
+    return $inline ? 'inline' : 'attachment';
+  }
+
+  private function getMime(string $outputMode): string
+  {
+    return [
+      'pdf' => 'application/pdf',
+      'png' => 'image/png',
+    ][$outputMode];
+  }
+
+  private function responseHeaders(string $filename, string $outputMode, bool $inline = false): array
+  {
+    $dispositionType = $this->getDispositionType($inline);
+    $mime = $this->getMime($outputMode);
 
     return [
-      'Content-Disposition' => "$inline; filename=$filename",
-      'Content-Type' => 'application/pdf',
+      'Content-Disposition' => "$dispositionType; filename=$filename",
+      'Content-Type' => $mime,
     ];
+  }
+
+  private function makeFileResponse(string $filename, bool $inline): Response
+  {
+    $outputMode = substr(strrchr($filename, '.'), 1) ?: $filename;
+
+    $this->convertTo($outputMode);
+
+    return response($this->getOutput())->withHeaders(
+      $this->responseHeaders($filename, $outputMode, $inline)
+    );
   }
 
   public function download(string $filename): Response
   {
-    return response(
-      $this->get(), 200, $this->responseHeaders(false, $filename)
-    );
+    return $this->makeFileResponse($filename, false);
   }
 
   public function inline(string $filename): Response
   {
-    return response(
-      $this->get(), 200, $this->responseHeaders(true, $filename)
-    );
+    return $this->makeFileResponse($filename, true);
   }
 
   private function sourceIsUrl(): bool
@@ -156,45 +229,66 @@ final class WeasyPrint
       $this->source = $this->source->render();
     }
 
-    $this->inputPath = $isUrl = $this->sourceIsUrl()
+    $this->inputPath = $this->isUrl
       ? $this->source
       : $this->tempFilename();
 
     $this->outputPath = $this->tempFilename();
 
-    if (!$isUrl) {
+    if (!$this->isUrl) {
       $this->writeTempInputFile();
+    }
+  }
+
+  private function pushCommand(string $key, $value): void
+  {
+    if (is_bool($value) && $value) {
+      array_push($this->command, $key);
+    } else if ($value) {
+      array_push($this->command, $key, $value);
+    }
+  }
+
+  private function compileCommand(): void
+  {
+    $this->command = [
+      $this->processBinary,
+      $this->inputPath,
+      $this->outputPath,
+      '--quiet',
+      '--format', $this->outputMode,
+      '--encoding', $this->outputEncoding,
+    ];
+
+    $this->pushCommand('--presentational-hints', $this->presentationalHints);
+    $this->pushCommand('--base-url', $this->baseUrl);
+    $this->pushCommand('--media-type', $this->mediaType);
+
+    if ($this->outputMode === 'png') {
+      $this->pushCommand('--resolution', $this->resolution);
+    }
+
+    foreach ($this->attachments as $attachment) {
+      $this->pushCommand('--attachment', $attachment);
+    }
+
+    foreach ($this->stylesheets as $stylesheet) {
+      $this->pushCommand('--stylesheet', $stylesheet);
     }
   }
 
   private function process(): void
   {
-    $command = [
-      $this->processBinary,
-      $this->inputPath,
-      $this->outputPath,
-      '--format', $this->outputMode,
-      '--encoding', $this->outputEncoding,
-    ];
+    $this->compileCommand();
 
-    if ($this->baseUrl) {
-      array_push($command, '--base-url', $this->baseUrl);
-    }
-
-    if (count($this->stylesheets)) {
-      foreach ($this->stylesheets as $stylesheet) {
-        array_push($command, '--stylesheet', $stylesheet);
-      }
-    }
-
-    $process = new Process($command, null, ['LC_ALL' => 'en_US.UTF-8']);
+    $process = new Process($this->command, null, ['LC_ALL' => 'en_US.UTF-8']);
     $process->setTimeout($this->processTimeout)->run();
 
     if (!$process->isSuccessful()) {
       throw new ProcessFailedException($process);
     }
 
-    if (!$this->sourceIsUrl()) {
+    if (!$this->isUrl) {
       unlink($this->inputPath);
     }
   }

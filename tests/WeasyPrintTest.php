@@ -65,7 +65,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     $this->assertFalse(is_file($tempFilename));
   }
 
-  private function runOutputFileAssertions($output, string $expectedDisposition)
+  private function runOutputFileAssertions($output, string $expectedMime, string $expectedDisposition)
   {
     /** @var ResponseHeaderBag */
     $headers = $output->headers;
@@ -75,114 +75,128 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     $this->assertTrue($isResponse);
 
     if ($isResponse) {
-      $this->assertTrue($headers->get('content-type') === 'application/pdf');
+      $this->assertTrue($headers->get('content-type') === $expectedMime);
       $this->assertTrue($headers->get('content-disposition') === $expectedDisposition);
     }
   }
 
   public function testCanRenderPdfFromUrl()
   {
-    $pdf = WeasyPrint::make('https://weasyprint.org')->convert();
-    $output = $pdf->get();
-
-    $this->runPdfAssertions($output);
+    $this->runPdfAssertions(
+      WeasyPrint::make('https://weasyprint.org')->toPdf()
+    );
   }
 
   public function testCanRenderPdfFromText()
   {
-    $pdf = WeasyPrint::make(file_get_contents('https://weasyprint.org'))->convert();
-    $output = $pdf->get();
-
-    $this->runPdfAssertions($output);
+    $this->runPdfAssertions(
+      WeasyPrint::make(file_get_contents('https://weasyprint.org'))->toPdf()
+    );
   }
 
   public function testCanRenderPdfFromView()
   {
-    $pdf = WeasyPrint::view('test-pdf')->convert();
-    $output = $pdf->get();
-
-    $this->runPdfAssertions($output);
-  }
-
-  public function testCanRenderPdfFromTextShortHand()
-  {
-    $output = WeasyPrint::make('Hello')->toPdf();
-
-    $this->runPdfAssertions($output);
+    $this->runPdfAssertions(
+      WeasyPrint::view('test-pdf')->toPdf()
+    );
   }
 
   public function testCanRenderPngFromUrl()
   {
-    $pdf = WeasyPrint::make('https://weasyprint.org')->convert('png');
-
-    $output = $pdf->get();
-
-    $this->runPngAssertions($output);
+    $this->runPngAssertions(
+      WeasyPrint::make('https://weasyprint.org')->toPng()
+    );
   }
 
   public function testCanRenderPngFromText()
   {
-    $pdf = WeasyPrint::make(file_get_contents('https://weasyprint.org'))->convert('png');
-
-    $output = $pdf->get();
-
-    $this->runPngAssertions($output);
+    $this->runPngAssertions(
+      WeasyPrint::make(file_get_contents('https://weasyprint.org'))->toPng()
+    );
   }
 
   public function testCanRenderPngFromView()
   {
-    $pdf = WeasyPrint::view('test-png')->convert('png');
-    $output = $pdf->get();
-
-    $this->runPngAssertions($output);
-  }
-
-  public function testCanRenderPngFromTextShortHand()
-  {
-    $output = WeasyPrint::make('Hello')->toPng();
-
-    $this->runPngAssertions($output);
-  }
-
-  public function testCanDownloadOutput()
-  {
-    $pdf = WeasyPrint::view('test-pdf')->convert();
-    $output = $pdf->download('test.pdf');
-
-    $this->runOutputFileAssertions(
-      $output, 'attachment; filename=test.pdf'
+    $this->runPngAssertions(
+      WeasyPrint::view('test-png')->toPng()
     );
   }
 
-  public function testCanInlineOutput()
+  public function testCanDownloadPdfOutput()
   {
-    $pdf = WeasyPrint::view('test-pdf')->convert();
-    $output = $pdf->inline('test.pdf');
-
     $this->runOutputFileAssertions(
-      $output, 'inline; filename=test.pdf'
+      WeasyPrint::view('test-pdf')->download('test.pdf'),
+      'application/pdf',
+      'attachment; filename=test.pdf'
     );
   }
 
-  public function testCanAcceptBaseUrl()
+  public function testCanInlinePdfOutput()
   {
-    $pdf = WeasyPrint::view('test-pdf')
-      ->setBaseUrl('https://example.com')
-      ->convert();
+    $this->runOutputFileAssertions(
+      WeasyPrint::view('test-pdf')->inline('test.pdf'),
+      'application/pdf',
+      'inline; filename=test.pdf'
+    );
+  }
 
-    $output = $pdf->get();
+  public function testCanDownloadPngOutput()
+  {
+    $this->runOutputFileAssertions(
+      WeasyPrint::view('test-png')->download('test.png'),
+      'image/png',
+      'attachment; filename=test.png'
+    );
+  }
+
+  public function testCanInlinePngOutput()
+  {
+    $this->runOutputFileAssertions(
+      WeasyPrint::view('test-png')->inline('test.png'),
+      'image/png',
+      'inline; filename=test.png'
+    );
+  }
+
+  public function testCanAcceptAdditionalOptions()
+  {
+    $output = WeasyPrint::view('test-pdf')
+      ->setBaseUrl('https://weasyprint.org')
+      ->setMediaType('screen')
+      ->setPresentationalHints(true)
+      ->toPdf();
 
     $this->runPdfAssertions($output);
   }
 
+  public function testCanAcceptPngResolution()
+  {
+    $output = WeasyPrint::view('test-png')
+      ->setResolution('300')
+      ->toPng();
+
+    $this->runPngAssertions($output);
+  }
+
   public function testCanAcceptStylesheets()
   {
-    $pdf = WeasyPrint::view('test-pdf')
+    $output = WeasyPrint::view('test-pdf')
       ->addStylesheet('https://fonts.googleapis.com/css?family=Manjari&display=swap')
       ->addStylesheet('https://fonts.googleapis.com/css?family=Roboto&display=swap')
-      ->convert();
+      ->toPdf();
 
-    $output = $pdf->get();
+    $this->runPdfAssertions($output);
+  }
+
+  public function testCanAcceptAttachments()
+  {
+    $tempFilename = $this->writeTempFile('WeasyPrint');
+
+    $output = WeasyPrint::view('test-pdf')
+      ->addAttachment($tempFilename)
+      ->toPdf();
+
+    unlink($tempFilename);
 
     $this->runPdfAssertions($output);
   }

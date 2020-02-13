@@ -29,5 +29,13 @@
         "WeasyPrint\\WeasyPrintProvider"
       ]
     }
+  },
+  "scripts": {
+    "test": [
+      "@cda",
+      "@phpunit"
+    ],
+    "cda": "composer dumpautoload",
+    "phpunit": "./vendor/bin/phpunit --testdox"
   }
 }
