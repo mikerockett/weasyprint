@@ -3,7 +3,7 @@
 [![forthebadge](https://forthebadge.com/images/badges/made-with-crayons.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/does-not-contain-treenuts.svg)](https://forthebadge.com)
 
-A simple Laravel 5.8/6.x wrapper for the [WeasyPrint Document Factory](https://weasyprint.org/).
+A simple Laravel 7.x/8.x wrapper for the [WeasyPrint Document Factory](https://weasyprint.org/).
 
 ## Installation
 
