@@ -28,6 +28,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     return $tempFilename;
   }
 
+  /** @covers WeasyPrint */
   public function testCanReturnVersion()
   {
     $version = WeasyPrint::version();
@@ -80,6 +81,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     }
   }
 
+  /** @covers WeasyPrint */
   public function testCanRenderPdfFromUrl()
   {
     $this->runPdfAssertions(
@@ -87,6 +89,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     );
   }
 
+  /** @covers WeasyPrint */
   public function testCanRenderPdfFromText()
   {
     $this->runPdfAssertions(
@@ -94,6 +97,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     );
   }
 
+  /** @covers WeasyPrint */
   public function testCanRenderPdfFromView()
   {
     $this->runPdfAssertions(
@@ -101,6 +105,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     );
   }
 
+  /** @covers WeasyPrint */
   public function testCanRenderPngFromUrl()
   {
     $this->runPngAssertions(
@@ -108,6 +113,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     );
   }
 
+  /** @covers WeasyPrint */
   public function testCanRenderPngFromText()
   {
     $this->runPngAssertions(
@@ -115,6 +121,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     );
   }
 
+  /** @covers WeasyPrint */
   public function testCanRenderPngFromView()
   {
     $this->runPngAssertions(
@@ -122,6 +129,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     );
   }
 
+  /** @covers WeasyPrint */
   public function testCanDownloadPdfOutput()
   {
     $this->runOutputFileAssertions(
@@ -131,6 +139,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     );
   }
 
+  /** @covers WeasyPrint */
   public function testCanInlinePdfOutput()
   {
     $this->runOutputFileAssertions(
@@ -140,6 +149,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     );
   }
 
+  /** @covers WeasyPrint */
   public function testCanDownloadPngOutput()
   {
     $this->runOutputFileAssertions(
@@ -149,6 +159,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     );
   }
 
+  /** @covers WeasyPrint */
   public function testCanInlinePngOutput()
   {
     $this->runOutputFileAssertions(
@@ -158,6 +169,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     );
   }
 
+  /** @covers WeasyPrint */
   public function testCanAcceptAdditionalOptions()
   {
     $output = WeasyPrint::view('test-pdf')
@@ -169,6 +181,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     $this->runPdfAssertions($output);
   }
 
+  /** @covers WeasyPrint */
   public function testCanAcceptPngResolution()
   {
     $output = WeasyPrint::view('test-png')
@@ -178,6 +191,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     $this->runPngAssertions($output);
   }
 
+  /** @covers WeasyPrint */
   public function testCanAcceptStylesheets()
   {
     $output = WeasyPrint::view('test-pdf')
@@ -188,6 +202,7 @@ class WeasyPrintTest extends Orchestra\Testbench\TestCase
     $this->runPdfAssertions($output);
   }
 
+  /** @covers WeasyPrint */
   public function testCanAcceptAttachments()
   {
     $tempFilename = $this->writeTempFile('WeasyPrint');
