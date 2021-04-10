@@ -62,4 +62,21 @@ class ConfigTests extends TestCase
     $this->assertEquals($binary, $config->getBinary());
     $this->assertEquals($containerConfig->get('weasyprint.cachePrefix'), $config->getCachePrefix());
   }
+
+  /** @covers WeasyPrint\Service */
+  public function testConfigOptionsCanBeChangedAfterInstantiation(): void
+  {
+    $config = Service::new()
+      ->withConfiguration(binary: $binary = '/bin/weasyprint')
+      ->getConfig();
+
+    /** @var Repository */
+    $containerConfig = $this->app->make(Repository::class);
+
+    $this->assertEquals($binary, $config->getBinary());
+    $this->assertEquals(
+      $containerConfig->get('weasyprint.cachePrefix'),
+      $config->getCachePrefix()
+    );
+  }
 }

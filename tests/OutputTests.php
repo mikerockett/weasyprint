@@ -38,6 +38,26 @@ class OutputTests extends TestCase
   }
 
   /** @covers WeasyPrint\Service */
+  public function testCanRenderPdfDefaultFromString()
+  {
+    $this->runPdfAssertions(
+      $this->buildAndGetData(
+        Service::new()->prepareSource('<p>WeasyPrint rocks!</p>')
+      )
+    );
+  }
+
+  /** @covers WeasyPrint\Service */
+  public function testCanRenderPdfShorthandFromString()
+  {
+    $this->runPdfAssertions(
+      $this->buildAndGetData(
+        Service::createFromSource('<p>WeasyPrint rocks!</p>')
+      )
+    );
+  }
+
+  /** @covers WeasyPrint\Service */
   public function testCanRenderPdfFromString()
   {
     $this->runPdfAssertions(
@@ -134,6 +154,16 @@ class OutputTests extends TestCase
       Service::new()->prepareSource(view('test-png'))->toPng()->build()->download('test.png'),
       'image/png',
       'attachment; filename=test.png'
+    );
+  }
+
+  /** @covers WeasyPrint\Service */
+  public function testCanRenderAndDownloadPdfOutputWithShorthands()
+  {
+    $this->runOutputFileAssertions(
+      Service::new()->prepareSource(view('test-pdf'))->download('test.pdf'),
+      'application/pdf',
+      'attachment; filename=test.pdf'
     );
   }
 

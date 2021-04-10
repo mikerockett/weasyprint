@@ -145,13 +145,11 @@ class Service implements Factory
   public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse
   {
     if (!$extension = Str::afterLast($filename, '.')) {
-      $filename = Str::of($filename)->trim('.')->append(
-        $extension = ($outputType = OutputType::pdf())->getValue()
-      );
-    }
-
-    if (!$outputType) {
-      $outputType = OutputType::from($extension);
+      $filename = Str::of($filename)
+        ->trim('.')
+        ->append($extension = $this->outputType->getValue());
+    } else {
+      $this->outputType = OutputType::from($extension);
     }
 
     return $this->build()->download($filename, $headers, $inline);
