@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace WeasyPrint;
 
-use Illuminate\Container\Container;
+use Illuminate\Config\Repository;
 use Illuminate\Support\ServiceProvider;
 use WeasyPrint\Contracts\Factory;
 use WeasyPrint\Service;
@@ -29,7 +29,7 @@ class Provider extends ServiceProvider
   public function register(): void
   {
     $this->app->singleton(Factory::class, fn ($app) => Service::new(
-      ...$app->make('config')->get($this->name())
+      ...$app->make(Repository::class)->get($this->name())
     ));
   }
 
