@@ -11,8 +11,8 @@ use WeasyPrint\Objects\{Config, Output, Source};
 
 interface Factory
 {
-  public static function new(mixed ...$configurationOptions): self;
-  public function withConfiguration(mixed ...$configurationOptions): self;
+  public static function new(mixed ...$config): self;
+  public function mergeConfig(mixed ...$config): self;
   public function prepareSource(Source|Renderable|string $source): self;
   public function getConfig(): Config;
   public function getSource(): Source;

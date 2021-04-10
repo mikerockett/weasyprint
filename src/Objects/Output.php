@@ -21,7 +21,7 @@ class Output
     return new static($data, $outputType);
   }
 
-  private function getContentType(): string
+  public function getContentType(): string
   {
     return [
       'pdf' => 'application/pdf',

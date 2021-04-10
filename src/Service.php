@@ -18,15 +18,15 @@ class Service implements Factory
   protected Source $source;
   protected OutputType $outputType;
 
-  private function __construct(mixed ...$configurationOptions)
+  private function __construct(mixed ...$config)
   {
-    $this->config = Config::new(...$configurationOptions);
+    $this->config = Config::new(...$config);
     $this->outputType = OutputType::pdf();
   }
 
-  public static function new(mixed ...$configurationOptions): Factory
+  public static function new(mixed ...$config): Factory
   {
-    return new static(...$configurationOptions);
+    return new static(...$config);
   }
 
   public static function createFromSource(Source|Renderable|string $source): Factory
@@ -34,10 +34,10 @@ class Service implements Factory
     return static::new()->prepareSource($source);
   }
 
-  public function withConfiguration(mixed ...$configurationOptions): Factory
+  public function mergeConfig(mixed ...$config): Factory
   {
     $service = clone $this;
-    $service->config = Config::new(...$configurationOptions);
+    $service->config = Config::new(...$config);
 
     return $service;
   }
@@ -163,5 +163,10 @@ class Service implements Factory
   public function putFile(string $path, ?string $disk = null, array $options = []): bool
   {
     return $this->build()->putFile($path, $disk, $options);
+  }
+
+  public function getData(): string
+  {
+    return $this->build()->getData();
   }
 }

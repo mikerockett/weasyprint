@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace WeasyPrint\Tests;
 
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use UnexpectedValueException;
 use WeasyPrint\Enums\OutputType;
 use WeasyPrint\Service;
 
+/** @covers WeasyPrint\Service */
 class OutputTests extends TestCase
 {
-  /** @covers WeasyPrint\Service */
   public function testUsesPdfOutputTypeByDefault(): void
   {
     $service = Service::new();
@@ -19,7 +20,6 @@ class OutputTests extends TestCase
     $this->assertEquals(OutputType::pdf(), $outputType);
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanSetPdfOutputType(): void
   {
     $service = Service::new()->to(OutputType::pdf());
@@ -28,7 +28,6 @@ class OutputTests extends TestCase
     $this->assertEquals(OutputType::pdf(), $outputType);
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanSetPngOutputType(): void
   {
     $service = Service::new()->to(OutputType::png());
@@ -37,7 +36,20 @@ class OutputTests extends TestCase
     $this->assertEquals(OutputType::png(), $outputType);
   }
 
-  /** @covers WeasyPrint\Service */
+  public function testCanSetOutputTypeFromString(): void
+  {
+    $service = Service::new()->to(OutputType::from('pdf'));
+
+    $this->assertInstanceOf(OutputType::class, $outputType = $service->getOutputType());
+    $this->assertEquals(OutputType::pdf(), $outputType);
+  }
+
+  public function testFailsWhenInvalidOutputTypePassed(): void
+  {
+    $this->expectException(UnexpectedValueException::class);
+    Service::new()->to(OutputType::from('jpg'));
+  }
+
   public function testCanRenderPdfDefaultFromString()
   {
     $this->runPdfAssertions(
@@ -47,7 +59,6 @@ class OutputTests extends TestCase
     );
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanRenderPdfShorthandFromString()
   {
     $this->runPdfAssertions(
@@ -57,7 +68,6 @@ class OutputTests extends TestCase
     );
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanRenderPdfFromString()
   {
     $this->runPdfAssertions(
@@ -67,7 +77,6 @@ class OutputTests extends TestCase
     );
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanRenderPdfFromUrl()
   {
     $this->runPdfAssertions(
@@ -77,7 +86,6 @@ class OutputTests extends TestCase
     );
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanRenderPdfFromRenderable()
   {
     $this->runPdfAssertions(
@@ -87,7 +95,6 @@ class OutputTests extends TestCase
     );
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanRenderPngFromString()
   {
     $this->runPngAssertions(
@@ -97,7 +104,6 @@ class OutputTests extends TestCase
     );
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanRenderPngFromUrl()
   {
     $this->runPngAssertions(
@@ -107,7 +113,6 @@ class OutputTests extends TestCase
     );
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanRenderPngFromRenderable()
   {
     $this->runPngAssertions(
@@ -117,7 +122,6 @@ class OutputTests extends TestCase
     );
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanRenderAndInlinePdfOutput()
   {
     $this->runOutputFileAssertions(
@@ -127,7 +131,6 @@ class OutputTests extends TestCase
     );
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanRenderAndInlinePngOutput()
   {
     $this->runOutputFileAssertions(
@@ -137,7 +140,6 @@ class OutputTests extends TestCase
     );
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanRenderAndDownloadPdfOutput()
   {
     $this->runOutputFileAssertions(
@@ -147,7 +149,6 @@ class OutputTests extends TestCase
     );
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanRenderAndDownloadPngOutput()
   {
     $this->runOutputFileAssertions(
@@ -157,7 +158,6 @@ class OutputTests extends TestCase
     );
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanRenderAndDownloadPdfOutputWithShorthands()
   {
     $this->runOutputFileAssertions(

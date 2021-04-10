@@ -8,9 +8,9 @@ use Illuminate\Contracts\Support\Renderable;
 use WeasyPrint\Objects\Source;
 use WeasyPrint\Service;
 
+/** @covers WeasyPrint\Service */
 class SourceTests extends TestCase
 {
-  /** @covers WeasyPrint\Service */
   public function testCanPrepareSourceFromSource(): void
   {
     $service = Service::new();
@@ -23,7 +23,6 @@ class SourceTests extends TestCase
     $this->assertIsString($source->get());
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanPrepareSourceFromArguments(): void
   {
     $service = Service::new();
@@ -34,7 +33,6 @@ class SourceTests extends TestCase
     $this->assertIsString($source->get());
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanPrepareSourceFromNamedArguments(): void
   {
     $service = Service::new();
@@ -45,7 +43,6 @@ class SourceTests extends TestCase
     $this->assertIsString($source->get());
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanPrepareSourceFromRenderable(): void
   {
     $service = Service::new();
@@ -55,7 +52,6 @@ class SourceTests extends TestCase
     $this->assertInstanceOf(Renderable::class, $source->get());
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanPrepareSourceFromUrlAndVerify(): void
   {
     $service = Service::new();
@@ -65,7 +61,6 @@ class SourceTests extends TestCase
     $this->assertTrue($source->isUrl());
   }
 
-  /** @covers WeasyPrint\Service */
   public function testCanPrepareSourceWithAttachments(): void
   {
     $service = Service::new();

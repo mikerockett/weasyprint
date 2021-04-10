@@ -8,9 +8,9 @@ use Illuminate\Config\Repository;
 use WeasyPrint\Objects\Config;
 use WeasyPrint\Service;
 
+/** @covers WeasyPrint\Service */
 class ConfigTests extends TestCase
 {
-  /** @covers WeasyPrint\Service */
   public function testPackageLoadsDefaultConfig(): void
   {
     /** @var Repository */
@@ -22,7 +22,6 @@ class ConfigTests extends TestCase
     );
   }
 
-  /** @covers WeasyPrint\Service */
   public function testServicePreparesConfigObjectByDefault(): void
   {
     $config = Service::new()->getConfig();
@@ -30,7 +29,6 @@ class ConfigTests extends TestCase
     $this->assertInstanceOf(Config::class, $config);
   }
 
-  /** @covers WeasyPrint\Service */
   public function testServicePreparesDefaultConfigWithDefaultOptions(): void
   {
     $config = Service::new()->getConfig();
@@ -41,7 +39,6 @@ class ConfigTests extends TestCase
     $this->assertEquals($containerConfig->get('weasyprint'), $config->toArray());
   }
 
-  /** @covers WeasyPrint\Service */
   public function testServicePreparesDefaultConfigWithMergedOption(): void
   {
     $config = Service::new(binary: $binary = '/bin/weasyprint')->getConfig();
@@ -49,7 +46,6 @@ class ConfigTests extends TestCase
     $this->assertEquals($binary, $config->getBinary());
   }
 
-  /** @covers WeasyPrint\Service */
   public function testServicePreparesDefaultConfigWithMergedArrayOption(): void
   {
     $config = Service::new(...[
@@ -63,11 +59,10 @@ class ConfigTests extends TestCase
     $this->assertEquals($containerConfig->get('weasyprint.cachePrefix'), $config->getCachePrefix());
   }
 
-  /** @covers WeasyPrint\Service */
   public function testConfigOptionsCanBeChangedAfterInstantiation(): void
   {
     $config = Service::new()
-      ->withConfiguration(binary: $binary = '/bin/weasyprint')
+      ->mergeConfig(binary: $binary = '/bin/weasyprint')
       ->getConfig();
 
     /** @var Repository */

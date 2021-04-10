@@ -27,7 +27,9 @@ abstract class Enum
 
   public static function from(mixed $value): static
   {
-    return self::__callStatic(static::keyForValue($value), []);
+    $key = static::keyForValue($value);
+
+    return static::$key();
   }
 
   public function getValue(): mixed

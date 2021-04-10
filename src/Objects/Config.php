@@ -23,11 +23,11 @@ class Config implements Arrayable
   ) {
   }
 
-  public static function new(mixed ...$configurationOptions): static
+  public static function new(mixed ...$config): static
   {
     $defaults = Container::getInstance()->make('config')->get('weasyprint');
 
-    return new static(...array_merge($defaults, $configurationOptions));
+    return new static(...array_merge($defaults, $config));
   }
 
   public function getBinary(): string

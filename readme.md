@@ -23,6 +23,7 @@ A feature-rich Laravel wrapper for the [WeasyPrint Document Factory](https://wea
   - [Merging](#merging)
   - [Available Configuration Options](#available-configuration-options)
 - [Immutability](#immutability)
+- [Cheat-sheet](#cheat-sheet)
 - [Contributing](#contributing)
   - [Tests](#tests)
   - [Committing](#committing)
@@ -98,13 +99,13 @@ To use dependency injection, you need to use the Factory contract, which will re
 When you depend on the Factory contract, you are still getting a service class instance, which may be reconfigured as and when needed. Therefore, passing in custom configuration is done differently, using a dedicated method:
 
 ```php
-$factory->withConfiguration(
+$factory->mergeConfig(
   binary: '/absolute/path/to/weasyprint',
   timeout: 5000,
 )
 ```
 
-You do not need to call `withConfiguration` at any specific point, but you must call it before you build the output.
+You do not need to call `mergeConfig` at any specific point, but you must call it before you build the output.
 
 ### Option 3. Facade
 
@@ -117,7 +118,7 @@ $service = WeasyPrint::prepareSource($source);
 
 Similar to dependency injection, using the Facade will give you an instance of the WeasyPrint service singleton. The Facade resolves to the Factory contract which, in turn, provides you with the singleton.
 
-To change the configuration, you may call the `withConfiguration` method, just as you would with dependency injection.
+To change the configuration, you may call the `mergeConfig` method, just as you would with dependency injection.
 
 ## Building the Output
 
@@ -130,6 +131,9 @@ use WeasyPrint\Enums\OutputType;
 
 $outputPdf = $service->to(OutputType::pdf())->build(); // this is the default
 $outputPng = $service->to(OutputType::png())->build();
+
+// Getting the output type from a string (useful when this is user-input)
+$outputPng = $service->to(OutputType::from('png'))->build();
 ```
 
 Here, we call the `to` method to set the output type, which must be an instance of the `OutputType` enumeration (Yes, we will support proper enums when PHP 8.1 is released 🎉). Then, we call `build` which spawns a Symfony Process that sends the source to `weasyprint` and returns the result to the service class.
@@ -168,13 +172,13 @@ Once you have built the output, there are several things you can do with it:
 $service->to(OutputType::pdf())->build()->download('document.pdf');
 ```
 
-1. Inline it as an attachment.
+2. Inline it as an attachment.
 
 ```php
 $service->to(OutputType::pdf())->build()->inline('document.pdf');
 ```
 
-2. Save it to disk.
+3. Save it to disk.
 
 ```php
 $service->to(OutputType::pdf())->build()->putFile('documents/document.pdf', 's3', $options = []);
@@ -185,6 +189,12 @@ The `putFile` method, which forwards the operation to Laravel’s filesystem, ac
 - A path relative to the root of your disk, not just a file name
 - A specific Laravel Filesystem disk, such as `s3`. If you don’t provide this, the default disk will be used.
 - Options to be passed to `put` on the disk instance.
+
+4. Grab it and do what you want with it.
+
+```php
+$service->to(OutputType::pdf())->build()->getData(); // You can also call getContentType to get the MIME type.
+```
 
 Note that, in these examples, we are declaring the output type explicitly. This means that the implicit inference mechanism will not be triggered when you specify the file name. As such, if you were to provide an extension that does not match up with the output type, the package will just assume that you know what you're doing and proceed, no questions asked.
 
@@ -242,7 +252,7 @@ Naturally this has no effect when outputting to PNG.
 
 ## Configuration
 
-As mentioned in previous sections, you may change WeasyPrint’s configuration on the fly, either by passing a configuration object to the `new` method of the service class, or by calling `withConfiguration` on an already-resolved service class instance.
+As mentioned in previous sections, you may change WeasyPrint’s configuration on the fly, either by passing a configuration object to the `new` method of the service class, or by calling `mergeConfig` on an already-resolved service class instance.
 
 ### Named Parameters and Argument Unpacking
 
@@ -251,7 +261,7 @@ Both of these methods use argument unpacking to internally resolve a new instanc
 Given that WeasyPrint for Laravel requires PHP 8 to run, you may pass in the configuration options as named arguments to either of these methods:
 
 ```php
-$service->withConfiguration(
+$service->mergeConfig(
   binary: '/absolute/path/to/weasyprint',
   timeout: 5000,
 );
@@ -260,7 +270,7 @@ $service->withConfiguration(
 If you prefer, however, you may also pass in an unpacked array:
 
 ```php
-$service->withConfiguration(...[
+$service->mergeConfig(...[
   'binary' => '/absolute/path/to/weasyprint',
   'timeout' => 5000,
 ])
@@ -353,6 +363,43 @@ return [
 Under the hood, the service class is immutable. This means that every time you prepare a source, change configuration, or set the output format, the service is cloned. The idea here is that the base service is only created once per request, as a singleton, and actual conversion-related actions on the service are done in a fresh instance, created solely for the purpose of that conversion.
 
 This provides additional benefis for stateful servers like [Laravel Octane](https://github.com/laravel/octane), where the base service is only ever created once with the default configuration. When a request terminates, cloned instances will be disposed of.
+
+## Cheat-sheet
+
+Here's a cheat-sheet showing all possible approaches and scenarios.
+
+```php
+// Managing Config
+$service = WeasyPrint\Service::new(binary: '/bin/weasyprint');
+$service = WeasyPrint\Service::new(...['binary' => '/bin/weasyprint']);
+$service = WeasyPrint\Facade::mergeConfig(binary: '/bin/weasyprint');
+$service = WeasyPrint\Facade::mergeConfig(...['binary' => '/bin/weasyprint']);
+
+// Preparing the Source
+$service = WeasyPrint\Service::new()->prepareSource('Cheat-sheet!');
+$service = WeasyPrint\Facade::createFromSource('Cheat-sheet!'); // Shorthand (using the Facade in this case)
+
+// Using Explicit Output Types
+$service->to(OutputType::pdf())->build()->download('document.pdf')
+$service->to(OutputType::from('pdf'))->build()->download('document.pdf')
+$service->to(OutputType::png())->build()->inline('image.png')
+$service->to(OutputType::pdf())->build()->getData()
+
+// Using Explicit Output Types (Shorthand)
+$service->toPdf()->build()->download('document.pdf')
+$service->toPng()->build()->inline('document.png')
+$service->toPdf()->build()->getData()
+
+// Using Implicit Type Inference (OutputType determined by extension)
+$service->build()->download('document.pdf')
+$service->build()->inline('image.png')
+$service->build()->getData() // No filename here, so PDF will be used by default.
+
+// Using Shorthand (OutputType determined by extension)
+$service->download('document.pdf')
+$service->inline('image.png')
+$service->getData() // No filename here, so PDF will be used by default.
+```
 
 ## Contributing
 

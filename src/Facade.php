@@ -9,10 +9,10 @@ use WeasyPrint\Contracts\Factory;
 use WeasyPrint\Objects\Config;
 
 /**
- * @method self withConfiguration(mixed ...$configurationOptions)
- * @method self prepareSource(Source|Renderable|string $source)
- * @method Config getConfig()
+ * @method Factory mergeConfig(mixed ...$config)
+ * @method Factory prepareSource(Source|Renderable|string $source)
  * @method Factory to(OutputType $outputType)
+ * @method Config getConfig()
  */
 class Facade extends SupportFacade
 {
