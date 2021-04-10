@@ -29,6 +29,11 @@ class Service implements Factory
     return new static(...$configurationOptions);
   }
 
+  public static function createFromSource(Source|Renderable|string $source): Factory
+  {
+    return static::new()->prepareSource($source);
+  }
+
   public function withConfiguration(mixed ...$configurationOptions): Factory
   {
     $service = clone $this;
