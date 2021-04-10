@@ -1,0 +1,98 @@
+<?php
+
+declare(strict_types=1);
+
+namespace WeasyPrint;
+
+use Illuminate\Support\Collection;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
+use WeasyPrint\Enums\OutputType;
+use WeasyPrint\Exceptions\AttachmentNotFoundException;
+use WeasyPrint\Objects\Config;
+
+class Command
+{
+  protected Collection $arguments;
+
+  public function __construct(
+    protected Config $config,
+    protected OutputType $outputType,
+    string $inputPath,
+    string $outputPath,
+    protected array $attachments = []
+  ) {
+    $this->arguments = new Collection([
+      $config->getBinary(),
+      $inputPath,
+      $outputPath,
+      '--quiet',
+      '--format', $outputType->getValue(),
+      '--encoding', $config->getInputEncoding(),
+    ]);
+
+    $this->prepareOptionalArguments();
+  }
+
+  private function maybePushArgument(string $key, $value): void
+  {
+    if ($value === true) {
+      $this->arguments->push($key);
+    } else if ($value) {
+      $this->arguments->push($key, $value);
+    }
+  }
+
+  private function prepareOptionalArguments(): void
+  {
+    $this->maybePushArgument(
+      '--presentational-hints',
+      $this->config->usePresentationalHints()
+    );
+
+    $this->maybePushArgument(
+      '--base-url',
+      $this->config->getBaseUrl()
+    );
+
+    $this->maybePushArgument(
+      '--media-type',
+      $this->config->getMediaType()
+    );
+
+    if ($this->outputType === OutputType::png()) {
+      $this->maybePushArgument(
+        '--resolution',
+        $this->config->getResolution()
+      );
+    }
+
+    if ($this->outputType === OutputType::pdf()) {
+      foreach ($this->attachments as $attachment) {
+        if (!is_file($attachment)) {
+          throw new AttachmentNotFoundException($attachment);
+        }
+
+        $this->maybePushArgument('--attachment', $attachment);
+      }
+
+      foreach ($this->config->getStylesheets() as $stylesheet) {
+        $this->maybePushArgument('--stylesheet', $stylesheet);
+      }
+    }
+  }
+
+  public function execute()
+  {
+    $process = new Process(
+      command: $this->arguments->toArray(),
+      env: ['LC_ALL' => 'en_US.UTF-8'],
+    );
+
+    $process->setTimeout($this->config->getTimeout())->run();
+
+    if (!$process->isSuccessful()) {
+      throw new ProcessFailedException($process);
+    }
+  }
+}
