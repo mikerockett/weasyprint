@@ -78,12 +78,16 @@ class Service implements Factory
     return $service;
   }
 
+  public function setOutputType(OutputType $outputType): Factory
+  {
+    $this->outputType = $outputType;
+
+    return $this;
+  }
+
   public function to(OutputType $outputType): Factory
   {
-    $service = clone $this;
-    $service->outputType = $outputType;
-
-    return $service;
+    return (clone $this)->setOutputType($outputType);
   }
 
   public function toPdf(): Factory
@@ -103,11 +107,8 @@ class Service implements Factory
 
   public function build(): Output
   {
-    if ($this->outputType->is(OutputType::none())) {
-      $this->outputType = OutputType::pdf();
-    }
-
     $pipeline = (new Pipeline)
+      ->pipe(new Pipes\EnsureOutputTypeIsSet)
       ->pipe(new Pipes\EnsureSourceIsSet)
       ->pipe(new Pipes\SetInputPath)
       ->pipe(new Pipes\SetOutputPath)
