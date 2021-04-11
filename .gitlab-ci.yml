@@ -14,4 +14,4 @@ before_script:
 
 test:
   script:
-    - ./vendor/bin/testbench package:test
+    - ./vendor/bin/testbench package:test --without-tty
