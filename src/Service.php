@@ -6,11 +6,13 @@ namespace WeasyPrint;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Str;
+use Rockett\Pipeline\Contracts\PipelineContract;
+use Rockett\Pipeline\Pipeline;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use WeasyPrint\Contracts\Factory;
 use WeasyPrint\Enums\OutputType;
-use WeasyPrint\Exceptions\{MissingOutputFileException, OutputStreamFailedException, SourceNotSetException};
 use WeasyPrint\Objects\{Config, Output, Source};
+use WeasyPrint\Pipeline\{BuilderContainer, BuilderPipes as Pipes};
 
 class Service implements Factory
 {
@@ -58,6 +60,11 @@ class Service implements Factory
     return $this->config;
   }
 
+  public function sourceIsSet(): bool
+  {
+    return isset($this->source);
+  }
+
   public function getSource(): Source
   {
     return $this->source;
@@ -94,52 +101,24 @@ class Service implements Factory
     return $this->outputType;
   }
 
-  private function makeTemporaryFilename(): string|false
-  {
-    return tempnam(
-      sys_get_temp_dir(),
-      $this->config->getCachePrefix()
-    );
-  }
-
   public function build(): Output
   {
-    if (!isset($this->source)) {
-      throw new SourceNotSetException;
-    }
+    $pipeline = (new Pipeline)
+      ->pipe(new Pipes\EnsureSourceIsSet)
+      ->pipe(new Pipes\SetInputPath)
+      ->pipe(new Pipes\SetOutputPath)
+      ->pipe(new Pipes\PersistTemporaryInput)
+      ->pipe(new Pipes\PrepareCommand)
+      ->pipe(new Pipes\ExecuteCommand)
+      ->pipe(new Pipes\UnlinkTemporaryInput)
+      ->pipe(new Pipes\PrepareOutput);
 
-    $inputPath = ($isUrl = $this->source->isUrl())
-      ? $this->source->get()
-      : $this->makeTemporaryFilename();
+    return $this->processPipeline($pipeline)->getOutput();
+  }
 
-    $outputPath = $this->makeTemporaryFilename();
-    $this->source->persistTemporaryFile($inputPath);
-
-    $command = new Command(
-      config: $this->config,
-      outputType: $this->outputType,
-      inputPath: $inputPath,
-      outputPath: $outputPath,
-      attachments: $this->source->getAttachments()
-    );
-
-    $command->execute();
-
-    if (!$isUrl) {
-      unlink($inputPath);
-    }
-
-    if (!is_file($outputPath)) {
-      throw new MissingOutputFileException($outputPath);
-    }
-
-    if (!$output = file_get_contents($outputPath)) {
-      throw new OutputStreamFailedException($outputPath);
-    }
-
-    unlink($outputPath);
-
-    return Output::new($output, $this->outputType);
+  protected function processPipeline(PipelineContract $pipeline): BuilderContainer
+  {
+    return $pipeline->process(new BuilderContainer(clone $this));
   }
 
   public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse

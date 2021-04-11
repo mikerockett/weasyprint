@@ -6,7 +6,7 @@ namespace WeasyPrint\Exceptions;
 
 use RuntimeException;
 
-class OutputStreamFailedException extends RuntimeException
+class OutputReadFailedException extends RuntimeException
 {
   public function __construct(string $outputFilePath)
   {

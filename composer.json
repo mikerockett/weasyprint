@@ -12,8 +12,9 @@
   "minimum-stability": "stable",
   "require": {
     "php": "^8.0",
-    "symfony/process": "^5.2",
-    "illuminate/support": "^8.0"
+    "illuminate/support": "^8.0",
+    "rockett/pipeline": "^2.0",
+    "symfony/process": "^5.2"
   },
   "require-dev": {
     "brianium/paratest": "^6.2",

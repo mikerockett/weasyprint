@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1d4d45afeb46142d98eb89cd80eef2b0",
+    "content-hash": "5154028466756c4390cf0a2899b1f84a",
     "packages": [
         {
             "name": "brick/math",
@@ -1542,6 +1542,64 @@
                 }
             ],
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "rockett/pipeline",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mikerockett/pipeline.git",
+                "reference": "26e49f74fd8d3c3ff208a9f110318e26c45aa76e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mikerockett/pipeline/zipball/26e49f74fd8d3c3ff208a9f110318e26c45aa76e",
+                "reference": "26e49f74fd8d3c3ff208a9f110318e26c45aa76e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rockett\\Pipeline\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frenky.net",
+                    "role": "Author of Original Source"
+                },
+                {
+                    "name": "Woody Gilk",
+                    "email": "woody.gilk@gmail.com",
+                    "role": "Maintainer of Original Source"
+                },
+                {
+                    "name": "Mike Rockétt",
+                    "email": "os@rockett.pw",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "A plug and play pipeline implementation.",
+            "keywords": [
+                "composition",
+                "design pattern",
+                "pattern",
+                "pipeline",
+                "sequential"
+            ],
+            "support": {
+                "issues": "https://github.com/mikerockett/pipeline/issues",
+                "source": "https://github.com/mikerockett/pipeline/tree/2.0.1"
+            },
+            "time": "2021-02-04T05:32:10+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

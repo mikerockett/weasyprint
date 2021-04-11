@@ -12,6 +12,8 @@ use WeasyPrint\Objects\Config;
  * @method Factory mergeConfig(mixed ...$config)
  * @method Factory prepareSource(Source|Renderable|string $source)
  * @method Factory to(OutputType $outputType)
+ * @method Factory toPdf()
+ * @method Factory toPng()
  * @method Config getConfig()
  */
 class Facade extends SupportFacade
