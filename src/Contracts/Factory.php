@@ -25,4 +25,5 @@ interface Factory
   public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse;
   public function inline(string $filename, array $headers = []): StreamedResponse;
   public function putFile(string $path, ?string $disk = null, array $options = []): bool;
+  public function getData(): string;
 }

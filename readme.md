@@ -2,16 +2,21 @@
 
 ---
 
-A feature-rich Laravel wrapper for the [WeasyPrint Document Factory](https://weasyprint.org/). This package requires **Laravel 8+** running on **PHP 8+** in order to operate.
+A feature-rich Laravel wrapper for the [WeasyPrint Document Factory](https://weasyprint.org/).
 
-- [Installation](#installation)
-- [Usage](#usage)
+**Note:** This package requires **Laravel 8+** running on **PHP 8+** in order to operate.
+
+[Changelog](changelog.md) | [Upgrade Guide](upgrading.md)
+
+# Table of Contents
+
+- [Package Installation](#package-installation)
+- [Service Instantiation](#service-instantiation)
   - [Option 1. Service Class](#option-1-service-class)
   - [Option 2. Dependency Injection](#option-2-dependency-injection)
   - [Option 3. Facade](#option-3-facade)
 - [Building the Output](#building-the-output)
   - [Explicit Output Type](#explicit-output-type)
-    - [Shorthand](#shorthand)
   - [Implicit Inference](#implicit-inference)
   - [Output Methods](#output-methods)
 - [Preparing the Source](#preparing-the-source)
@@ -23,13 +28,13 @@ A feature-rich Laravel wrapper for the [WeasyPrint Document Factory](https://wea
   - [Merging](#merging)
   - [Available Configuration Options](#available-configuration-options)
 - [Immutability](#immutability)
-- [Cheat-sheet](#cheat-sheet)
+- [TL;DR, gimme a cheat-sheet!](#tldr-gimme-a-cheat-sheet)
 - [Contributing](#contributing)
   - [Tests](#tests)
   - [Committing](#committing)
 - [Open Source](#open-source)
 
-## Installation
+## Package Installation
 
 First make sure WeasyPrint is [installed on your system](https://weasyprint.readthedocs.io/en/latest/install.html).
 
@@ -47,7 +52,7 @@ If you would like to publish the default configuration, you may run the followin
 $ php artisan vendor:publish --tag=weasyprint.config
 ```
 
-## Usage
+## Service Instantiation
 
 WeasyPrint for Laravel provides different mechanisms you can use to get going. You may make use of the service class directly, use dependency injection, or use the Facade.
 
@@ -89,23 +94,25 @@ class GeneratePDF
   public function __invoke(WeasyPrintFactory $factory)
   {
     $source = '<p>WeasyPrint rocks!</p>';
-    $factory->prepareSource($source);
+    $service = $factory->prepareSource($source);
   }
 }
 ```
 
-To use dependency injection, you need to use the Factory contract, which will resolve the WeasyPrint service singleton from the [Service Container](https://laravel.com/docs/8.x/container). This singleton is prepared with your default configuration at framework boot-time, and is fully compatible with [Laravel Octane](https://github.com/laravel/octane).
+To use dependency injection, you need to use the Factory contract, which will resolve the WeasyPrint service singleton from the [Service Container](https://laravel.com/docs/container). This singleton is prepared with your default configuration at framework boot-time, and is fully compatible with [Laravel Octane](https://github.com/laravel/octane).
 
-When you depend on the Factory contract, you are still getting a service class instance, which may be reconfigured as and when needed. Therefore, passing in custom configuration is done differently, using a dedicated method:
+The service singleton is immutable, which means that calls to `prepareSource`, `mergeConfig`, `addAttachment`, `to`, `toPdf`, and `toPng` will return a **newly cloned service instance**. See the notes on [immutability](#immutability) for more information.
+
+To reconfigure this instance, you may call `mergeConfig` on the new service instance:
 
 ```php
-$factory->mergeConfig(
+$service->mergeConfig(
   binary: '/absolute/path/to/weasyprint',
   timeout: 5000,
 )
 ```
 
-You do not need to call `mergeConfig` at any specific point, but you must call it before you build the output.
+You do not need to call this method at any specific point in time, but you must call it *before* you build the output.
 
 ### Option 3. Facade
 
@@ -116,7 +123,7 @@ $source = '<p>WeasyPrint rocks!</p>';
 $service = WeasyPrint::prepareSource($source);
 ```
 
-Similar to dependency injection, using the Facade will give you an instance of the WeasyPrint service singleton. The Facade resolves to the Factory contract which, in turn, provides you with the singleton.
+Similar to dependency injection, using the Facade will give you an instance of the WeasyPrint service singleton. The Facade resolves to the Factory contract which, in turn, provides you with the singleton. From this point, the behaviour remains exactly as it would with dependency injection. That is, you will receive a newly cloned instance of the service when any of the prior methods are called. See the notes on [immutability](#immutability) for more information.
 
 To change the configuration, you may call the `mergeConfig` method, just as you would with dependency injection.
 
@@ -213,7 +220,7 @@ public function prepareSource(
 The `$source` argument may be one of the following:
 
 - `WeasyPrint\Objects\Source` if you are preparing a Source instance manually. The `Source::new` constructor accepts a `Renderable` or a `string`.
-- `Illumintate\Support\Contracts\Renderable` if you are passing in an instance of something that is renderable, ie it implements the `render` method. This might be a Laravel View, which also accepts an array of data. For more information, see the Laravel [documentation on views](https://laravel.com/docs/8.x/views).
+- `Illumintate\Support\Contracts\Renderable` if you are passing in an instance of something that is renderable, ie it implements the `render` method. This might be a Laravel View, which also accepts an array of data. For more information, see the Laravel [documentation on views](https://laravel.com/docs/views).
 - `string` if you are passing in an already-rendered piece of HTML, or asking WeasyPrint to fetch and render the source from an external URL.
 
 ### Source Object
@@ -362,9 +369,9 @@ return [
 
 Under the hood, the service class is immutable. This means that every time you prepare a source, change configuration, or set the output format, the service is cloned. The idea here is that the base service is only created once per request, as a singleton, and actual conversion-related actions on the service are done in a fresh instance, created solely for the purpose of that conversion.
 
-This provides additional benefis for stateful servers like [Laravel Octane](https://github.com/laravel/octane), where the base service is only ever created once with the default configuration. When a request terminates, cloned instances will be disposed of.
+This provides additional benefits for stateful servers like [Laravel Octane](https://github.com/laravel/octane), where the base service is only ever created once with the default configuration. When a request terminates, cloned instances will be disposed of.
 
-## Cheat-sheet
+## TL;DR, gimme a cheat-sheet!
 
 Here's a cheat-sheet showing all possible approaches and scenarios.
 
@@ -391,11 +398,6 @@ $service->toPng()->build()->inline('document.png')
 $service->toPdf()->build()->getData()
 
 // Using Implicit Type Inference (OutputType determined by extension)
-$service->build()->download('document.pdf')
-$service->build()->inline('image.png')
-$service->build()->getData() // No filename here, so PDF will be used by default.
-
-// Using Shorthand (OutputType determined by extension)
 $service->download('document.pdf')
 $service->inline('image.png')
 $service->getData() // No filename here, so PDF will be used by default.

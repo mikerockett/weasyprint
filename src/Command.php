@@ -33,7 +33,7 @@ class Command
     $this->prepareOptionalArguments();
   }
 
-  private function maybePushArgument(string $key, $value): void
+  protected function maybePushArgument(string $key, $value): void
   {
     if ($value === true) {
       $this->arguments->push($key);
@@ -42,7 +42,7 @@ class Command
     }
   }
 
-  private function prepareOptionalArguments(): void
+  protected function prepareOptionalArguments(): void
   {
     $this->maybePushArgument(
       '--presentational-hints',
@@ -59,14 +59,14 @@ class Command
       $this->config->getMediaType()
     );
 
-    if ($this->outputType === OutputType::png()) {
+    if ($this->outputType->is(OutputType::png())) {
       $this->maybePushArgument(
         '--resolution',
         $this->config->getResolution()
       );
     }
 
-    if ($this->outputType === OutputType::pdf()) {
+    if ($this->outputType->is(OutputType::pdf())) {
       foreach ($this->attachments as $attachment) {
         if (!is_file($attachment)) {
           throw new AttachmentNotFoundException($attachment);
@@ -75,8 +75,10 @@ class Command
         $this->maybePushArgument('--attachment', $attachment);
       }
 
-      foreach ($this->config->getStylesheets() as $stylesheet) {
-        $this->maybePushArgument('--stylesheet', $stylesheet);
+      if ($stylesheets = $this->config->getStylesheets()) {
+        foreach ($stylesheets as $stylesheet) {
+          $this->maybePushArgument('--stylesheet', $stylesheet);
+        }
       }
     }
   }

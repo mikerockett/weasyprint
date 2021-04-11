@@ -42,7 +42,12 @@ abstract class Enum
     return $this->key;
   }
 
-  private static function keyForValue($value): string
+  public function is(self $compareWith): bool
+  {
+    return $this->getValue() === $compareWith->getValue();
+  }
+
+  protected static function keyForValue($value): string
   {
     if (($key = static::search($value)) === false) {
       throw new UnexpectedValueException(

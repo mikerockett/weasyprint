@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WeasyPrint\Tests;
 
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use UnexpectedValueException;
 use WeasyPrint\Enums\OutputType;
 use WeasyPrint\Service;
@@ -12,14 +13,6 @@ use WeasyPrint\Service;
 /** @covers WeasyPrint\Service */
 class OutputTests extends TestCase
 {
-  public function testUsesPdfOutputTypeByDefault(): void
-  {
-    $service = Service::new();
-
-    $this->assertInstanceOf(OutputType::class, $outputType = $service->getOutputType());
-    $this->assertEquals(OutputType::pdf(), $outputType);
-  }
-
   public function testCanSetPdfOutputType(): void
   {
     $service = Service::new()->to(OutputType::pdf());
@@ -167,12 +160,12 @@ class OutputTests extends TestCase
     );
   }
 
-  private function buildAndGetData(Service $service): string
+  protected function buildAndGetData(Service $service): string
   {
     return $service->build()->getData();
   }
 
-  private function writeTempFile($contents)
+  protected function writeTempFile($contents)
   {
     $tempFilename = tempnam(
       sys_get_temp_dir(),
@@ -185,7 +178,7 @@ class OutputTests extends TestCase
   }
 
 
-  private function runPdfAssertions($output)
+  protected function runPdfAssertions($output)
   {
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
     $tempFilename = $this->writeTempFile($output);
@@ -200,7 +193,7 @@ class OutputTests extends TestCase
     $this->assertFalse(is_file($tempFilename));
   }
 
-  private function runPngAssertions($output)
+  protected function runPngAssertions($output)
   {
     $tempFilename = $this->writeTempFile($output);
 
@@ -213,16 +206,17 @@ class OutputTests extends TestCase
     $this->assertFalse(is_file($tempFilename));
   }
 
-  private function runOutputFileAssertions($output, string $expectedMime, string $expectedDisposition)
+  protected function runOutputFileAssertions($output, string $expectedMime, string $expectedDisposition)
   {
     /** @var ResponseHeaderBag */
     $headers = $output->headers;
 
-    $isResponse = $headers instanceof ResponseHeaderBag;
+    $hasHeaderBag = $headers instanceof ResponseHeaderBag;
 
-    $this->assertTrue($isResponse);
+    $this->assertTrue($output instanceof StreamedResponse);
+    $this->assertTrue($hasHeaderBag);
 
-    if ($isResponse) {
+    if ($hasHeaderBag) {
       $this->assertTrue($headers->get('content-type') === $expectedMime);
       $this->assertTrue($headers->get('content-disposition') === $expectedDisposition);
     }

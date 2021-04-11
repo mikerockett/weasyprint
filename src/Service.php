@@ -23,7 +23,7 @@ class Service implements Factory
   private function __construct(mixed ...$config)
   {
     $this->config = Config::new(...$config);
-    $this->outputType = OutputType::pdf();
+    $this->outputType = OutputType::none();
   }
 
   public static function new(mixed ...$config): Factory
@@ -103,6 +103,10 @@ class Service implements Factory
 
   public function build(): Output
   {
+    if ($this->outputType->is(OutputType::none())) {
+      $this->outputType = OutputType::pdf();
+    }
+
     $pipeline = (new Pipeline)
       ->pipe(new Pipes\EnsureSourceIsSet)
       ->pipe(new Pipes\SetInputPath)
@@ -121,15 +125,29 @@ class Service implements Factory
     return $pipeline->process(new BuilderContainer(clone $this));
   }
 
-  public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse
+  protected function syncOutputTypeAndFilename(string $filename): string
   {
     if (!$extension = Str::afterLast($filename, '.')) {
-      $filename = Str::of($filename)
+      if ($this->outputType->is(OutputType::none())) {
+        $this->outputType = OutputType::pdf();
+      }
+
+      return Str::of($filename)
         ->trim('.')
         ->append($extension = $this->outputType->getValue());
-    } else {
+    }
+
+
+    if ($this->outputType->is(OutputType::none())) {
       $this->outputType = OutputType::from($extension);
     }
+
+    return $filename;
+  }
+
+  public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse
+  {
+    $filename = $this->syncOutputTypeAndFilename($filename);
 
     return $this->build()->download($filename, $headers, $inline);
   }
@@ -141,6 +159,8 @@ class Service implements Factory
 
   public function putFile(string $path, ?string $disk = null, array $options = []): bool
   {
+    $path = $this->syncOutputTypeAndFilename($path);
+
     return $this->build()->putFile($path, $disk, $options);
   }
 
