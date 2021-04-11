@@ -31,7 +31,7 @@ class Output
 
   public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse
   {
-    return Response::streamDownload(fn () => $this->data, $filename, array_merge($headers, [
+    return Response::streamDownload(fn () => print $this->data, $filename, array_merge($headers, [
       'Content-Type' => $this->getContentType()
     ]), $inline ? 'inline' : 'attachment');
   }
