@@ -384,7 +384,9 @@ $service = WeasyPrint\Facade::mergeConfig(...['binary' => '/bin/weasyprint']);
 
 // Preparing the Source
 $service = WeasyPrint\Service::new()->prepareSource('Cheat-sheet!');
-$service = WeasyPrint\Facade::createFromSource('Cheat-sheet!'); // Shorthand (using the Facade in this case)
+$service = WeasyPrint\Service::createFromSource('Cheat-sheet!');
+$service = WeasyPrint\Facade::prepareSource('Cheat-sheet!');
+$service = app(WeasyPrint\Factory::class)::prepareSource('Cheat-sheet!');
 
 // Using Explicit Output Types
 $service->to(OutputType::pdf())->build()->download('document.pdf')
