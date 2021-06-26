@@ -5,14 +5,15 @@ cache:
     - vendor/
 
 before_script:
-  - apt update -yqq
-  - apt install -yqq build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget git libmcrypt-dev python3-dev python3-pip python3-setuptools python3-wheel python3-cffi python3-venv libpango1.0-dev libzip-dev libharfbuzz-dev libpangoft2-1.0-0 libjpeg-dev libpng-dev
+  - lsb_release -a
+  - apt-get update -yqq
+  - apt-get install -yqq build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget git libmcrypt-dev python3-dev python3-pip python3-setuptools python3-wheel python3-cffi python3-venv libpango1.0-dev libzip-dev libharfbuzz-dev libpangoft2-1.0-0 libjpeg-dev libpng-dev
   - pango-view --version
-  - docker-php-ext-install gd zip
-  - pip3 install WeasyPrint==53.0b2
-  - weasyprint --info
-  - curl -sS https://getcomposer.org/installer | php
-  - php composer.phar install --optimize-autoloader --prefer-dist
+  # - docker-php-ext-install gd zip
+  # - pip3 install WeasyPrint==53.0b2
+  # - weasyprint --info
+  # - curl -sS https://getcomposer.org/installer | php
+  # - php composer.phar install --optimize-autoloader --prefer-dist
 
 test:
   script:
