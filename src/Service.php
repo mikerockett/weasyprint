@@ -33,21 +33,18 @@ class Service implements Factory
 
   public function mergeConfig(mixed ...$config): Factory
   {
-    $service = clone $this;
-    $service->config = Config::new(...$config);
+    $this->config = Config::new(...$config);
 
-    return $service;
+    return $this;
   }
 
   public function prepareSource(Source|Renderable|string $source): Factory
   {
-    $service = clone $this;
-
-    $service->source = $source instanceof Source
+    $this->source = $source instanceof Source
       ? $source
       : Source::new($source);
 
-    return $service;
+    return $this;
   }
 
   public function getConfig(): Config
@@ -67,10 +64,9 @@ class Service implements Factory
 
   public function addAttachment(string $pathToAttachment): Factory
   {
-    $service = clone $this;
-    $service->source->addAttachment($pathToAttachment);
+    $this->source->addAttachment($pathToAttachment);
 
-    return $service;
+    return $this;
   }
 
   public function build(): Output
@@ -90,7 +86,7 @@ class Service implements Factory
 
   protected function processPipeline(PipelineContract $pipeline): BuilderContainer
   {
-    return $pipeline->process(new BuilderContainer(clone $this));
+    return $pipeline->process(new BuilderContainer($this));
   }
 
   public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse
