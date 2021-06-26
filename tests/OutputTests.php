@@ -4,46 +4,13 @@ declare(strict_types=1);
 
 namespace WeasyPrint\Tests;
 
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\HttpFoundation\StreamedResponse;
-use UnexpectedValueException;
-use WeasyPrint\Enums\OutputType;
+use Symfony\Component\HttpFoundation\{ResponseHeaderBag, StreamedResponse};
 use WeasyPrint\Service;
 
 /** @covers WeasyPrint\Service */
 class OutputTests extends TestCase
 {
-  public function testCanSetPdfOutputType(): void
-  {
-    $service = Service::new()->to(OutputType::pdf());
-
-    $this->assertInstanceOf(OutputType::class, $outputType = $service->getOutputType());
-    $this->assertEquals(OutputType::pdf(), $outputType);
-  }
-
-  public function testCanSetPngOutputType(): void
-  {
-    $service = Service::new()->to(OutputType::png());
-
-    $this->assertInstanceOf(OutputType::class, $outputType = $service->getOutputType());
-    $this->assertEquals(OutputType::png(), $outputType);
-  }
-
-  public function testCanSetOutputTypeFromString(): void
-  {
-    $service = Service::new()->to(OutputType::from('pdf'));
-
-    $this->assertInstanceOf(OutputType::class, $outputType = $service->getOutputType());
-    $this->assertEquals(OutputType::pdf(), $outputType);
-  }
-
-  public function testFailsWhenInvalidOutputTypePassed(): void
-  {
-    $this->expectException(UnexpectedValueException::class);
-    Service::new()->to(OutputType::from('jpg'));
-  }
-
-  public function testCanRenderPdfDefaultFromString()
+  public function testCanRenderFromString(): void
   {
     $this->runPdfAssertions(
       $this->buildAndGetData(
@@ -52,7 +19,7 @@ class OutputTests extends TestCase
     );
   }
 
-  public function testCanRenderPdfShorthandFromString()
+  public function testCanRenderWithCreateFromSourceShorthand(): void
   {
     $this->runPdfAssertions(
       $this->buildAndGetData(
@@ -61,56 +28,20 @@ class OutputTests extends TestCase
     );
   }
 
-  public function testCanRenderPdfFromString()
+  public function testCanRenderFromUrl(): void
   {
     $this->runPdfAssertions(
       $this->buildAndGetData(
-        Service::new()->prepareSource('<p>WeasyPrint rocks!</p>')->toPdf()
+        Service::new()->prepareSource('https://example.com')
       )
     );
   }
 
-  public function testCanRenderPdfFromUrl()
+  public function testCanRenderFromRenderable(): void
   {
     $this->runPdfAssertions(
       $this->buildAndGetData(
-        Service::new()->prepareSource('https://example.com')->toPdf()
-      )
-    );
-  }
-
-  public function testCanRenderPdfFromRenderable()
-  {
-    $this->runPdfAssertions(
-      $this->buildAndGetData(
-        Service::new()->prepareSource(view('test-pdf'))->toPdf()
-      )
-    );
-  }
-
-  public function testCanRenderPngFromString()
-  {
-    $this->runPngAssertions(
-      $this->buildAndGetData(
-        Service::new()->prepareSource('<p>WeasyPrint rocks!</p>')->toPng()
-      )
-    );
-  }
-
-  public function testCanRenderPngFromUrl()
-  {
-    $this->runPngAssertions(
-      $this->buildAndGetData(
-        Service::new()->prepareSource('https://example.com')->toPng()
-      )
-    );
-  }
-
-  public function testCanRenderPngFromRenderable()
-  {
-    $this->runPngAssertions(
-      $this->buildAndGetData(
-        Service::new()->prepareSource(view('test-png'))->toPng()
+        Service::new()->prepareSource(view('test-pdf'))
       )
     );
   }
@@ -118,36 +49,18 @@ class OutputTests extends TestCase
   public function testCanRenderAndInlinePdfOutput()
   {
     $this->runOutputFileAssertions(
-      Service::new()->prepareSource(view('test-pdf'))->toPdf()->build()->inline('test.pdf'),
+      Service::new()->prepareSource(view('test-pdf'))->build()->inline('test.pdf'),
       'application/pdf',
       'inline; filename=test.pdf'
-    );
-  }
-
-  public function testCanRenderAndInlinePngOutput()
-  {
-    $this->runOutputFileAssertions(
-      Service::new()->prepareSource(view('test-png'))->toPng()->build()->inline('test.png'),
-      'image/png',
-      'inline; filename=test.png'
     );
   }
 
   public function testCanRenderAndDownloadPdfOutput()
   {
     $this->runOutputFileAssertions(
-      Service::new()->prepareSource(view('test-pdf'))->toPdf()->build()->download('test.pdf'),
+      Service::new()->prepareSource(view('test-pdf'))->build()->download('test.pdf'),
       'application/pdf',
       'attachment; filename=test.pdf'
-    );
-  }
-
-  public function testCanRenderAndDownloadPngOutput()
-  {
-    $this->runOutputFileAssertions(
-      Service::new()->prepareSource(view('test-png'))->toPng()->build()->download('test.png'),
-      'image/png',
-      'attachment; filename=test.png'
     );
   }
 
@@ -187,19 +100,6 @@ class OutputTests extends TestCase
     $this->assertNotNull($output);
     $this->assertNotEmpty($output);
     $this->assertEquals($mime, 'application/pdf');
-
-    unlink($tempFilename);
-
-    $this->assertFalse(is_file($tempFilename));
-  }
-
-  protected function runPngAssertions($output)
-  {
-    $tempFilename = $this->writeTempFile($output);
-
-    $this->assertNotNull($output);
-    $this->assertNotEmpty($output);
-    $this->assertNotFalse(imagecreatefrompng($tempFilename));
 
     unlink($tempFilename);
 

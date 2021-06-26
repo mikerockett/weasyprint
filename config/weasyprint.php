@@ -9,6 +9,13 @@ return [
   'binary' => '/usr/local/bin/weasyprint',
 
   /**
+   * The environment variables passed to Symfony Process when
+   * executing the WeasyPrint binary.
+   * @param array
+   */
+  'processEnvironment' => ['LC_ALL' => 'en_US.UTF-8'],
+
+  /**
    * The cache prefix to use for the temporary filename.
    * @param string
    */
@@ -41,13 +48,6 @@ return [
    * @param bool
    */
   'optimizeImages' => false,
-
-  /**
-   * Optionally set the output resolution in pixels per inch.
-   * For PNG output only. Defaults to 96 (which means that PNG pixels match CSS pixels) at binary-level.
-   * @param int|null
-   */
-  'resolution' => null,
 
   /**
    * Optionally set the media type to use for CSS @media.

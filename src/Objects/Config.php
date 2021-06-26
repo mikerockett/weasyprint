@@ -16,10 +16,10 @@ class Config implements Arrayable
     protected string $inputEncoding = 'utf-8',
     protected bool $presentationalHints = true,
     protected bool $optimizeImages = false,
-    protected int|null $resolution = null,
     protected string|null $mediaType = null,
     protected string|null $baseUrl = null,
     protected array|null $stylesheets = null,
+    protected array $processEnvironment = ['LC_ALL' => 'en_US.UTF-8'],
   ) {
   }
 
@@ -60,11 +60,6 @@ class Config implements Arrayable
     return $this->optimizeImages;
   }
 
-  public function getResolution(): int|null
-  {
-    return $this->resolution;
-  }
-
   public function getMediaType(): string|null
   {
     return $this->mediaType;
@@ -80,6 +75,11 @@ class Config implements Arrayable
     return $this->stylesheets;
   }
 
+  public function getProcessEnvironment(): array
+  {
+    return $this->processEnvironment;
+  }
+
   public function toArray()
   {
     return [
@@ -89,10 +89,10 @@ class Config implements Arrayable
       'inputEncoding' => $this->getInputEncoding(),
       'presentationalHints' => $this->usePresentationalHints(),
       'optimizeImages' => $this->shouldOptimizeImages(),
-      'resolution' => $this->getResolution(),
       'mediaType' => $this->getMediaType(),
       'baseUrl' => $this->getBaseUrl(),
       'stylesheets' => $this->getStylesheets(),
+      'processEnvironment' => $this->getProcessEnvironment(),
     ];
   }
 }

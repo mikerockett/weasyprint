@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace WeasyPrint\Tests;
 
 use Illuminate\Config\Repository;
-use WeasyPrint\Objects\Config;
-use WeasyPrint\Service;
+use WeasyPrint\{Objects\Config, Service};
 
 /** @covers WeasyPrint\Service */
 class ConfigTests extends TestCase

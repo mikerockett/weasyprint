@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace WeasyPrint\Tests;
 
-use WeasyPrint\Contracts\Factory;
-use WeasyPrint\Facade;
-use WeasyPrint\Service;
+use WeasyPrint\{Contracts\Factory, Facade, Service};
 
 class InstantiationTests extends TestCase
 {

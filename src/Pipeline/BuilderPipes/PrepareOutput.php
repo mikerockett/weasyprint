@@ -23,10 +23,7 @@ class PrepareOutput implements BuilderPipelineStage
 
     unlink($outputPath);
 
-    $container->setOutput(Output::new(
-      data: $output,
-      outputType: $container->service->getOutputType()
-    ));
+    $container->setOutput(Output::new($output));
 
     return $container;
   }

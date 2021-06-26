@@ -6,7 +6,6 @@ namespace WeasyPrint;
 
 use Illuminate\Support\Collection;
 use Symfony\Component\Process\{Exception\ProcessFailedException, Process};
-use WeasyPrint\Enums\OutputType;
 use WeasyPrint\Exceptions\AttachmentNotFoundException;
 use WeasyPrint\Objects\Config;
 
@@ -16,7 +15,6 @@ class Command
 
   public function __construct(
     protected Config $config,
-    protected OutputType $outputType,
     string $inputPath,
     string $outputPath,
     protected array $attachments = []
@@ -26,7 +24,6 @@ class Command
       $inputPath,
       $outputPath,
       '--quiet',
-      '--format', $outputType->getValue(),
       '--encoding', $config->getInputEncoding(),
     ]);
 
@@ -59,38 +56,30 @@ class Command
       $this->config->getMediaType()
     );
 
-    if ($this->outputType->is(OutputType::png())) {
-      $this->maybePushArgument(
-        '--resolution',
-        $this->config->getResolution()
-      );
-    }
-
-    if ($this->outputType->is(OutputType::pdf())) {
-      foreach ($this->attachments as $attachment) {
-        if (!is_file($attachment)) {
-          throw new AttachmentNotFoundException($attachment);
-        }
-
-        $this->maybePushArgument('--attachment', $attachment);
+    foreach ($this->attachments as $attachment) {
+      if (!is_file($attachment)) {
+        throw new AttachmentNotFoundException($attachment);
       }
 
-      if ($stylesheets = $this->config->getStylesheets()) {
-        foreach ($stylesheets as $stylesheet) {
-          $this->maybePushArgument('--stylesheet', $stylesheet);
-        }
+      $this->maybePushArgument('--attachment', $attachment);
+    }
+
+    if ($stylesheets = $this->config->getStylesheets()) {
+      foreach ($stylesheets as $stylesheet) {
+        $this->maybePushArgument('--stylesheet', $stylesheet);
       }
     }
   }
 
-  public function execute()
+  public function execute(): void
   {
     $process = new Process(
       command: $this->arguments->toArray(),
-      env: ['LC_ALL' => 'en_US.UTF-8'],
+      env: $this->config->getProcessEnvironment(),
+      timeout: $this->config->getTimeout()
     );
 
-    $process->setTimeout($this->config->getTimeout())->run();
+    $process->run();
 
     if (!$process->isSuccessful()) {
       throw new ProcessFailedException($process);

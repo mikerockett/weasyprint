@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace WeasyPrint\Tests;
 
 use Illuminate\Contracts\Support\Renderable;
-use WeasyPrint\Objects\Source;
-use WeasyPrint\Service;
+use WeasyPrint\{Objects\Source, Service};
 
 /** @covers WeasyPrint\Service */
 class SourceTests extends TestCase

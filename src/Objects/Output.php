@@ -4,36 +4,31 @@ declare(strict_types=1);
 
 namespace WeasyPrint\Objects;
 
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\{Response, Storage};
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use WeasyPrint\Enums\OutputType;
 
 class Output
 {
-  private function __construct(
-    protected string $data,
-    protected OutputType $outputType
-  ) {}
-
-  public static function new(string $data, OutputType $outputType): static
+  private function __construct(protected string $data)
   {
-    return new static($data, $outputType);
   }
 
-  public function getContentType(): string
+  public static function new(string $data): static
   {
-    return [
-      'pdf' => 'application/pdf',
-      'png' => 'image/png',
-    ][$this->outputType->getValue()];
+    return new static($data);
   }
 
   public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse
   {
-    return Response::streamDownload(fn () => print $this->data, $filename, array_merge($headers, [
-      'Content-Type' => $this->getContentType()
-    ]), $inline ? 'inline' : 'attachment');
+    return Response::streamDownload(
+      fn () => print $this->data,
+      $filename,
+      array_merge(
+        $headers,
+        ['Content-Type' => 'application/pdf']
+      ),
+      $inline ? 'inline' : 'attachment'
+    );
   }
 
   public function inline(string $filename, array $headers = []): StreamedResponse

@@ -15,7 +15,6 @@ class PrepareCommand implements BuilderPipelineStage
 
     $container->setCommand(new Command(
       config: $service->getConfig(),
-      outputType: $service->getOutputType(),
       inputPath: $container->getInputPath(),
       outputPath: $container->getOutputPath(),
       attachments: $service->getSource()->getAttachments()
