@@ -56,6 +56,11 @@ class Command
       $this->config->getMediaType()
     );
 
+    $this->maybePushArgument(
+      '--optimize-size',
+      $this->config->getOptimizeSize()
+    );
+
     foreach ($this->attachments as $attachment) {
       if (!is_file($attachment)) {
         throw new AttachmentNotFoundException($attachment);

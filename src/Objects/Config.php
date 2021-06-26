@@ -15,7 +15,7 @@ class Config implements Arrayable
     protected int $timeout = 3600,
     protected string $inputEncoding = 'utf-8',
     protected bool $presentationalHints = true,
-    protected bool $optimizeImages = false,
+    protected string $optimizeSize = 'none',
     protected string|null $mediaType = null,
     protected string|null $baseUrl = null,
     protected array|null $stylesheets = null,
@@ -55,9 +55,9 @@ class Config implements Arrayable
     return $this->presentationalHints;
   }
 
-  public function shouldOptimizeImages(): bool
+  public function getOptimizeSize(): string
   {
-    return $this->optimizeImages;
+    return $this->optimizeSize;
   }
 
   public function getMediaType(): string|null
@@ -88,7 +88,7 @@ class Config implements Arrayable
       'timeout' => $this->getTimeout(),
       'inputEncoding' => $this->getInputEncoding(),
       'presentationalHints' => $this->usePresentationalHints(),
-      'optimizeImages' => $this->shouldOptimizeImages(),
+      'optimizeSize' => $this->getOptimizeSize(),
       'mediaType' => $this->getMediaType(),
       'baseUrl' => $this->getBaseUrl(),
       'stylesheets' => $this->getStylesheets(),

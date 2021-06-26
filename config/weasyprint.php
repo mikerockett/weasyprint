@@ -41,15 +41,6 @@ return [
   'presentationalHints' => true,
 
   /**
-   * Optionally enable image optimization, where WeasyPrint will attempt
-   * to reduce the size of embedded images.
-   * When enabled, `--optimize-images` is passed to the binary.
-   * Note: this feature requires WeasyPrint 52 or greater.
-   * @param bool
-   */
-  'optimizeImages' => false,
-
-  /**
    * Optionally set the media type to use for CSS @media.
    * Defaults to `print` at binary-level.
    * @param string|null
@@ -69,5 +60,12 @@ return [
    * @param string[]|null
    */
   'stylesheets' => null,
+
+  /**
+   * Optionally enable size optimizations, where WeasyPrint will attempt
+   * to reduce the size of embedded images, fonts or both.
+   * @param string
+   */
+  'optimizeSize' => 'none',
 
 ];
