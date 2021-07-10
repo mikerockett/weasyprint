@@ -4,11 +4,11 @@ return [
 
   /**
    * The path to the WeasyPrint binary on your system.
-   * Sensible default is to use the globally-available binary (in PATH).
-   * If it is not there, specify the absolute path here.
+   * If it is available on your system globally, the package will find and use it.
+   * If not, then you will need to specifu the absolute path.
    * @param string
    */
-  'binary' => env('WEASYPRINT_BINARY', 'weasyprint'),
+  'binary' => env('WEASYPRINT_BINARY'),
 
   /**
    * The environment variables passed to Symfony Process when

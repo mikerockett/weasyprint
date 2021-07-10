@@ -10,7 +10,7 @@ use Illuminate\Contracts\Support\Arrayable;
 class Config implements Arrayable
 {
   private function __construct(
-    protected string $binary = '/usr/local/bin/weasyprint',
+    protected ?string $binary = null,
     protected string $cachePrefix = 'weasyprint_cache',
     protected int $timeout = 3600,
     protected string $inputEncoding = 'utf-8',
@@ -30,7 +30,7 @@ class Config implements Arrayable
     return new static(...array_merge($defaults, $config));
   }
 
-  public function getBinary(): string
+  public function getBinary(): ?string
   {
     return $this->binary;
   }

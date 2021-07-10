@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WeasyPrint;
 
 use Illuminate\Support\Collection;
+use RuntimeException;
 use Symfony\Component\Process\{Exception\ProcessFailedException, Process};
 use WeasyPrint\Exceptions\AttachmentNotFoundException;
 use WeasyPrint\Objects\Config;
@@ -20,7 +21,7 @@ class Command
     protected array $attachments = []
   ) {
     $this->arguments = new Collection([
-      $config->getBinary(),
+      $config->getBinary() ?? $this->findBinary(),
       $inputPath,
       $outputPath,
       '--quiet',
@@ -28,6 +29,18 @@ class Command
     ]);
 
     $this->prepareOptionalArguments();
+  }
+
+  protected function findBinary(): string
+  {
+    $process = Process::fromShellCommandline('which weasyprint');
+    $process->run();
+
+    if (!$process->isSuccessful()) throw new RuntimeException(
+      'Unable to find WeasyPrint binary. Please specify the absolute path to WeasyPrint in config [binary].'
+    );
+
+    return trim($process->getOutput());
   }
 
   protected function maybePushArgument(string $key, $value): void
