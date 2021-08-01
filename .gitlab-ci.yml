@@ -3,8 +3,8 @@ test:
   cache:
     paths: [vendor/]
   before_script:
-    - apk add -q fontconfig-dev gcc gdk-pixbuf-dev harfbuzz-dev jpeg-dev libffi-dev musl-dev pango-dev py3-brotli py3-cffi py3-pillow py3-pip py3-setuptools py3-wheel python3-dev zlib-dev zopfli-dev
-    - pip3 -q install WeasyPrint==53.0b2
+    - apk -q add py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
+    - pip3 -q install weasyprint
     - weasyprint --info
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install -qo
