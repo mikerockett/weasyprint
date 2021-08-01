@@ -3,7 +3,7 @@
 ![License](https://img.shields.io/packagist/l/rockett/weasyprint?style=for-the-badge)
 ![Version](https://img.shields.io/packagist/v/rockett/weasyprint?label=Release&style=for-the-badge)
 ![Downloads](https://img.shields.io/packagist/dm/rockett/weasyprint?label=Installs&style=for-the-badge)
-![Pipeline Status](https://img.shields.io/gitlab/pipeline/mikerockett/weasyprint/master?style=for-the-badge)
+![Pipeline Status](https://img.shields.io/gitlab/pipeline/mikerockett/weasyprint/6.x?style=for-the-badge)
 
 **A feature-rich Laravel wrapper for the [WeasyPrint Document Factory](https://weasyprint.org/).**
 
@@ -44,8 +44,8 @@ There are two versions of the package that are supported. v6 is the latest, and 
 
 | Package           | WeasyPrint    | Laravel                    | PHP | Branch                                    |
 | ----------------- | ------------- | -------------------------- | --- | ----------------------------------------- |
-| `^6.0` (current)  | ≥ v53 (pydyf) | 8.47+ (scoped singletons)  | 8.x | [6.x](/mikerockett/weasyprint/-/tree/6.x) |
-| `^5.0` (previous) | < v53 (cairo) | 8.x (immutable singletons) | 8.x | [5.x](/mikerockett/weasyprint/-/tree/5.x) |
+| `^6.0` (current)  | ≥ v53 (pydyf) | 8.47+ (scoped singletons)  | 8.x | [6.x](https://gitlab.com/mikerockett/weasyprint/-/tree/6.x) |
+| `^5.0` (previous) | < v53 (cairo) | 8.x (immutable singletons) | 8.x | [5.x](https://gitlab.com/mikerockett/weasyprint/-/tree/5.x) |
 
 **The guides below are for v6:**
 
