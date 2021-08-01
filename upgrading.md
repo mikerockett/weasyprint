@@ -1,8 +1,53 @@
-<img width="400" src="logo.png" alt="WeasyPrint for Laravel" />
+# WeasyPrint for Laravel – Upgrade Guide
 
----
+## v5 → v6
 
-# Upgrade Guide
+Version 6 of the package is a trimmed down version of v5, with specific emphasis on support for WeasyPrint v53, which has a new rendering engine (drops cairo) and no longer supports PNG images.
+
+To upgrade to v6 of the package, you must be running WeasyPrint v53 or greater. A varity of installation options are available on their [documentation](https://doc.courtbouillon.org/weasyprint/latest/first_steps.html).
+
+This version drops support for output types, as only PDFs are supported now. This means that the `to()`, `toPdf()` and `toPng()` methods have been dropped. The `OutputType` enumeration class has also been dropped.
+
+The instantiation options are still available, however you no longer need to call any of the above methods. For example, assuming you are using the Facade, you can now do the following:
+
+```php
+// Download
+WeasyPrint::prepareSource($source)->build()->download('filename.pdf'); // or,
+WeasyPrint::prepareSource($source)->download('filename.pdf');
+
+// Inline
+WeasyPrint::prepareSource($source)->build()->inline('filename.pdf'); // or,
+WeasyPrint::prepareSource($source)->inline('filename.pdf');
+
+// Get Raw Data
+$data = WeasyPrint::prepareSource($source)->build()->getData(); // or,
+$data = WeasyPrint::prepareSource($source)->getData();
+```
+
+Be sure to checkout the [readme](readme.md) to see all the instantiation approaches.
+
+Additionally, some configuration options have changed:
+
+- `resolution` has been dropped – this was for PNGs only. You may remove this option if you have published your config file.
+- `optimizeImages` has been dropped in favor of `optimizeSize`, corresponding to the `--optimize-size` flag that is passed to WeasyPrint. You don't need to do anything if you have not published your config file. If you have, simply remove `optimizeImages` and replace it with `optimizeSize`, as follows:
+
+```php
+return [
+  // …
+
+  /**
+   * Optionally enable size optimizations, where WeasyPrint will attempt
+   * to reduce the size of embedded images, fonts or both.
+   * Use: 'images', 'fonts', 'all' or 'none' (default)
+   * @param string
+   */
+  'optimizeSize' => env('WEASYPRINT_OPTIMIZE_SIZE', 'none'),
+];
+```
+
+Note that the configuration now supports environment variables, which means you don't need to publish the config file anymore, unless you'd like to change the variable names or resolve them in a different way. See the [readme](readme.md) for more information.
+
+And, lastly, the `getContentType()` method on the `Output` class has been removed – you will always receive `application/pdf`.
 
 ## v2/3/4 → v5.0.0
 

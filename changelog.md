@@ -1,10 +1,29 @@
-<img width="400" src="logo.png" alt="WeasyPrint for Laravel" />
+# WeasyPrint for Laravel – Release Notes
 
----
+## v6.0.0 (Breaking Release) `current`
 
-# Release Notes
+This version is specifically designed around WeasyPrint v53, which drops support for PNGs due to its new rendering engine. Overall, this simplifies things from an interface perspective – you only need to prepare the source, build the `Output`, and do what you need with it.
 
-## v5.0.0 (Major Paradigm Release) `current`
+Over and above the changes noted below, the package now requires Laravel 8.47+, which adds support for [scoped singletons](https://laravel.com/docs/8.x/container#binding-scoped). In the previous version (v5) of this package, the singleton was immutable, which meant that every mutable-by-design method would actually return a cloned instance of the service.
+
+### What’s New
+
+- The configuration file now supports environment variables, which generally removes the need to publish it. See the [readme](readme.md#available-configuration-options) for a list of available options.
+
+### Breaking Changes
+
+- The `to()`, `toPdf()` and `toPng()` methods have been removed.
+- Likewise, the `OutputType` enumeration class has been removed. Under the hood, the `--format` flag has been removed.
+- The `optimizeImages` config option has been removed in favor of `optimizeSize`.
+- The `resolution` config option has been removed, due to lack of PNG support.
+
+### Other Changes
+
+- The `binary` config option previously declared a sensible default of `/usr/local/bin/weasyprint`. However, this may not always be the case as WeasyPrint may be installed in a virtual environment, which does not conform to that path. Additionally, some Linux distros place the binary elsewhere on the system. With the removal of this default, the package will attempt to locate the binary, which means it needs to be in your `PATH`. If it is not in your path, and you do not want it to be, simply set the absolute path to the binary in your environment using `WEASYPRINT_BINARY`.
+- Due to the addition of the scoped singleton, the service class is no longer immutable. Any method that previously cloned the service will no longer do so.
+- Internally, the package now uses a [pipeline](https://github.com/mikerockett/pipeline) to prepare everything and call the WeasyPrint binary.
+
+## v5.0.0 (Paradigm Release) `maintenance`
 
 ### What’s New
 

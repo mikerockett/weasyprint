@@ -5,7 +5,7 @@ return [
   /**
    * The path to the WeasyPrint binary on your system.
    * If it is available on your system globally, the package will find and use it.
-   * If not, then you will need to specifu the absolute path.
+   * If not, then you will need to specify the absolute path.
    * @param string
    */
   'binary' => env('WEASYPRINT_BINARY'),
