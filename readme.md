@@ -1,6 +1,6 @@
 # WeasyPrint for Laravel
 
-![License](https://img.shields.io/packagist/l/rockett/weasyprint?style=for-the-badge)
+[![License](https://img.shields.io/badge/license-isc-green.svg?style=for-the-badge)](https://gitlab.com/mikerockett/weasyprint/-/blob/6.x/license.md)
 ![Version](https://img.shields.io/packagist/v/rockett/weasyprint?label=Release&style=for-the-badge)
 ![Downloads](https://img.shields.io/packagist/dm/rockett/weasyprint?label=Installs&style=for-the-badge)
 ![Pipeline Status](https://img.shields.io/gitlab/pipeline/mikerockett/weasyprint/6.x?style=for-the-badge)
