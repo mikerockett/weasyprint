@@ -37,9 +37,9 @@ See the **[Changelog](changelog.md)** | View the **[Upgrade Guide](upgrading.md)
 
 ## Package Installation
 
-First make sure WeasyPrint is [installed on your system](https://weasyprint.readthedocs.io/en/latest/install.html).
+First make sure WeasyPrint is [installed on your system](https://doc.courtbouillon.org/weasyprint/latest/first_steps.html).
 
-Then install the package with Composer:
+Then, install the package with Composer:
 
 ```shell
 $ composer require rockett/weasyprint
