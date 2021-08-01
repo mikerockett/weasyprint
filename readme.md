@@ -13,6 +13,7 @@ See the **[Changelog](changelog.md)** | View the **[Upgrade Guide](upgrading.md)
 
 ---
 
+- [Supported WeasyPrint Versions](#supported-weasyprint-versions)
 - [Package Installation](#package-installation)
 - [Service Instantiation](#service-instantiation)
   - [Option 1. Service Class](#option-1-service-class)
@@ -32,8 +33,21 @@ See the **[Changelog](changelog.md)** | View the **[Upgrade Guide](upgrading.md)
 - [TL;DR, gimme a cheat-sheet!](#tldr-gimme-a-cheat-sheet)
 - [Contributing](#contributing)
   - [Tests](#tests)
-  - [Committing](#committing)
+  - [Commit Messages](#commit-messages)
 - [Open Source](#open-source)
+
+---
+
+## Supported WeasyPrint Versions
+
+There are two versions of the package that are supported. v6 is the latest, and is the only version that will receive new features. v5 is the previous, and will only receive bug-fixes and security-patches. The table below outlines supported versions:
+
+| Package           | WeasyPrint    | Laravel                    | PHP | Branch                                    |
+| ----------------- | ------------- | -------------------------- | --- | ----------------------------------------- |
+| `^6.0` (current)  | ≥ v53 (pydyf) | 8.47+ (scoped singletons)  | 8.x | [6.x](/mikerockett/weasyprint/-/tree/6.x) |
+| `^5.0` (previous) | < v53 (cairo) | 8.x (immutable singletons) | 8.x | [5.x](/mikerockett/weasyprint/-/tree/5.x) |
+
+**The guides below are for v6:**
 
 ## Package Installation
 
@@ -381,7 +395,13 @@ $service->getData();
 
 ## Contributing
 
-If you’d like to make a contribution to WeasyPrint for Laravel, you’re more than welcome to [submit a merge request](https://gitlab.com/mikerockett/weasyprint/-/merge_requests/new) against the master branch. Your request should be as detailed as possible, unless it’s a trivial change.
+If you’d like to make a contribution to WeasyPrint for Laravel, you’re more than welcome to [submit a merge request](https://gitlab.com/mikerockett/weasyprint/-/merge_requests/new) against the `main` or current-release branch:
+
+1. If you are introducing a **non-breaking** change and supports WeasyPrint **< v53 (cairo)**, target the `5.x` branch.
+2. If you are introducing a **non-breaking** change and supports WeasyPrint **≥ v53 (pydyf)**, target the `6.x` branch.
+3. If you are introducing a **breaking** change of any kind, target the `main` branch. The change will be released in a new major version when accepted.
+
+Your request should be as detailed as possible, unless it’s a trivial change.
 
 ### Tests
 
@@ -390,7 +410,7 @@ Should it be required, please make sure that any impacted tests are updated, or 
 1. If you are introducing a new feature, you will more than likely need to create a new test case where each piece of fuctionality the new feature introduces may be tested.
 2. Otherwise, if you are enhancing an existing feature by adding new functionality, you may add the appropriate test method to the applicable test case.
 
-When building tests, you do not need to build them for each [instantiation type](#usage). Like other tests in the suite, you may use direct service-class instantiation.
+When building tests, you do not need to build them for each [instantiation type](#service-instantiation). Like other tests in the suite, you may use direct service-class instantiation.
 
 Then run the tests before opening your merge request:
 
@@ -398,7 +418,13 @@ Then run the tests before opening your merge request:
 $ composer run test
 ```
 
-### Committing
+This will run tests in parallel. To run them sequentially, run this instead:
+
+```shell
+$ ./vendor/bin/testbench package:test --parallel
+```
+
+### Commit Messages
 
 Your commit message should be clear and concise. If you’re fixing a bug, start the message with `bugfix:`. If it’s a feature: `feature:`. If it’s a chore, like formatting code: `chore:`.
 
