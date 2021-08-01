@@ -37,7 +37,7 @@ See the **[Changelog](changelog.md)** | View the **[Upgrade Guide](upgrading.md)
 
 ## Package Installation
 
-First make sure WeasyPrint is [installed on your system](https://doc.courtbouillon.org/weasyprint/latest/first_steps.html).
+First make sure **WeasyPrint v53+** is [installed on your system](https://doc.courtbouillon.org/weasyprint/latest/first_steps.html).
 
 Then, install the package with Composer:
 
