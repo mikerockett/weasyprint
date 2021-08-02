@@ -12,7 +12,6 @@ This package requires **Laravel 8.47+** running on **PHP 8+** in order to operat
 See the **[Changelog](changelog.md)** | View the **[Upgrade Guide](upgrading.md)**
 
 ---
-
 - [Supported WeasyPrint Versions](#supported-weasyprint-versions)
 - [Package Installation](#package-installation)
 - [Service Instantiation](#service-instantiation)
@@ -421,7 +420,7 @@ $ composer run test
 This will run tests in parallel. To run them sequentially, run this instead:
 
 ```shell
-$ ./vendor/bin/testbench package:test --parallel
+$ ./vendor/bin/testbench package:test
 ```
 
 ### Commit Messages
