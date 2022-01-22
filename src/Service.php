@@ -40,9 +40,10 @@ class Service implements Factory
 
   public function prepareSource(Source|Renderable|string $source): Factory
   {
-    $this->source = $source instanceof Source
-      ? $source
-      : Source::new($source);
+    $this->source = match ($source instanceof Source) {
+      true => $source,
+      default => Source::new($source)
+    };
 
     return $this;
   }

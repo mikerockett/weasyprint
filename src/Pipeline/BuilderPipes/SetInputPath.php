@@ -11,9 +11,10 @@ class SetInputPath implements BuilderPipelineStage
   public function __invoke(BuilderContainer $container): BuilderContainer
   {
     $container->setInputPath(
-      ($source = $container->service->getSource())->isUrl()
-        ? $source->get()
-        : $container->makeTemporaryFilename()
+      match (($source = $container->service->getSource())->isUrl()) {
+        true => $source->get(),
+        default => $container->makeTemporaryFilename()
+      }
     );
 
     return $container;

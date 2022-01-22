@@ -42,9 +42,6 @@ class Provider extends ServiceProvider
       );
     }
 
-    $this->mergeConfigFrom(
-      $this->configFile(),
-      $this->name()
-    );
+    $this->mergeConfigFrom($this->configFile(), $this->name());
   }
 }

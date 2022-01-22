@@ -12,7 +12,8 @@ class Source
   protected array $attachments = [];
 
   private function __construct(protected Renderable|string $source)
-  {}
+  {
+  }
 
   public static function new(Renderable|string $source): static
   {
@@ -26,11 +27,10 @@ class Source
 
   public function isUrl(): bool
   {
-    if (gettype($source = $this->get()) !== 'string') {
-      return false;
-    }
-
-    return filter_var($source, FILTER_VALIDATE_URL) !== false;
+    return match (gettype($source = $this->get()) !== 'string') {
+      true => false,
+      default => filter_var($source, FILTER_VALIDATE_URL) !== false,
+    };
   }
 
   public function addAttachment(string $pathToAttachment): static
@@ -63,8 +63,9 @@ class Source
 
   public function render(): string
   {
-    return $this->source instanceof Renderable
-      ? $this->source->render()
-      : $this->source;
+    return match ($this->source instanceof Renderable) {
+      true => $this->source->render(),
+      default => $this->source,
+    };
   }
 }

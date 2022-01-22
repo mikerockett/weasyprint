@@ -10,7 +10,8 @@ class SourceData implements Arrayable
 {
   public function __construct(
     protected string $test = 'foo'
-  ) {}
+  ) {
+  }
 
   public function toArray()
   {

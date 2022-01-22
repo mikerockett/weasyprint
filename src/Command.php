@@ -36,41 +36,44 @@ class Command
     $process = Process::fromShellCommandline('which weasyprint');
     $process->run();
 
-    if (!$process->isSuccessful()) throw new RuntimeException(
-      'Unable to find WeasyPrint binary. Please specify the absolute path to WeasyPrint in config [binary].'
-    );
+    if (!$process->isSuccessful()) {
+      throw new RuntimeException(
+        'Unable to find WeasyPrint binary. Please specify the absolute path to WeasyPrint in config [binary].'
+      );
+    }
 
     return trim($process->getOutput());
   }
 
   protected function maybePushArgument(string $key, $value): void
   {
-    if ($value === true) {
-      $this->arguments->push($key);
-    } else if ($value) {
-      $this->arguments->push($key, $value);
-    }
+    $key = "--$key";
+
+    match ($value) {
+      true => $this->arguments->push($key),
+      default => $this->arguments->push($key, $value)
+    };
   }
 
   protected function prepareOptionalArguments(): void
   {
     $this->maybePushArgument(
-      '--presentational-hints',
+      'presentational-hints',
       $this->config->usePresentationalHints()
     );
 
     $this->maybePushArgument(
-      '--base-url',
+      'base-url',
       $this->config->getBaseUrl()
     );
 
     $this->maybePushArgument(
-      '--media-type',
+      'media-type',
       $this->config->getMediaType()
     );
 
     $this->maybePushArgument(
-      '--optimize-size',
+      'optimize-size',
       $this->config->getOptimizeSize()
     );
 
@@ -79,12 +82,12 @@ class Command
         throw new AttachmentNotFoundException($attachment);
       }
 
-      $this->maybePushArgument('--attachment', $attachment);
+      $this->maybePushArgument('attachment', $attachment);
     }
 
     if ($stylesheets = $this->config->getStylesheets()) {
       foreach ($stylesheets as $stylesheet) {
-        $this->maybePushArgument('--stylesheet', $stylesheet);
+        $this->maybePushArgument('stylesheet', $stylesheet);
       }
     }
   }
