@@ -15,8 +15,7 @@ class BuilderContainer
   protected Output $output;
 
   public function __construct(public Service $service)
-  {
-  }
+  {}
 
   public function makeTemporaryFilename(): string|false
   {
