@@ -1,51 +1,28 @@
-weasyprint 53 on php 8.0:
-  image: php:8.0-cli-alpine3.14
+.parallel:
   cache:
     paths: [vendor/]
-  before_script:
-    - apk -q add py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
-    - pip3 -q install weasyprint==53
-    - weasyprint --info
-    - curl -sS https://getcomposer.org/installer | php
-    - php composer.phar install -qo
+  parallel:
+    matrix:
+      - WEASYPRINT: [53, 54]
   script:
     - ./vendor/bin/testbench package:test --without-tty
 
-weasyprint 54 on php 8.0:
-  image: php:8.0-cli-alpine3.14
-  cache:
-    paths: [vendor/]
+php8.0:
+  extends: .parallel
+  image: php:8.0-cli-alpine
   before_script:
     - apk -q add py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
-    - pip3 -q install weasyprint==54
+    - pip3 -q install weasyprint==$WEASYPRINT
     - weasyprint --info
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install -qo
-  script:
-    - ./vendor/bin/testbench package:test --without-tty
 
-weasyprint 53 on php 8.1:
-  image: php:8.1-cli-alpine3.14
-  cache:
-    paths: [vendor/]
+php8.1:
+  extends: .parallel
+  image: php:8.1-cli-alpine
   before_script:
     - apk -q add py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
-    - pip3 -q install weasyprint==53
+    - pip3 -q install weasyprint==$WEASYPRINT
     - weasyprint --info
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install -qo
-  script:
-    - ./vendor/bin/testbench package:test --without-tty
-
-weasyprint 54 on php 8.1:
-  image: php:8.1-cli-alpine3.14
-  cache:
-    paths: [vendor/]
-  before_script:
-    - apk -q add py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
-    - pip3 -q install weasyprint==54
-    - weasyprint --info
-    - curl -sS https://getcomposer.org/installer | php
-    - php composer.phar install -qo
-  script:
-    - ./vendor/bin/testbench package:test --without-tty
