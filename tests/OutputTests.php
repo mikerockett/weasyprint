@@ -32,7 +32,7 @@ class OutputTests extends TestCase
   {
     $this->runPdfAssertions(
       $this->buildAndGetData(
-        Service::new()->prepareSource('https://example.com')
+        Service::new()->prepareSource('https://google.com')
       )
     );
   }

@@ -55,7 +55,7 @@ class SourceTests extends TestCase
   {
     $service = Service::new();
 
-    $source = $service->prepareSource('https://example.com')->getSource();
+    $source = $service->prepareSource('https://google.com')->getSource();
 
     $this->assertTrue($source->isUrl());
   }
