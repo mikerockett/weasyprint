@@ -4,8 +4,6 @@
   parallel:
     matrix:
       - WEASYPRINT: [53, 54]
-  script:
-    - ./vendor/bin/testbench package:test --without-tty
 
 php8.0:
   extends: .parallel
@@ -16,6 +14,8 @@ php8.0:
     - weasyprint --info
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install -qo
+  script:
+    - ./vendor/bin/testbench package:test --without-tty
 
 php8.1:
   extends: .parallel
@@ -26,3 +26,5 @@ php8.1:
     - weasyprint --info
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install -qo
+  script:
+    - ./vendor/bin/testbench package:test --without-tty
