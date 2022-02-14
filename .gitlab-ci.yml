@@ -3,14 +3,14 @@
     paths: [vendor/]
   parallel:
     matrix:
-      - WEASYPRINT: [53, 54]
+      - WEASYPRINT: ['53', '54']
 
 php8.0:
   extends: .parallel
   image: php:8.0-cli-alpine
   before_script:
     - apk -q add py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
-    - pip3 -q install weasyprint==$WEASYPRINT
+    - pip3 -q install weasyprint=="$WEASYPRINT"
     - weasyprint --info
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install -qo
@@ -22,7 +22,7 @@ php8.1:
   image: php:8.1-cli-alpine
   before_script:
     - apk -q add py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
-    - pip3 -q install weasyprint==$WEASYPRINT
+    - pip3 -q install weasyprint=="$WEASYPRINT"
     - weasyprint --info
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install -qo
