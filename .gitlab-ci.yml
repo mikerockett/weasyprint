@@ -1,30 +1,22 @@
-.parallel:
+.template:
   cache:
     paths: [vendor/]
   parallel:
     matrix:
-      - WEASYPRINT: ['53', '54']
+      - WEASYPRINT: ["53", "54"]
+  before_script:
+    - apk -q add py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
+    - pip3 -q install weasyprint==$WEASYPRINT
+    - weasyprint --info
+    - curl -sS https://getcomposer.org/installer | php
+    - php composer.phar install -qo
+  script:
+    - ./vendor/bin/testbench package:test --without-tty
 
 php8.0:
-  extends: .parallel
+  extends: .template
   image: php:8.0-cli-alpine
-  before_script:
-    - apk -q add py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
-    - pip3 -q install weasyprint=="$WEASYPRINT"
-    - weasyprint --info
-    - curl -sS https://getcomposer.org/installer | php
-    - php composer.phar install -qo
-  script:
-    - ./vendor/bin/testbench package:test --without-tty
 
 php8.1:
-  extends: .parallel
+  extends: .template
   image: php:8.1-cli-alpine
-  before_script:
-    - apk -q add py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
-    - pip3 -q install weasyprint=="$WEASYPRINT"
-    - weasyprint --info
-    - curl -sS https://getcomposer.org/installer | php
-    - php composer.phar install -qo
-  script:
-    - ./vendor/bin/testbench package:test --without-tty
