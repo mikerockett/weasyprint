@@ -49,7 +49,7 @@ class Command
   {
     $key = "--$key";
 
-    if ($value === true) {
+    if (is_bool($value) && $value) {
       $this->arguments->push($key);
     } else if ($value) {
       $this->arguments->push($key, $value);
