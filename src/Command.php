@@ -49,9 +49,11 @@ class Command
   {
     $key = "--$key";
 
-    is_bool($value) && $value
-      ? $this->arguments->push($key)
-      : $this->arguments->push($key, $value);
+    if ($value === true) {
+      $this->arguments->push($key);
+    } else if ($value) {
+      $this->arguments->push($key, $value);
+    }
   }
 
   protected function prepareOptionalArguments(): void
