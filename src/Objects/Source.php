@@ -26,11 +26,10 @@ class Source
 
   public function isUrl(): bool
   {
-    if (gettype($source = $this->get()) !== 'string') {
-      return false;
-    }
-
-    return filter_var($source, FILTER_VALIDATE_URL) !== false;
+    return match (gettype($source = $this->get())) {
+      'string' => filter_var($source, FILTER_VALIDATE_URL) !== false,
+      default => false,
+    };
   }
 
   public function addAttachment(string $pathToAttachment): static
@@ -63,8 +62,9 @@ class Source
 
   public function render(): string
   {
-    return $this->source instanceof Renderable
-      ? $this->source->render()
-      : $this->source;
+    return match ($this->source instanceof Renderable) {
+      true => $this->source->render(),
+      default => $this->source,
+    };
   }
 }

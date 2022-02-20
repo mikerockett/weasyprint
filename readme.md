@@ -7,7 +7,7 @@
 
 **A feature-rich Laravel wrapper for the [WeasyPrint Document Factory](https://weasyprint.org/).**
 
-This package requires **Laravel 8.47+** running on **PHP 8+** in order to operate. The reason a minor version of Laravel is required is due to the addition of [scoped singletons](https://laravel.com/docs/8.x/container#binding-scoped), which adds first-class support for [Laravel Octane](https://github.com/laravel/octane). In the previous version of this package, the singleton was immutable, which meant that every mutable-by-design method would actually return a cloned instance of the service.
+This package requires at least **Laravel 8.47+** running on **PHP 8+** in order to operate. The reason a specific minor version of Laravel is required is due to the addition of [scoped singletons](https://laravel.com/docs/8.x/container#binding-scoped), which adds first-class support for [Laravel Octane](https://github.com/laravel/octane). In the previous version of this package, the singleton was immutable, which meant that every mutable-by-design method would actually return a cloned instance of the service.
 
 See the **[Changelog](changelog.md)** | View the **[Upgrade Guide](upgrading.md)**
 
@@ -18,12 +18,12 @@ See the **[Changelog](changelog.md)** | View the **[Upgrade Guide](upgrading.md)
   - [Option 1. Service Class](#option-1-service-class)
   - [Option 2. Dependency Injection](#option-2-dependency-injection)
   - [Option 3. Facade](#option-3-facade)
-- [Building the Output](#building-the-output)
-  - [Implicit Inference](#implicit-inference)
 - [Preparing the Source](#preparing-the-source)
   - [Source Object](#source-object)
   - [Renderable](#renderable)
   - [String](#string)
+- [Building the Output](#building-the-output)
+  - [Implicit Inference](#implicit-inference)
 - [Attachments](#attachments)
 - [Configuration](#configuration)
   - [Named Parameters and Argument Unpacking](#named-parameters-and-argument-unpacking)
@@ -41,10 +41,12 @@ See the **[Changelog](changelog.md)** | View the **[Upgrade Guide](upgrading.md)
 
 There are two versions of the package that are supported. v6 is the latest, and is the only version that will receive new features. v5 is the previous, and will only receive bug-fixes and security-patches. The table below outlines supported versions:
 
-| Package           | WeasyPrint    | Laravel                    | PHP | Branch                                    |
-| ----------------- | ------------- | -------------------------- | --- | ----------------------------------------- |
-| `^6.0` (current)  | ≥ v53 (pydyf) | 8.47+ (scoped singletons)  | 8.x | [6.x](https://gitlab.com/mikerockett/weasyprint/-/tree/6.x) |
-| `^5.0` (previous) | < v53 (cairo) | 8.x (immutable singletons) | 8.x | [5.x](https://gitlab.com/mikerockett/weasyprint/-/tree/5.x) |
+The table below outlines supported versions:
+
+| Package Version   | WeasyPrint    | Laravel                         | PHP | Branch                                                      |
+| ----------------- | ------------- | ------------------------------- | --- | ----------------------------------------------------------- |
+| `^6.0` (current)  | ≥ v53 (pydyf) | 8.47+ (scoped singletons), 9.0+ | 8.x | [6.x](https://gitlab.com/mikerockett/weasyprint/-/tree/6.x) |
+| `^5.0` (previous) | < v53 (cairo) | 8.x (immutable singletons)      | 8.x | [5.x](https://gitlab.com/mikerockett/weasyprint/-/tree/5.x) |
 
 **The guides below are for v6:**
 
@@ -139,44 +141,6 @@ Similar to dependency injection, using the Facade will give you an instance of t
 
 To change the configuration, you may call the `mergeConfig` method, just as you would with dependency injection.
 
-## Building the Output
-
-Now that you know how to instantiate a service class instance and prepare the source input, you are ready to build the output. To do this, you can call the `build()` method, which will return an instance of `Objects\Output`.
-
-```php
-$output = $service->build();
-```
-
-The `$output` object makes the following methods available:
-
-```php
-public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse;
-```
-
-This method creates a Symfony `StreamedResponse` that may be used to download the PDF to the client (browser).
-
-```php
-public function inline(string $filename, array $headers = []): StreamedResponse;
-```
-
-Likewise, this method does the same, except it uses an inline attachment so that it may be displayed in the browser. This is just a shorthand for `download`, setting `$inline` to `true`.
-
-```php
-public function putFile(string $path, ?string $disk = null, array $options = []): bool;
-```
-
-This method forwards the data to Laravel’s [Filesystem](https://laravel.com/docs/filesystem) using the `Storage` facade’s `put` method, which gives you the ability to save the PDF to disk.
-
-```php
-public function getData(): string;
-```
-
-This method returns the raw PDF data as a string.
-
-### Implicit Inference
-
-If you would prefer to not call `build()`, you can simply omit it and call the methods that are available on the `Output` class. The service will implicitly build the PDF for you, and then call the applicable method on the output.
-
 ## Preparing the Source
 
 With the basics out of the way, let’s talk more about preparing the source. The `prepareSource` method takes a single argument that represents your source data.
@@ -237,6 +201,44 @@ use WeasyPrint\Facade as WeasyPrint;
 
 $service = WeasyPrint::prepareSource('<p>WeasyPrint rocks!</p>');
 ```
+
+## Building the Output
+
+Now that you know how to instantiate a service class instance and prepare the source input, you are ready to build the output. To do this, you can call the `build()` method, which will return an instance of `Objects\Output`.
+
+```php
+$output = $service->build();
+```
+
+The `$output` object makes the following methods available:
+
+```php
+public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse;
+```
+
+This method creates a Symfony `StreamedResponse` that may be used to download the PDF to the client (browser).
+
+```php
+public function inline(string $filename, array $headers = []): StreamedResponse;
+```
+
+Likewise, this method does the same, except it uses an inline attachment so that it may be displayed in the browser. This is just a shorthand for `download`, setting `$inline` to `true`.
+
+```php
+public function putFile(string $path, ?string $disk = null, array $options = []): bool;
+```
+
+This method forwards the data to Laravel’s [Filesystem](https://laravel.com/docs/filesystem) using the `Storage` facade’s `put` method, which gives you the ability to save the PDF to disk.
+
+```php
+public function getData(): string;
+```
+
+This method returns the raw PDF data as a string.
+
+### Implicit Inference
+
+If you would prefer to not call `build()`, you can simply omit it and call the methods that are available on the `Output` class. The service will implicitly build the PDF for you, and then call the applicable method on the output.
 
 ## Attachments
 

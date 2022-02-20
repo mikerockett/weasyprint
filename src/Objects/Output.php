@@ -23,17 +23,14 @@ class Output
     return Response::streamDownload(
       fn () => print $this->data,
       $filename,
-      array_merge(
-        $headers,
-        ['Content-Type' => 'application/pdf']
-      ),
+      array_merge($headers, ['Content-Type' => 'application/pdf']),
       $inline ? 'inline' : 'attachment'
     );
   }
 
   public function inline(string $filename, array $headers = []): StreamedResponse
   {
-    return $this->download($filename, $headers, true);
+    return $this->download($filename, $headers, inline: true);
   }
 
   public function putFile(string $path, ?string $disk = null, array $options = []): bool
