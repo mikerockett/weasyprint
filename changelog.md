@@ -2,7 +2,7 @@
 
 ## 7.0.0 `current`
 
-This release adds support for Laravel 10 and drops support for Laravel 8. The minimum-required version of PHP is now 8.1.
+This release adds support for Laravel 10 and drops support for Laravel 8. The minimum-required version of PHP is now 8.1. As there have been no significant API changes to WeasyPrint, this package continues to support v53+.
 
 ## 6.1.0 `maintenance`, `minor`
 

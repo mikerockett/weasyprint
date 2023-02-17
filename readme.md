@@ -7,12 +7,10 @@
 
 **A feature-rich Laravel wrapper for the [WeasyPrint Document Factory](https://weasyprint.org/).**
 
-This package requires at least **Laravel 8.47+** running on **PHP 8+** in order to operate. The reason a specific minor version of Laravel is required is due to the addition of [scoped singletons](https://laravel.com/docs/8.x/container#binding-scoped), which adds first-class support for [Laravel Octane](https://github.com/laravel/octane). In the previous version of this package, the singleton was immutable, which meant that every mutable-by-design method would actually return a cloned instance of the service.
-
 See the **[Changelog](changelog.md)** | View the **[Upgrade Guide](upgrading.md)**
 
 ---
-- [Supported WeasyPrint Versions](#supported-weasyprint-versions)
+- [Version Requirements](#version-requirements)
 - [Package Installation](#package-installation)
 - [Service Instantiation](#service-instantiation)
   - [Option 1. Service Class](#option-1-service-class)
@@ -37,17 +35,21 @@ See the **[Changelog](changelog.md)** | View the **[Upgrade Guide](upgrading.md)
 
 ---
 
-## Supported WeasyPrint Versions
+## Version Requirements
 
-There are two versions of the package that are supported. v6 is the latest, and is the only version that will receive new features. v5 is the previous, and will only receive bug-fixes and security-patches. The table below outlines supported versions:
+There are three versions of the package that are supported. v7 is the latest, and is the only version that will receive new features. v5 and v6 are the previous versions, and will only receive bug-fixes and security-patches, thus they are in maintenance mode.
 
 The table below outlines supported versions:
 
-| Package Version      | WeasyPrint    | Laravel                        | PHP  | Branch                                                      |
-| -------------------- | ------------- | ------------------------------ | ---- | ----------------------------------------------------------- |
-| `^7.0` (current)     | ≥ v53 (pydyf) | 9.0, 10.0                      | 8.1+ | [6.x](https://gitlab.com/mikerockett/weasyprint/-/tree/7.x) |
-| `^6.0` (maintenance) | ≥ v53 (pydyf) | 8.47+ (scoped singletons), 9.0 | 8.x  | [6.x](https://gitlab.com/mikerockett/weasyprint/-/tree/6.x) |
-| `^5.0` (maintenance) | < v53 (cairo) | 8.x (immutable singletons)     | 8.x  | [5.x](https://gitlab.com/mikerockett/weasyprint/-/tree/5.x) |
+| Package Version      | WeasyPrint    | Laravel                         | PHP  | Branch                                                      |
+| -------------------- | ------------- | ------------------------------- | ---- | ----------------------------------------------------------- |
+| `^7.0` (current)     | ≥ v53 (pydyf) | 9.x, 10.x                       | 8.1+ | [7.x](https://gitlab.com/mikerockett/weasyprint/-/tree/7.x) |
+| `^6.0` (maintenance) | ≥ v53 (pydyf) | 8.47+ (scoped singletons)*, 9.x | 8.x  | [6.x](https://gitlab.com/mikerockett/weasyprint/-/tree/6.x) |
+| `^5.0` (maintenance) | < v53 (cairo) | 8.x (immutable singletons)      | 8.x  | [5.x](https://gitlab.com/mikerockett/weasyprint/-/tree/5.x) |
+
+\* The reason a specific minor version of Laravel is required for v6 is due to the addition of [scoped singletons](https://laravel.com/docs/8.x/container#binding-scoped), which adds first-class support for [Laravel Octane](https://github.com/laravel/octane). In the previous version of this package, the singleton was immutable, which meant that every mutable-by-design method would actually return a cloned instance of the service.
+
+---
 
 > Note: **The guides below are for v6+**
 
