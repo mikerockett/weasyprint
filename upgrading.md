@@ -1,5 +1,9 @@
 # WeasyPrint for Laravel – Upgrade Guide
 
+## v6 → v7
+
+Version 7 of the package does not introduce any new features or changes. The upgrade path simply involves ensuring that you are running at least Laravel 9.x on PHP 8.1+.
+
 ## v5 → v6
 
 Version 6 of the package is a trimmed down version of v5, with specific emphasis on support for WeasyPrint v53, which has a new rendering engine (drops cairo) and no longer supports PNG images.

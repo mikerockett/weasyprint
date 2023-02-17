@@ -1,10 +1,14 @@
 # WeasyPrint for Laravel – Release Notes
 
-## 6.1.0 `current`, `minor`
+## 7.0.0 `current`
+
+This release adds support for Laravel 10 and drops support for Laravel 8. The minimum-required version of PHP is now 8.1.
+
+## 6.1.0 `maintenance`, `minor`
 
 This release adds support for Laravel 9, and works just fine with WeasyPrint v54.
 
-## 6.0.0 (Breaking Release) `current`
+## 6.0.0 (Breaking Release) `maintenance`
 
 This version is specifically designed around WeasyPrint v53, which drops support for PNGs due to its new rendering engine. Overall, this simplifies things from an interface perspective – you only need to prepare the source, build the `Output`, and do what you need with it.
 

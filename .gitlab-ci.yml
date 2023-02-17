@@ -3,7 +3,7 @@
     paths: [vendor/]
   parallel:
     matrix:
-      - WEASYPRINT: ["53", "54"]
+      - WEASYPRINT: ['53', '54', '55', '56', '57']
   before_script:
     - apk -q add py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
     - pip3 -q install weasyprint==$WEASYPRINT
@@ -13,10 +13,10 @@
   script:
     - ./vendor/bin/testbench package:test --without-tty
 
-php8.0:
-  extends: .template
-  image: php:8.0-cli-alpine
-
 php8.1:
   extends: .template
   image: php:8.1-cli-alpine
+
+php8.2:
+  extends: .template
+  image: php:8.2-cli-alpine

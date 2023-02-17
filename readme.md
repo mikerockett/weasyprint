@@ -43,12 +43,13 @@ There are two versions of the package that are supported. v6 is the latest, and 
 
 The table below outlines supported versions:
 
-| Package Version   | WeasyPrint    | Laravel                         | PHP | Branch                                                      |
-| ----------------- | ------------- | ------------------------------- | --- | ----------------------------------------------------------- |
-| `^6.0` (current)  | ≥ v53 (pydyf) | 8.47+ (scoped singletons), 9.0+ | 8.x | [6.x](https://gitlab.com/mikerockett/weasyprint/-/tree/6.x) |
-| `^5.0` (previous) | < v53 (cairo) | 8.x (immutable singletons)      | 8.x | [5.x](https://gitlab.com/mikerockett/weasyprint/-/tree/5.x) |
+| Package Version      | WeasyPrint    | Laravel                        | PHP  | Branch                                                      |
+| -------------------- | ------------- | ------------------------------ | ---- | ----------------------------------------------------------- |
+| `^7.0` (current)     | ≥ v53 (pydyf) | 9.0, 10.0                      | 8.1+ | [6.x](https://gitlab.com/mikerockett/weasyprint/-/tree/7.x) |
+| `^6.0` (maintenance) | ≥ v53 (pydyf) | 8.47+ (scoped singletons), 9.0 | 8.x  | [6.x](https://gitlab.com/mikerockett/weasyprint/-/tree/6.x) |
+| `^5.0` (maintenance) | < v53 (cairo) | 8.x (immutable singletons)     | 8.x  | [5.x](https://gitlab.com/mikerockett/weasyprint/-/tree/5.x) |
 
-**The guides below are for v6:**
+> Note: **The guides below are for v6+**
 
 ## Package Installation
 
