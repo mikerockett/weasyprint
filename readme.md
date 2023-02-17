@@ -402,7 +402,7 @@ $service->getData();
 If you’d like to make a contribution to WeasyPrint for Laravel, you’re more than welcome to [submit a merge request](https://gitlab.com/mikerockett/weasyprint/-/merge_requests/new) against the `main` or current-release branch:
 
 1. If you are introducing a **non-breaking** change and supports WeasyPrint **< v53 (cairo)**, target the `5.x` branch.
-2. If you are introducing a **non-breaking** change and supports WeasyPrint **≥ v53 (pydyf)**, target the `6.x` branch.
+2. If you are introducing a **non-breaking** change and supports WeasyPrint **≥ v53 (pydyf)**, target the `7.x` branch. If accepted, it will also be merged into `6.x`.
 3. If you are introducing a **breaking** change of any kind, target the `main` branch. The change will be released in a new major version when accepted.
 
 Your request should be as detailed as possible, unless it’s a trivial change.
