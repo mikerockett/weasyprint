@@ -1,3 +1,4 @@
+<!-- exclude-from-website: -->
 # WeasyPrint for Laravel
 
 ![License](https://img.shields.io/badge/license-isc-green.svg?style=for-the-badge)
@@ -34,7 +35,7 @@ See the **[Changelog](changelog.md)** | View the **[Upgrade Guide](upgrading.md)
 - [Open Source](#open-source)
 
 ---
-
+<!-- /exclude-from-website -->
 ## Version Requirements
 
 There are three versions of the package that are supported. v7 is the latest, and is the only version that will receive new features. v5 and v6 are the previous versions, and will only receive bug-fixes and security-patches, thus they are in maintenance mode.
