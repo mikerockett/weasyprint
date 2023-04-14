@@ -107,5 +107,7 @@ class ConfigTests extends TestCase
       expected: PDFVariant::PDF_A_1B,
       actual: PDFVariant::fromEnv($key),
     );
+
+    Env::getRepository()->clear($key);
   }
 }
