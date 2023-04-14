@@ -69,6 +69,10 @@ class SourceTests extends TestCase
       ->getSource();
 
     $this->assertTrue($source->hasAttachments());
-    $this->assertTrue($source->getAttachments()[0] === $attachmentPath);
+
+    $this->assertEquals(
+      expected: $attachmentPath,
+      actual: $source->getAttachments()[0],
+    );
   }
 }

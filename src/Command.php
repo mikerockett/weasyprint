@@ -78,6 +78,16 @@ class Command
       $this->config->getOptimizeSize()
     );
 
+    $this->maybePushArgument(
+      'pdf-variant',
+      $this->config->getPdfVariant()?->value
+    );
+
+    $this->maybePushArgument(
+      'pdf-version',
+      $this->config->getPdfVersion()
+    );
+
     foreach ($this->attachments as $attachment) {
       if (!is_file($attachment)) {
         throw new AttachmentNotFoundException($attachment);

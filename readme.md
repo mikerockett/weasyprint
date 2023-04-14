@@ -423,12 +423,6 @@ Then run the tests before opening your merge request:
 $ composer run test
 ```
 
-This will run tests in parallel. To run them sequentially, run this instead:
-
-```shell
-$ ./vendor/bin/testbench package:test
-```
-
 ### Commit Messages
 
 Your commit message should be clear and concise. If you’re fixing a bug, start the message with `bugfix:`. If it’s a feature: `feature:`. If it’s a chore, like formatting code: `chore:`.

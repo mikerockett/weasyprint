@@ -19,6 +19,8 @@ abstract class TestCase extends OrchestraTestCase
   /** @param Application $app */
   protected function getEnvironmentSetUp($app)
   {
-    $app->make(Repository::class)->set('view.paths', [__DIR__ . '/views']);
+    $app
+      ->make(Repository::class)
+      ->set('view.paths', [__DIR__ . '/views']);
   }
 }

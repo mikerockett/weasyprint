@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace WeasyPrint\Tests;
 
 use Illuminate\Config\Repository;
+use Illuminate\Support\Env;
 use WeasyPrint\{Objects\Config, Service};
+use WeasyPrint\Enums\PDFVariant;
 
 /** @covers WeasyPrint\Service */
 class ConfigTests extends TestCase
@@ -16,8 +18,8 @@ class ConfigTests extends TestCase
     $containerConfig = $this->app->make(Repository::class);
 
     $this->assertEquals(
-      require __DIR__ . '/../config/weasyprint.php',
-      $containerConfig->get('weasyprint')
+      expected: require __DIR__ . '/../config/weasyprint.php',
+      actual: $containerConfig->get('weasyprint')
     );
   }
 
@@ -25,7 +27,10 @@ class ConfigTests extends TestCase
   {
     $config = Service::new()->getConfig();
 
-    $this->assertInstanceOf(Config::class, $config);
+    $this->assertInstanceOf(
+      expected: Config::class,
+      actual: $config
+    );
   }
 
   public function testServicePreparesDefaultConfigWithDefaultOptions(): void
@@ -35,14 +40,20 @@ class ConfigTests extends TestCase
     /** @var Repository */
     $containerConfig = $this->app->make(Repository::class);
 
-    $this->assertEquals($containerConfig->get('weasyprint'), $config->toArray());
+    $this->assertEquals(
+      expected: $containerConfig->get('weasyprint'),
+      actual: $config->toArray()
+    );
   }
 
   public function testServicePreparesDefaultConfigWithMergedOption(): void
   {
     $config = Service::new(binary: $binary = '/bin/weasyprint')->getConfig();
 
-    $this->assertEquals($binary, $config->getBinary());
+    $this->assertEquals(
+      expected: $binary,
+      actual: $config->getBinary(),
+    );
   }
 
   public function testServicePreparesDefaultConfigWithMergedArrayOption(): void
@@ -54,8 +65,15 @@ class ConfigTests extends TestCase
     /** @var Repository */
     $containerConfig = $this->app->make(Repository::class);
 
-    $this->assertEquals($binary, $config->getBinary());
-    $this->assertEquals($containerConfig->get('weasyprint.cachePrefix'), $config->getCachePrefix());
+    $this->assertEquals(
+      expected: $binary,
+      actual: $config->getBinary(),
+    );
+
+    $this->assertEquals(
+      expected: $containerConfig->get('weasyprint.cachePrefix'),
+      actual: $config->getCachePrefix(),
+    );
   }
 
   public function testConfigOptionsCanBeChangedAfterInstantiation(): void
@@ -67,10 +85,27 @@ class ConfigTests extends TestCase
     /** @var Repository */
     $containerConfig = $this->app->make(Repository::class);
 
-    $this->assertEquals($binary, $config->getBinary());
     $this->assertEquals(
-      $containerConfig->get('weasyprint.cachePrefix'),
-      $config->getCachePrefix()
+      expected: $binary,
+      actual: $config->getBinary(),
+    );
+
+    $this->assertEquals(
+      expected: $containerConfig->get('weasyprint.cachePrefix'),
+      actual: $config->getCachePrefix(),
+    );
+  }
+
+  public function testPdfVariantCanBeSetFromEnv(): void
+  {
+    Env::getRepository()->set(
+      name: $key = 'WEASYPRINT_PDF_VARIANT',
+      value: 'pdf/a-1b',
+    );
+
+    $this->assertEquals(
+      expected: PDFVariant::PDF_A_1B,
+      actual: PDFVariant::fromEnv($key),
     );
   }
 }

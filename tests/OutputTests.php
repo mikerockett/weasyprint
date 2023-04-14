@@ -99,7 +99,11 @@ class OutputTests extends TestCase
 
     $this->assertNotNull($output);
     $this->assertNotEmpty($output);
-    $this->assertEquals($mime, 'application/pdf');
+
+    $this->assertEquals(
+      expected: 'application/pdf',
+      actual: $mime,
+    );
 
     unlink($tempFilename);
 
@@ -117,8 +121,15 @@ class OutputTests extends TestCase
     $this->assertTrue($hasHeaderBag);
 
     if ($hasHeaderBag) {
-      $this->assertTrue($headers->get('content-type') === $expectedMime);
-      $this->assertTrue($headers->get('content-disposition') === $expectedDisposition);
+      $this->assertEquals(
+        expected: $expectedMime,
+        actual: $headers->get('content-type'),
+      );
+
+      $this->assertEquals(
+        expected: $expectedDisposition,
+        actual: $headers->get('content-disposition'),
+      );
     }
   }
 }

@@ -28,6 +28,9 @@ class InstantiationTests extends TestCase
 
   protected function runInstanceAssertion($service): void
   {
-    $this->assertInstanceOf(Service::class, $service);
+    $this->assertInstanceOf(
+      expected: Service::class,
+      actual: $service
+    );
   }
 }

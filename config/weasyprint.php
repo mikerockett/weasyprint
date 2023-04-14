@@ -67,9 +67,26 @@ return [
   /**
    * Optionally enable size optimizations, where WeasyPrint will attempt
    * to reduce the size of embedded images, fonts or both.
-   * Use: 'images', 'fonts', 'all' or 'none' (default)
+   * Use one of : 'images', 'fonts', 'all' or 'none' (default)
+   * @deprecated in a next major release [8.x]
    * @param string
    */
   'optimizeSize' => env('WEASYPRINT_OPTIMIZE_SIZE', 'none'),
+
+  /**
+   * Optionally specify a PDF variant.
+   * Use one of: pdf/a-1b, pdf/a-2b, pdf/a-3b, pdf/a-4b, or pdf/ua-1
+   * Or:         case direct from PDFVariant
+   * @param WeasyPrint\Enums\PDFVariant
+   * @version Note: This config option requires WeasyPrint v58+
+   */
+  'pdfVariant' => WeasyPrint\Enums\PDFVariant::fromEnv('WEASYPRINT_PDF_VARIANT'),
+
+  /**
+   * Optionally specify a PDF version.
+   * @param string
+   * @version Note: This config option requires WeasyPrint v58+
+   */
+  'pdfVersion' => null,
 
 ];

@@ -6,6 +6,7 @@ namespace WeasyPrint\Objects;
 
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Support\Arrayable;
+use WeasyPrint\Enums\PDFVariant;
 
 class Config implements Arrayable
 {
@@ -20,6 +21,8 @@ class Config implements Arrayable
     protected string|null $baseUrl = null,
     protected array|null $stylesheets = null,
     protected array $processEnvironment = ['LC_ALL' => 'en_US.UTF-8'],
+    protected PDFVariant|null $pdfVariant = null,
+    protected string|null $pdfVersion = null,
   ) {
   }
 
@@ -80,8 +83,19 @@ class Config implements Arrayable
     return $this->processEnvironment;
   }
 
+  public function getPdfVariant(): PDFVariant|null
+  {
+    return $this->pdfVariant;
+  }
+
+  public function getPdfVersion(): string|null
+  {
+    return $this->pdfVersion;
+  }
+
   public function toArray()
   {
+
     return [
       'binary' => $this->getBinary(),
       'cachePrefix' => $this->getCachePrefix(),
@@ -93,6 +107,8 @@ class Config implements Arrayable
       'baseUrl' => $this->getBaseUrl(),
       'stylesheets' => $this->getStylesheets(),
       'processEnvironment' => $this->getProcessEnvironment(),
+      'pdfVariant' => $this->getPdfVariant(),
+      'pdfVersion' => $this->getPdfVersion(),
     ];
   }
 }

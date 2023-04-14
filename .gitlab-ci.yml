@@ -3,7 +3,7 @@
     paths: [vendor/]
   parallel:
     matrix:
-      - WEASYPRINT: ['53', '54', '55', '56', '57']
+      - WEASYPRINT: ['53', '54', '55', '56', '57', '58']
   before_script:
     - apk -q add py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
     - pip3 -q install weasyprint==$WEASYPRINT
