@@ -6,13 +6,14 @@ namespace WeasyPrint;
 
 use Illuminate\Support\Collection;
 use RuntimeException;
-use Symfony\Component\Process\{Exception\ProcessFailedException, Process};
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 use WeasyPrint\Exceptions\AttachmentNotFoundException;
 use WeasyPrint\Objects\Config;
 
 class Command
 {
-  protected Collection $arguments;
+  private Collection $arguments;
 
   public function __construct(
     protected Config $config,
@@ -31,12 +32,12 @@ class Command
     $this->prepareOptionalArguments();
   }
 
-  protected function findBinary(): string
+  private function findBinary(): string
   {
     $process = Process::fromShellCommandline('which weasyprint');
     $process->run();
 
-    if (!$process->isSuccessful()) {
+    if (! $process->isSuccessful()) {
       throw new RuntimeException(
         'Unable to find WeasyPrint binary. Please specify the absolute path to WeasyPrint in config [binary].'
       );
@@ -45,18 +46,18 @@ class Command
     return trim($process->getOutput());
   }
 
-  protected function maybePushArgument(string $key, $value): void
+  private function maybePushArgument(string $key, $value): void
   {
     $key = "--$key";
 
     if ($value === true) {
       $this->arguments->push($key);
-    } else if ($value) {
+    } elseif ($value) {
       $this->arguments->push($key, $value);
     }
   }
 
-  protected function prepareOptionalArguments(): void
+  private function prepareOptionalArguments(): void
   {
     $this->maybePushArgument(
       'presentational-hints',
@@ -89,7 +90,7 @@ class Command
     );
 
     foreach ($this->attachments as $attachment) {
-      if (!is_file($attachment)) {
+      if (! is_file($attachment)) {
         throw new AttachmentNotFoundException($attachment);
       }
 
@@ -113,7 +114,7 @@ class Command
 
     $process->run();
 
-    if (!$process->isSuccessful()) {
+    if (! $process->isSuccessful()) {
       throw new ProcessFailedException($process);
     }
   }

@@ -16,11 +16,11 @@ abstract class TestCase extends OrchestraTestCase
     return [Provider::class];
   }
 
-  /** @param Application $app */
+  /** @param  Application  $app */
   protected function getEnvironmentSetUp($app)
   {
     $app
       ->make(Repository::class)
-      ->set('view.paths', [__DIR__ . '/views']);
+      ->set('view.paths', [__DIR__.'/views']);
   }
 }

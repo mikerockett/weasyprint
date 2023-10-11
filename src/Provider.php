@@ -7,7 +7,6 @@ namespace WeasyPrint;
 use Illuminate\Config\Repository;
 use Illuminate\Support\ServiceProvider;
 use WeasyPrint\Contracts\Factory;
-use WeasyPrint\Service;
 
 class Provider extends ServiceProvider
 {
@@ -23,7 +22,7 @@ class Provider extends ServiceProvider
 
   protected function configFile(): string
   {
-    return __DIR__ . '/../config/weasyprint.php';
+    return __DIR__.'/../config/weasyprint.php';
   }
 
   public function register(): void

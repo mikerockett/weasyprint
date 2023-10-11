@@ -10,11 +10,11 @@ enum PDFVariant: string
   case PDF_A_4B = 'pdf/a-4b';
   case PDF_UA_1 = 'pdf/ua-1';
 
-  public static function fromEnv(string $key): static|null
+  public static function fromEnv(string $key): ?static
   {
     return match ($env = env($key)) {
       null => null,
-      default => static::tryFrom($env)
+      default => self::tryFrom($env)
     };
   }
 }

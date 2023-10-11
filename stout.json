@@ -1,0 +1,35 @@
+{
+  "indent": "  ",
+  "preset": "psr12",
+  "rules": {
+    "array_indentation": true,
+    "array_syntax": {
+      "syntax": "short"
+    },
+    "blank_line_between_import_groups": false,
+    "cast_spaces": true,
+    "class_attributes_separation": {
+      "elements": {
+        "case": "none",
+        "const": "none",
+        "method": "one",
+        "property": "none",
+        "trait_import": "none"
+      }
+    },
+    "global_namespace_import": true,
+    "group_import": true,
+    "method_chaining_indentation": true,
+    "no_unused_imports": true,
+    "no_useless_else": true,
+    "ordered_imports": true,
+    "ordered_interfaces": true,
+    "protected_to_private": true,
+    "return_assignment": true,
+    "self_static_accessor": true,
+    "single_import_per_statement": false,
+    "single_quote": true,
+    "ternary_to_null_coalescing": true,
+    "trailing_comma_in_multiline": true
+  }
+}

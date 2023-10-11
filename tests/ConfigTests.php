@@ -6,8 +6,9 @@ namespace WeasyPrint\Tests;
 
 use Illuminate\Config\Repository;
 use Illuminate\Support\Env;
-use WeasyPrint\{Objects\Config, Service};
 use WeasyPrint\Enums\PDFVariant;
+use WeasyPrint\Objects\Config;
+use WeasyPrint\Service;
 
 /** @covers WeasyPrint\Service */
 class ConfigTests extends TestCase
@@ -18,7 +19,7 @@ class ConfigTests extends TestCase
     $containerConfig = $this->app->make(Repository::class);
 
     $this->assertEquals(
-      expected: require __DIR__ . '/../config/weasyprint.php',
+      expected: require __DIR__.'/../config/weasyprint.php',
       actual: $containerConfig->get('weasyprint')
     );
   }
@@ -59,7 +60,7 @@ class ConfigTests extends TestCase
   public function testServicePreparesDefaultConfigWithMergedArrayOption(): void
   {
     $config = Service::new(...[
-      'binary' => $binary = '/bin/weasyprint'
+      'binary' => $binary = '/bin/weasyprint',
     ])->getConfig();
 
     /** @var Repository */

@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace WeasyPrint\Pipeline;
 
-use WeasyPrint\{Command, Service};
 use WeasyPrint\Objects\Output;
+use WeasyPrint\{Command, Service};
 
 class BuilderContainer
 {
-  protected string $inputPath;
-  protected string $outputPath;
-  protected Command $command;
-  protected Output $output;
+  private string $inputPath;
+  private string $outputPath;
+  private Command $command;
+  private Output $output;
 
-  public function __construct(public Service $service)
-  {}
+  public function __construct(
+    public Service $service
+  ) {
+  }
 
   public function makeTemporaryFilename(): string|false
   {

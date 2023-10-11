@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace WeasyPrint;
 
 use Illuminate\Contracts\Support\Renderable;
-use Rockett\Pipeline\{Contracts\PipelineContract, Pipeline};
+use Rockett\Pipeline\Contracts\PipelineContract;
+use Rockett\Pipeline\Pipeline;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use WeasyPrint\Contracts\Factory;
 use WeasyPrint\Objects\{Config, Output, Source};
@@ -13,8 +14,8 @@ use WeasyPrint\Pipeline\{BuilderContainer, BuilderPipes as Pipes};
 
 class Service implements Factory
 {
-  protected Config $config;
-  protected Source $source;
+  private Config $config;
+  private Source $source;
 
   private function __construct(mixed ...$config)
   {
@@ -23,12 +24,12 @@ class Service implements Factory
 
   public static function new(mixed ...$config): Factory
   {
-    return new static(...$config);
+    return new self(...$config);
   }
 
   public static function createFromSource(Source|Renderable|string $source): Factory
   {
-    return static::new()->prepareSource($source);
+    return self::new()->prepareSource($source);
   }
 
   public function mergeConfig(mixed ...$config): Factory
@@ -72,20 +73,20 @@ class Service implements Factory
 
   public function build(): Output
   {
-    $pipeline = (new Pipeline)
-      ->pipe(new Pipes\EnsureSourceIsSet)
-      ->pipe(new Pipes\SetInputPath)
-      ->pipe(new Pipes\SetOutputPath)
-      ->pipe(new Pipes\PersistTemporaryInput)
-      ->pipe(new Pipes\PrepareCommand)
-      ->pipe(new Pipes\ExecuteCommand)
-      ->pipe(new Pipes\UnlinkTemporaryInput)
-      ->pipe(new Pipes\PrepareOutput);
+    $pipeline = (new Pipeline())
+      ->pipe(new Pipes\EnsureSourceIsSet())
+      ->pipe(new Pipes\SetInputPath())
+      ->pipe(new Pipes\SetOutputPath())
+      ->pipe(new Pipes\PersistTemporaryInput())
+      ->pipe(new Pipes\PrepareCommand())
+      ->pipe(new Pipes\ExecuteCommand())
+      ->pipe(new Pipes\UnlinkTemporaryInput())
+      ->pipe(new Pipes\PrepareOutput());
 
     return $this->processPipeline($pipeline)->getOutput();
   }
 
-  protected function processPipeline(PipelineContract $pipeline): BuilderContainer
+  private function processPipeline(PipelineContract $pipeline): BuilderContainer
   {
     return $pipeline->process(new BuilderContainer($this));
   }
@@ -100,7 +101,7 @@ class Service implements Factory
     return $this->download($filename, $headers, true);
   }
 
-  public function putFile(string $path, ?string $disk = null, array $options = []): bool
+  public function putFile(string $path, string $disk = null, array $options = []): bool
   {
     return $this->build()->putFile($path, $disk, $options);
   }

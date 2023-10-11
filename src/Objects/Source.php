@@ -9,14 +9,16 @@ use WeasyPrint\Exceptions\TemporaryFileException;
 
 class Source
 {
-  protected array $attachments = [];
+  private array $attachments = [];
 
-  private function __construct(protected Renderable|string $source)
-  {}
+  private function __construct(
+    protected Renderable|string $source
+  ) {
+  }
 
   public static function new(Renderable|string $source): static
   {
-    return new static($source);
+    return new self($source);
   }
 
   public function get(): Renderable|string

@@ -12,11 +12,11 @@ class PrepareOutput implements BuilderPipelineStage
 {
   public function __invoke(BuilderContainer $container): BuilderContainer
   {
-    if (!is_file($outputPath = $container->getOutputPath())) {
+    if (! is_file($outputPath = $container->getOutputPath())) {
       throw new MissingOutputFileException($outputPath);
     }
 
-    if (!$output = file_get_contents($outputPath)) {
+    if (! $output = file_get_contents($outputPath)) {
       unlink($outputPath);
       throw new OutputReadFailedException($outputPath);
     }

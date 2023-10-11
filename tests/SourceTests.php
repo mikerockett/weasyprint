@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace WeasyPrint\Tests;
 
 use Illuminate\Contracts\Support\Renderable;
-use WeasyPrint\{Objects\Source, Service};
+use WeasyPrint\Objects\Source;
+use WeasyPrint\Service;
 
 /** @covers WeasyPrint\Service */
 class SourceTests extends TestCase
@@ -65,7 +66,7 @@ class SourceTests extends TestCase
     $service = Service::new();
 
     $source = $service->prepareSource('WeasyPrint rocks!')
-      ->addAttachment($attachmentPath = __DIR__ . '/attachments/test-attachment.txt')
+      ->addAttachment($attachmentPath = __DIR__.'/attachments/test-attachment.txt')
       ->getSource();
 
     $this->assertTrue($source->hasAttachments());

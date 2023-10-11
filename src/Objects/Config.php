@@ -17,12 +17,12 @@ class Config implements Arrayable
     protected string $inputEncoding = 'utf-8',
     protected bool $presentationalHints = true,
     protected string $optimizeSize = 'none',
-    protected string|null $mediaType = null,
-    protected string|null $baseUrl = null,
-    protected array|null $stylesheets = null,
+    protected ?string $mediaType = null,
+    protected ?string $baseUrl = null,
+    protected ?array $stylesheets = null,
     protected array $processEnvironment = ['LC_ALL' => 'en_US.UTF-8'],
-    protected PDFVariant|null $pdfVariant = null,
-    protected string|null $pdfVersion = null,
+    protected ?PDFVariant $pdfVariant = null,
+    protected ?string $pdfVersion = null,
   ) {
   }
 
@@ -30,7 +30,7 @@ class Config implements Arrayable
   {
     $defaults = Container::getInstance()->make('config')->get('weasyprint');
 
-    return new static(...array_merge($defaults, $config));
+    return new self(...array_merge($defaults, $config));
   }
 
   public function getBinary(): ?string
@@ -63,17 +63,17 @@ class Config implements Arrayable
     return $this->optimizeSize;
   }
 
-  public function getMediaType(): string|null
+  public function getMediaType(): ?string
   {
     return $this->mediaType;
   }
 
-  public function getBaseUrl(): string|null
+  public function getBaseUrl(): ?string
   {
     return $this->baseUrl;
   }
 
-  public function getStylesheets(): array|null
+  public function getStylesheets(): ?array
   {
     return $this->stylesheets;
   }
@@ -83,12 +83,12 @@ class Config implements Arrayable
     return $this->processEnvironment;
   }
 
-  public function getPdfVariant(): PDFVariant|null
+  public function getPdfVariant(): ?PDFVariant
   {
     return $this->pdfVariant;
   }
 
-  public function getPdfVersion(): string|null
+  public function getPdfVersion(): ?string
   {
     return $this->pdfVersion;
   }

@@ -9,13 +9,14 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Output
 {
-  private function __construct(protected string $data)
-  {
+  private function __construct(
+    protected string $data
+  ) {
   }
 
   public static function new(string $data): static
   {
-    return new static($data);
+    return new self($data);
   }
 
   public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse
@@ -33,7 +34,7 @@ class Output
     return $this->download($filename, $headers, inline: true);
   }
 
-  public function putFile(string $path, ?string $disk = null, array $options = []): bool
+  public function putFile(string $path, string $disk = null, array $options = []): bool
   {
     return Storage::disk($disk)->put($path, $this->data, $options);
   }

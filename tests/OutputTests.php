@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WeasyPrint\Tests;
 
+use Smalot\PdfParser\Parser;
 use Symfony\Component\HttpFoundation\{ResponseHeaderBag, StreamedResponse};
 use WeasyPrint\Service;
 
@@ -46,31 +47,52 @@ class OutputTests extends TestCase
     );
   }
 
-  public function testCanRenderAndInlinePdfOutput()
+  public function testCanRenderAndInlinePdfOutput(): void
   {
     $this->runOutputFileAssertions(
-      Service::new()->prepareSource(view('test-pdf'))->build()->inline('test.pdf'),
+      Service::new()
+        ->prepareSource(view('test-pdf'))->build()
+        ->inline('test.pdf'),
       'application/pdf',
       'inline; filename=test.pdf'
     );
   }
 
-  public function testCanRenderAndDownloadPdfOutput()
+  public function testCanRenderAndDownloadPdfOutput(): void
   {
     $this->runOutputFileAssertions(
-      Service::new()->prepareSource(view('test-pdf'))->build()->download('test.pdf'),
+      Service::new()
+        ->prepareSource(view('test-pdf'))->build()
+        ->download('test.pdf'),
       'application/pdf',
       'attachment; filename=test.pdf'
     );
   }
 
-  public function testCanRenderAndDownloadPdfOutputWithShorthands()
+  public function testCanRenderAndDownloadPdfOutputWithShorthands(): void
   {
     $this->runOutputFileAssertions(
-      Service::new()->prepareSource(view('test-pdf'))->download('test.pdf'),
+      Service::new()
+        ->prepareSource(view('test-pdf'))
+        ->download('test.pdf'),
       'application/pdf',
       'attachment; filename=test.pdf'
     );
+  }
+
+  public function testCanRenderDifferentPdfVersions(): void
+  {
+    collect(['1.4', '1.7'])->each(function (string $version) {
+      $data = Service::new()
+        ->mergeConfig(pdfVersion: $version)
+        ->prepareSource(view('test-pdf'))
+        ->getData('test.pdf');
+
+      $this->assertStringStartsWith(
+        prefix: "%PDF-$version",
+        string: $data
+      );
+    });
   }
 
   protected function buildAndGetData(Service $service): string
@@ -78,7 +100,7 @@ class OutputTests extends TestCase
     return $service->build()->getData();
   }
 
-  protected function writeTempFile($contents)
+  protected function writeTempFile($contents): string
   {
     $tempFilename = tempnam(
       sys_get_temp_dir(),
@@ -90,8 +112,7 @@ class OutputTests extends TestCase
     return $tempFilename;
   }
 
-
-  protected function runPdfAssertions($output)
+  protected function runPdfAssertions($output): void
   {
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
     $tempFilename = $this->writeTempFile($output);
@@ -105,16 +126,25 @@ class OutputTests extends TestCase
       actual: $mime,
     );
 
+    $parser = new Parser();
+    $document = $parser->parseFile($tempFilename);
+
+    $this->assertStringStartsWith(
+      prefix: 'WeasyPrint',
+      string: $document->getDetails()['Producer']
+    );
+
     unlink($tempFilename);
 
     $this->assertFalse(is_file($tempFilename));
   }
 
-  protected function runOutputFileAssertions($output, string $expectedMime, string $expectedDisposition)
-  {
-    /** @var ResponseHeaderBag */
+  protected function runOutputFileAssertions(
+    mixed $output,
+    string $expectedMime,
+    string $expectedDisposition
+  ): void {
     $headers = $output->headers;
-
     $hasHeaderBag = $headers instanceof ResponseHeaderBag;
 
     $this->assertTrue($output instanceof StreamedResponse);

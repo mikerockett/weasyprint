@@ -11,8 +11,8 @@ class EnsureSourceIsSet implements BuilderPipelineStage
 {
   public function __invoke(BuilderContainer $container): BuilderContainer
   {
-    if (!$container->service->sourceIsSet()) {
-      throw new SourceNotSetException;
+    if (! $container->service->sourceIsSet()) {
+      throw new SourceNotSetException();
     }
 
     return $container;
