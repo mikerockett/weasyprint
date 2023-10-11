@@ -1,5 +1,11 @@
 # WeasyPrint for Laravel – Release Notes
 
+## 7.1.0 `current`
+
+This release adds support for WeasyPrint 58, along with two new configuration properties, `pdfVersion` and `pdfVariant`, which may only be used in versions 58 and greater. Custom meta-data has not been added in this release.
+
+> Note: Support for WeasyPrint 59 and 60 to come in the next major package release, which will drop support for older versions of WeasyPrint.
+
 ## 7.0.0 `current`
 
 This release adds support for Laravel 10 and drops support for Laravel 8. The minimum-required version of PHP is now 8.1. As there have been no significant API changes to WeasyPrint, this package continues to support v53+.
