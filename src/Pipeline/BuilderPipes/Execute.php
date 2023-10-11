@@ -6,7 +6,7 @@ namespace WeasyPrint\Pipeline\BuilderPipes;
 
 use WeasyPrint\Pipeline\{BuilderContainer, BuilderPipelineStage};
 
-class ExecuteCommand implements BuilderPipelineStage
+class Execute implements BuilderPipelineStage
 {
   public function __invoke(BuilderContainer $container): BuilderContainer
   {

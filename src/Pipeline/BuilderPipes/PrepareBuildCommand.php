@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace WeasyPrint\Pipeline\BuilderPipes;
 
-use WeasyPrint\Command;
+use WeasyPrint\Commands\BuildCommand;
 use WeasyPrint\Pipeline\{BuilderContainer, BuilderPipelineStage};
 
-class PrepareCommand implements BuilderPipelineStage
+class PrepareBuildCommand implements BuilderPipelineStage
 {
   public function __invoke(BuilderContainer $container): BuilderContainer
   {
     $service = $container->service;
 
-    $container->setCommand(new Command(
+    $container->setCommand(new BuildCommand(
       config: $service->getConfig(),
       inputPath: $container->getInputPath(),
       outputPath: $container->getOutputPath(),

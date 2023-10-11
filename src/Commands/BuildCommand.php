@@ -2,25 +2,24 @@
 
 declare(strict_types=1);
 
-namespace WeasyPrint;
+namespace WeasyPrint\Commands;
 
 use Illuminate\Support\Collection;
-use RuntimeException;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 use WeasyPrint\Exceptions\AttachmentNotFoundException;
 use WeasyPrint\Objects\Config;
 
-class Command
+class BuildCommand extends BaseCommand
 {
-  private Collection $arguments;
+  use FindsBinary;
 
   public function __construct(
-    protected Config $config,
+    Config $config,
     string $inputPath,
     string $outputPath,
     protected array $attachments = []
   ) {
+    $this->config = $config;
+
     $this->arguments = new Collection([
       $config->getBinary() ?? $this->findBinary(),
       $inputPath,
@@ -30,31 +29,6 @@ class Command
     ]);
 
     $this->prepareOptionalArguments();
-  }
-
-  private function findBinary(): string
-  {
-    $process = Process::fromShellCommandline('which weasyprint');
-    $process->run();
-
-    if (! $process->isSuccessful()) {
-      throw new RuntimeException(
-        'Unable to find WeasyPrint binary. Please specify the absolute path to WeasyPrint in config [binary].'
-      );
-    }
-
-    return trim($process->getOutput());
-  }
-
-  private function maybePushArgument(string $key, $value): void
-  {
-    $key = "--$key";
-
-    if ($value === true) {
-      $this->arguments->push($key);
-    } elseif ($value) {
-      $this->arguments->push($key, $value);
-    }
   }
 
   private function prepareOptionalArguments(): void
@@ -90,7 +64,7 @@ class Command
     );
 
     foreach ($this->attachments as $attachment) {
-      if (! is_file($attachment)) {
+      if (!is_file($attachment)) {
         throw new AttachmentNotFoundException($attachment);
       }
 
@@ -101,21 +75,6 @@ class Command
       foreach ($stylesheets as $stylesheet) {
         $this->maybePushArgument('stylesheet', $stylesheet);
       }
-    }
-  }
-
-  public function execute(): void
-  {
-    $process = new Process(
-      command: $this->arguments->toArray(),
-      env: $this->config->getProcessEnvironment(),
-      timeout: $this->config->getTimeout()
-    );
-
-    $process->run();
-
-    if (! $process->isSuccessful()) {
-      throw new ProcessFailedException($process);
     }
   }
 }

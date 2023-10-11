@@ -82,6 +82,12 @@ class OutputTests extends TestCase
 
   public function testCanRenderDifferentPdfVersions(): void
   {
+    $service = Service::new();
+
+    if (version_compare($service->getWeasyPrintVersion(), '58', 'lt')) {
+      $this->markTestSkipped('This test was skipped as it is not applicable to the current version of WeasyPrint.');
+    }
+
     collect(['1.4', '1.7'])->each(function (string $version) {
       $data = Service::new()
         ->mergeConfig(pdfVersion: $version)

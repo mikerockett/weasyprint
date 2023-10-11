@@ -8,6 +8,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Rockett\Pipeline\Contracts\PipelineContract;
 use Rockett\Pipeline\Pipeline;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use WeasyPrint\Commands\VersionCommand;
 use WeasyPrint\Contracts\Factory;
 use WeasyPrint\Objects\{Config, Output, Source};
 use WeasyPrint\Pipeline\{BuilderContainer, BuilderPipes as Pipes};
@@ -30,6 +31,13 @@ class Service implements Factory
   public static function createFromSource(Source|Renderable|string $source): Factory
   {
     return self::new()->prepareSource($source);
+  }
+
+  public function getWeasyPrintVersion(): string
+  {
+    $version = (new VersionCommand($this->config))->execute();
+
+    return str_replace('WeasyPrint version ', '', $version);
   }
 
   public function mergeConfig(mixed ...$config): Factory
@@ -78,8 +86,8 @@ class Service implements Factory
       ->pipe(new Pipes\SetInputPath())
       ->pipe(new Pipes\SetOutputPath())
       ->pipe(new Pipes\PersistTemporaryInput())
-      ->pipe(new Pipes\PrepareCommand())
-      ->pipe(new Pipes\ExecuteCommand())
+      ->pipe(new Pipes\PrepareBuildCommand())
+      ->pipe(new Pipes\Execute())
       ->pipe(new Pipes\UnlinkTemporaryInput())
       ->pipe(new Pipes\PrepareOutput());
 

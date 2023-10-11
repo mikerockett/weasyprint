@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace WeasyPrint\Pipeline;
 
+use WeasyPrint\Commands\BuildCommand;
 use WeasyPrint\Objects\Output;
-use WeasyPrint\{Command, Service};
+use WeasyPrint\Service;
 
 class BuilderContainer
 {
   private string $inputPath;
   private string $outputPath;
-  private Command $command;
+  private BuildCommand $command;
   private Output $output;
 
   public function __construct(
@@ -37,7 +38,7 @@ class BuilderContainer
     $this->outputPath = $this->makeTemporaryFilename();
   }
 
-  public function setCommand(Command $command): void
+  public function setCommand(BuildCommand $command): void
   {
     $this->command = $command;
   }
@@ -57,7 +58,7 @@ class BuilderContainer
     return $this->outputPath;
   }
 
-  public function getCommand(): Command
+  public function getCommand(): BuildCommand
   {
     return $this->command;
   }

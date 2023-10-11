@@ -12,6 +12,8 @@ interface Factory
 {
   public static function new(mixed ...$config): self;
 
+  public function getWeasyPrintVersion(): string;
+
   public function mergeConfig(mixed ...$config): self;
 
   public function prepareSource(Source|Renderable|string $source): self;
