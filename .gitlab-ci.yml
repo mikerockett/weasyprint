@@ -20,7 +20,3 @@ php8.1:
 php8.2:
   extends: .template
   image: php:8.2-cli-alpine
-
-php8.3:
-  extends: .template
-  image: php:8.3-cli-alpine
