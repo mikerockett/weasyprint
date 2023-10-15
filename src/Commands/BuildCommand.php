@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 use WeasyPrint\Exceptions\AttachmentNotFoundException;
 use WeasyPrint\Objects\Config;
 
-class BuildCommand extends BaseCommand
+final class BuildCommand extends BaseCommand
 {
   use FindsBinary;
 
@@ -21,11 +21,11 @@ class BuildCommand extends BaseCommand
     $this->config = $config;
 
     $this->arguments = new Collection([
-      $config->getBinary() ?? $this->findBinary(),
+      $config->binary ?? $this->findBinary(),
       $inputPath,
       $outputPath,
       '--quiet',
-      '--encoding', $config->getInputEncoding(),
+      '--encoding', $config->inputEncoding,
     ]);
 
     $this->prepareOptionalArguments();
@@ -33,43 +33,30 @@ class BuildCommand extends BaseCommand
 
   private function prepareOptionalArguments(): void
   {
-    $this->maybePushArgument(
-      'presentational-hints',
-      $this->config->usePresentationalHints()
+    $arguments = collect([
+      'presentational-hints' => $this->config->presentationalHints,
+      'base-url' => $this->config->baseUrl,
+      'media-type' => $this->config->mediaType,
+      'pdf-variant' => $this->config->pdfVariant?->value,
+      'pdf-version' => $this->config->pdfVersion?->value,
+    ]);
+
+    $arguments->each(
+      fn (mixed $value, string $name) => $this->maybePushArgument($name, $value)
     );
 
-    $this->maybePushArgument(
-      'base-url',
-      $this->config->getBaseUrl()
-    );
+    collect($this->attachments)->each(
+      function (string $path): void {
+        if (!is_file($path)) {
+          throw new AttachmentNotFoundException($path);
+        }
 
-    $this->maybePushArgument(
-      'media-type',
-      $this->config->getMediaType()
-    );
-
-    $this->maybePushArgument(
-      'pdf-variant',
-      $this->config->getPdfVariant()?->value
-    );
-
-    $this->maybePushArgument(
-      'pdf-version',
-      $this->config->getPdfVersion()?->value
-    );
-
-    foreach ($this->attachments as $attachment) {
-      if (!is_file($attachment)) {
-        throw new AttachmentNotFoundException($attachment);
+        $this->maybePushArgument('attachment', $path);
       }
+    );
 
-      $this->maybePushArgument('attachment', $attachment);
-    }
-
-    if ($stylesheets = $this->config->getStylesheets()) {
-      foreach ($stylesheets as $stylesheet) {
-        $this->maybePushArgument('stylesheet', $stylesheet);
-      }
-    }
+    collect($this->config->stylesheets)->each(
+      fn (string $path) => $this->maybePushArgument('stylesheet', $path)
+    );
   }
 }

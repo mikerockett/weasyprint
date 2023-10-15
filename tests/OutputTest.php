@@ -5,35 +5,36 @@ declare(strict_types=1);
 use Smalot\PdfParser\Parser;
 use Symfony\Component\HttpFoundation\{ResponseHeaderBag, StreamedResponse};
 use WeasyPrint\Enums\PDFVersion;
+use WeasyPrint\Objects\Config;
 use WeasyPrint\Service;
 
 test('can render from string', function (): void {
-  runPdfAssertions(buildAndGetData(
-    Service::new()->prepareSource('<p>WeasyPrint rocks!</p>')
-  ));
-});
-
-test('can render with create from source shorthand', function (): void {
-  runPdfAssertions(buildAndGetData(
-    Service::createFromSource('<p>WeasyPrint rocks!</p>')
-  ));
+  runPdfAssertions(
+    Service::instance()->prepareSource('<p>WeasyPrint rocks!</p>')
+      ->build()
+      ->getData()
+  );
 });
 
 test('can render from url', function (): void {
-  runPdfAssertions(buildAndGetData(
-    Service::new()->prepareSource('https://google.com')
-  ));
+  runPdfAssertions(
+    Service::instance()->prepareSource('https://google.com')
+      ->build()
+      ->getData()
+  );
 });
 
 test('can render from renderable', function (): void {
-  runPdfAssertions(buildAndGetData(
-    Service::new()->prepareSource(view('test-pdf'))
-  ));
+  runPdfAssertions(
+    Service::instance()->prepareSource(view('test-pdf'))
+      ->build()
+      ->getData()
+  );
 });
 
 test('can render and inline pdf output', function (): void {
   runOutputFileAssertions(
-    Service::new()
+    Service::instance()
       ->prepareSource(view('test-pdf'))->build()
       ->inline('test.pdf'),
     'application/pdf',
@@ -43,7 +44,7 @@ test('can render and inline pdf output', function (): void {
 
 test('can render and download pdf output', function (): void {
   runOutputFileAssertions(
-    Service::new()
+    Service::instance()
       ->prepareSource(view('test-pdf'))->build()
       ->download('test.pdf'),
     'application/pdf',
@@ -53,7 +54,7 @@ test('can render and download pdf output', function (): void {
 
 test('can render and download pdf output with shorthands', function (): void {
   runOutputFileAssertions(
-    Service::new()
+    Service::instance()
       ->prepareSource(view('test-pdf'))
       ->download('test.pdf'),
     'application/pdf',
@@ -62,12 +63,12 @@ test('can render and download pdf output with shorthands', function (): void {
 });
 
 test('can render different pdf versions', function (): void {
-  $service = Service::new();
-
   collect([PDFVersion::VERSION_1_4, PDFVersion::VERSION_1_7])->each(
     function (PDFVersion $version): void {
-      $data = Service::new()
-        ->mergeConfig(pdfVersion: $version)
+      $data = Service::instance()
+        ->tapConfig(static function (Config $config) use ($version) {
+          $config->pdfVersion = $version;
+        })
         ->prepareSource(view('test-pdf'))
         ->getData('test.pdf');
 
@@ -75,11 +76,6 @@ test('can render different pdf versions', function (): void {
     }
   );
 });
-
-function buildAndGetData(Service $service): string
-{
-  return $service->build()->getData();
-}
 
 function writeTempFile($contents): string
 {

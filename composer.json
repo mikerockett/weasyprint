@@ -53,6 +53,6 @@
     ],
     "dump": "composer dumpautoload",
     "pest": "./vendor/bin/pest",
-    "format": "./vendor/bin/stout"
+    "format": "./vendor/bin/stout --dirty"
   }
 }

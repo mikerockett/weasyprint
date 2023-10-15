@@ -23,8 +23,8 @@ class BuilderContainer
   public function makeTemporaryFilename(): string|false
   {
     return tempnam(
-      sys_get_temp_dir(),
-      $this->service->getConfig()->getCachePrefix()
+      directory: sys_get_temp_dir(),
+      prefix: $this->service->getConfig()->cachePrefix
     );
   }
 

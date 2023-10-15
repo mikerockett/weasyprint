@@ -10,11 +10,9 @@ use WeasyPrint\Objects\{Config, Output, Source};
 
 interface Factory
 {
-  public static function new(mixed ...$config): self;
-
   public function getWeasyPrintVersion(): string;
 
-  public function mergeConfig(mixed ...$config): self;
+  public function tapConfig(callable $callback): self;
 
   public function prepareSource(Source|Renderable|string $source): self;
 

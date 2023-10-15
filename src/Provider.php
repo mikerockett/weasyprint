@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace WeasyPrint;
 
-use Illuminate\Config\Repository;
 use Illuminate\Support\ServiceProvider;
 use WeasyPrint\Contracts\Factory;
 
@@ -22,25 +21,26 @@ class Provider extends ServiceProvider
 
   protected function configFile(): string
   {
-    return __DIR__.'/../config/weasyprint.php';
+    return __DIR__ . '/../config/weasyprint.php';
   }
 
   public function register(): void
   {
-    $this->app->scoped(Factory::class, fn ($app) => Service::new(
-      ...$app->make(Repository::class)->get($this->name())
-    ));
+    $this->app->scoped(Factory::class, Service::class);
   }
 
   public function boot(): void
   {
     if ($this->app->runningInConsole()) {
       $this->publishes(
-        [$this->configFile() => config_path('weasyprint.php')],
-        $this->identifierFor('config')
+        paths: [$this->configFile() => config_path("{$this->name()}.php")],
+        groups: $this->identifierFor('config')
       );
     }
 
-    $this->mergeConfigFrom($this->configFile(), $this->name());
+    $this->mergeConfigFrom(
+      path: $this->configFile(),
+      key: $this->name()
+    );
   }
 }

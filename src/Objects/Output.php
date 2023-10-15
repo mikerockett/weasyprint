@@ -9,14 +9,9 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Output
 {
-  private function __construct(
+  public function __construct(
     protected string $data
   ) {
-  }
-
-  public static function new(string $data): static
-  {
-    return new self($data);
   }
 
   public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse

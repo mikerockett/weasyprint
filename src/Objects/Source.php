@@ -11,14 +11,9 @@ class Source
 {
   private array $attachments = [];
 
-  private function __construct(
+  public function __construct(
     protected Renderable|string $source
   ) {
-  }
-
-  public static function new(Renderable|string $source): static
-  {
-    return new self($source);
   }
 
   public function get(): Renderable|string

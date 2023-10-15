@@ -7,9 +7,9 @@ use WeasyPrint\Objects\Source;
 use WeasyPrint\Service;
 
 test('can prepare source from source', function (): void {
-  $service = Service::new();
+  $service = Service::instance();
   $source = $service->prepareSource(
-    Source::new('WeasyPrint rocks!')
+    new Source('WeasyPrint rocks!')
   )->getSource();
 
   expect($source)->toBeInstanceOf(Source::class);
@@ -17,7 +17,7 @@ test('can prepare source from source', function (): void {
 });
 
 test('can prepare source from arguments', function (): void {
-  $service = Service::new();
+  $service = Service::instance();
   $source = $service->prepareSource('WeasyPrint rocks!')->getSource();
 
   expect($source)->toBeInstanceOf(Source::class);
@@ -25,7 +25,7 @@ test('can prepare source from arguments', function (): void {
 });
 
 test('can prepare source from named arguments', function (): void {
-  $service = Service::new();
+  $service = Service::instance();
   $source = $service->prepareSource('WeasyPrint rocks!')->getSource();
 
   expect($source)->toBeInstanceOf(Source::class);
@@ -33,21 +33,21 @@ test('can prepare source from named arguments', function (): void {
 });
 
 test('can prepare source from renderable', function (): void {
-  $service = Service::new();
+  $service = Service::instance();
   $source = $service->prepareSource(view('test-pdf'))->getSource();
 
   expect($source->get())->toBeInstanceOf(Renderable::class);
 });
 
 test('can prepare source from url and verify', function (): void {
-  $service = Service::new();
+  $service = Service::instance();
   $source = $service->prepareSource('https://google.com')->getSource();
 
   expect($source->isUrl())->toBeTrue();
 });
 
 test('can prepare source with attachments', function (): void {
-  $service = Service::new();
+  $service = Service::instance();
 
   $source = $service->prepareSource('WeasyPrint rocks!')
     ->addAttachment($attachmentPath = __DIR__ . '/attachments/test-attachment.txt')

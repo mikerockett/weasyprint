@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace WeasyPrint;
 
+use Illuminate\Config\Repository;
 use Illuminate\Contracts\Support\Renderable;
 use Rockett\Pipeline\Contracts\PipelineContract;
 use Rockett\Pipeline\Pipeline;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use WeasyPrint\Commands\VersionCommand;
 use WeasyPrint\Contracts\Factory;
+use WeasyPrint\Exceptions\MissingSourceException;
 use WeasyPrint\Objects\{Config, Output, Source};
 use WeasyPrint\Pipeline\{BuilderContainer, BuilderPipes as Pipes};
 
@@ -18,19 +20,14 @@ class Service implements Factory
   private Config $config;
   private Source $source;
 
-  private function __construct(mixed ...$config)
+  public function __construct(Repository $config)
   {
-    $this->config = Config::new(...$config);
+    $this->config = new Config(...$config->get('weasyprint'));
   }
 
-  public static function new(mixed ...$config): Factory
+  public static function instance(): self
   {
-    return new self(...$config);
-  }
-
-  public static function createFromSource(Source|Renderable|string $source): Factory
-  {
-    return self::new()->prepareSource($source);
+    return app(Factory::class);
   }
 
   public function getWeasyPrintVersion(): string
@@ -40,9 +37,16 @@ class Service implements Factory
     return str_replace('WeasyPrint version ', '', $version);
   }
 
-  public function mergeConfig(mixed ...$config): Factory
+  public function setConfig(Config $config): self
   {
-    $this->config = Config::new(...$config);
+    $this->config = $config;
+
+    return $this;
+  }
+
+  public function tapConfig(callable $callback): self
+  {
+    $callback($this->config);
 
     return $this;
   }
@@ -51,7 +55,7 @@ class Service implements Factory
   {
     $this->source = match ($source instanceof Source) {
       true => $source,
-      default => Source::new($source)
+      default => new Source($source)
     };
 
     return $this;
@@ -74,6 +78,10 @@ class Service implements Factory
 
   public function addAttachment(string $pathToAttachment): Factory
   {
+    if (!$this->source) {
+      throw new MissingSourceException();
+    }
+
     $this->source->addAttachment($pathToAttachment);
 
     return $this;
@@ -81,17 +89,19 @@ class Service implements Factory
 
   public function build(): Output
   {
-    $pipeline = (new Pipeline())
-      ->pipe(new Pipes\EnsureSourceIsSet())
-      ->pipe(new Pipes\SetInputPath())
-      ->pipe(new Pipes\SetOutputPath())
-      ->pipe(new Pipes\PersistTemporaryInput())
-      ->pipe(new Pipes\PrepareBuildCommand())
-      ->pipe(new Pipes\Execute())
-      ->pipe(new Pipes\UnlinkTemporaryInput())
-      ->pipe(new Pipes\PrepareOutput());
-
-    return $this->processPipeline($pipeline)->getOutput();
+    return $this->processPipeline(
+      new Pipeline(
+        null,
+        new Pipes\EnsureSourceIsSet(),
+        new Pipes\SetInputPath(),
+        new Pipes\SetOutputPath(),
+        new Pipes\PersistTemporaryInput(),
+        new Pipes\PrepareBuildCommand(),
+        new Pipes\Execute(),
+        new Pipes\UnlinkTemporaryInput(),
+        new Pipes\PrepareOutput(),
+      )
+    )->getOutput();
   }
 
   private function processPipeline(PipelineContract $pipeline): BuilderContainer

@@ -11,20 +11,20 @@
 See the **[Changelog](changelog.md)** | View the **[Upgrade Guide](upgrading.md)**
 
 ---
-- [Supported Version](#supported-version)
+- [Supported Versions](#supported-versions)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Service Instantiation](#service-instantiation)
+  - [Getting a Service Instance](#getting-a-service-instance)
   - [Preparing the Source](#preparing-the-source)
   - [Building the Output](#building-the-output)
   - [Attachments](#attachments)
-  - [Configuration](#configuration)
+  - [Config](#config)
 - [Contributing](#contributing)
 - [Open Source](#open-source)
 
 ---
 <!-- /exclude-from-website -->
-## Supported Version
+## Supported Versions
 
 There are three versions of the package that are supported. v7 is the latest, and is the only version that will receive new features. v5 and v6 are the previous versions, and will only receive bug-fixes and security-patches, thus they are in maintenance mode.
 
@@ -41,7 +41,7 @@ The table below outlines supported versions:
 
 ## Installation
 
-First make sure **WeasyPrint v53+** is [installed on your system](https://doc.courtbouillon.org/weasyprint/latest/first_steps.html).
+First make sure **WeasyPrint v59+** is [installed on your system](https://doc.courtbouillon.org/weasyprint/latest/first_steps.html).
 
 Then, install the package with Composer:
 
@@ -59,67 +59,60 @@ $ php artisan vendor:publish --tag=weasyprint.config
 
 ## Usage
 
-WeasyPrint for Laravel provides different mechanisms you can use to get going. You may make use of the service class directly, use dependency injection, or use the Facade. Once you have a service class instance, there are different ways in which you can prepare your source file or data and build the PDF output.
+WeasyPrint for Laravel is easy to use.
 
-### Service Instantiation
+All you need is an instance of the WeasyPrint service class, which can be resolved from the Laravel [Service Container](https://laravel.com/docs/container) as a [scoped singleton](https://laravel.com/docs/10.x/container#binding-scoped).
 
-#### Option 1. Service Class
+Once you have an instance, you can prepare your source, change config (if needed), and build the output for processing by your application.
 
-```php
-use WeasyPrint\Service as WeasyPrintService;
+### Getting a Service Instance
 
-$source = '<p>WeasyPrint rocks!</p>';
-$service = WeasyPrintService::new()->prepareSource($source);
-```
+There are three ways to get an instance of the WeasyPrint service class.
 
-This will give you a new WeasyPrint service class instance, ready to render a PDF or PNG based on the source provided to `prepareSource` (more on this further down).
+#### Option 1. Using the Factory Contract
 
-When using the service class directly, the default configuration will be loaded in for you, unless you pass custom configuration into the `new` method, which is just a static alias to the constructor:
+This contract may either be used in dependency injection, or via the global `app()` or `resolve()` helper functions.
 
-```php
-$service = WeasyPrintService::new(
-  binary: '/absolute/path/to/weasyprint',
-  timeout: 5000,
-);
-```
-
-Configuration options are discussed further down.
-
-If you prefer a short-hand and don’t care much for changing any configuration, you can use the `createFromSource` static constructor instead:
+**Dependency Injection:**
 
 ```php
-$service = WeasyPrintService::createFromSource($source);
-```
-
-#### Option 2. Dependency Injection
-
-```php
-use WeasyPrint\Contracts\Factory as WeasyPrintFactory;
+use WeasyPrint\Contracts\Factory;
 
 class GeneratePDF
 {
-  public function __invoke(WeasyPrintFactory $factory)
+  public function __invoke(Factory $weasyprint)
   {
-    $source = '<p>WeasyPrint rocks!</p>';
-    $service = $factory->prepareSource($source);
+    // You now have access to a WeasyPrint instance named $weasyprint.
+    $weasyprint->prepareSource('<p>WeasyPrint rocks!</p>');
   }
 }
 ```
 
-To use dependency injection, you need to use the Factory contract, which will resolve the WeasyPrint service singleton from the [Service Container](https://laravel.com/docs/container). This singleton is scoped to ensure support for [Laravel Octane](https://github.com/laravel/octane).
-
-To reconfigure this instance, you may call `mergeConfig` on the new service instance:
+**Global Helpers**
 
 ```php
-$service->mergeConfig(
-  binary: '/absolute/path/to/weasyprint',
-  timeout: 5000,
-)
+use WeasyPrint\Contracts\Factory;
+
+$weasyprint = app(Factory::class); // or resolve(Factory::class)
+
+// You now have access to a WeasyPrint instance named $weasyprint.
+$weasyprint->prepareSource('<p>WeasyPrint rocks!</p>');
 ```
 
-You do not need to call this method at any specific point in time, but you must call it *before* you build the output.
+#### Option 2. Service Instance Helper
+
+If you do not want to use dependency injection, and you do not want to use the `app()` or `resolve()` helpers, you can use the service instance helper instead. This is the same as calling one the global helpers.
+
+```php
+use WeasyPrint\Service;
+
+$weasyprint = Service::instance();
+$weasyprint->prepareSource('<p>WeasyPrint rocks!</p>');
+```
 
 #### Option 3. Facade
+
+Similar to the other options, using the Facade will give you an instance of the WeasyPrint service singleton. The Facade resolves to the `Factory` contract which, in turn, provides you with the singleton.
 
 ```php
 use WeasyPrint\Facade as WeasyPrint;
@@ -128,13 +121,13 @@ $source = '<p>WeasyPrint rocks!</p>';
 $service = WeasyPrint::prepareSource($source);
 ```
 
-Similar to dependency injection, using the Facade will give you an instance of the WeasyPrint service singleton. The Facade resolves to the Factory contract which, in turn, provides you with the singleton.
-
-To change the configuration, you may call the `mergeConfig` method, just as you would with dependency injection.
+> **Note:** For the sake of simplicity, the facade option will be used throughout the remainder of this documentation.
 
 ### Preparing the Source
 
-With the basics out of the way, let’s talk more about preparing the source. The `prepareSource` method takes a single argument that represents your source data.
+Next step is to prepare the source – that is, the data WeasyPrint will use to render your PDF and return it to your application for processing.
+
+The `prepareSource` method takes a single argument that represents your source data.
 
 Here’s the method signature:
 
@@ -195,7 +188,9 @@ $service = WeasyPrint::prepareSource('<p>WeasyPrint rocks!</p>');
 
 ### Building the Output
 
-Now that you know how to instantiate a service class instance and prepare the source input, you are ready to build the output. To do this, you can call the `build()` method, which will return an instance of `Objects\Output`.
+Now that you know how to get a service class instance and prepare the source input, you are ready to build the output.
+
+To do this, you can call the `build()` method, which will return an instance of `WeasyPrint\Objects\Output`.
 
 ```php
 $output = $service->build();
@@ -243,122 +238,115 @@ $service = WeasyPrint::prepareSource('<p>WeasyPrint rocks!</p>')
 
 Naturally this has no effect when outputting to PNG.
 
-### Configuration
+### Config
 
-As mentioned in previous sections, you may change WeasyPrint’s configuration on the fly, either by passing a configuration object to the `new` method of the service class, or by calling `mergeConfig` on an already-resolved service class instance.
+This package comes preloaded with a sensible set of default configs. These defaults are sourced from the package directly, unless you [publish the config](#installation) into your application.
 
-#### Named Parameters and Argument Unpacking
+For additional type-safety, default config is prepared using the `Config` class. It must be cast to an `array`, and the service instance will automatically hydrate it when needed.
 
-Both of these methods use argument unpacking to internally resolve a new instance of `WeasyPrint\Config`, which will be used by the service class instance to interpret the configuration options as and when needed.
+Once the default config has been loaded into a service instance, you can change it one of two ways:
 
-Given that WeasyPrint for Laravel requires PHP 8 to run, you may pass in the configuration options as named arguments to either of these methods:
+**Tap the Config**
+
+Tapping involves the use of a callback that mutates the existing `Config` object in the service instance, using the `tapConfig` method.
+
+You need only change the properties you want to change, and everything else will remain untouched (derived from the defaults).
 
 ```php
-$service->mergeConfig(
-  binary: '/absolute/path/to/weasyprint',
-  timeout: 5000,
+use WeasyPrint\Objects\Config;
+
+$service->tapConfig(
+  static function (Config $config): void {
+    $config->binary = '/absolute/path/to/weasyprint';
+    $config->timeout = 5000;
+  }
 );
 ```
 
-If you prefer, however, you may also pass in an unpacked array:
+**Overriding the Config**
+
+To override the config with a brand new `Config` object, you can call `setConfig`, which accepts the object and sets it on the service instance.
 
 ```php
-$service->mergeConfig(...[
-  'binary' => '/absolute/path/to/weasyprint',
-  'timeout' => 5000,
-])
+use WeasyPrint\Objects\Config;
+
+$service->setConfig(
+  new Config(
+    binary: '/absolute/path/to/weasyprint',
+    timeout: 5000,
+  )
+);
 ```
 
-#### Merging with the Defaults
+> **Note:** Unlike tapping, overriding the config will disregard any defaults that you might have set in your config file, or those set in the unpublished config file. Instead, the defaults are derived from the constructor of `Config` object.
 
-No matter which way you pass in the configuration options, they will be merged with the defaults, which are acquired from the default configuration stored in the package source, or from the published config file if you ran `vendor:publish`.
+#### Config Defaults
 
-#### Available Configuration Options
-
-Here are the configuration options you can set, along with their defaults:
+Below are the default config options, which you can override per the above.
 
 ```php
-return [
-
+return (array) new \WeasyPrint\Objects\Config(
   /**
-   * The path to the WeasyPrint binary on your system.
-   * If it is available on your system globally, the package will find and use it.
-   * If not, then you will need to specify the absolute path.
-   * @param string
+   * The path to the WeasyPrint binary on your system. If it is available on
+   * your system globally, the package will find and use it. If not, then
+   * you will need to specify the absolute path.
    */
-  'binary' => env('WEASYPRINT_BINARY'),
-
-  /**
-   * The environment variables passed to Symfony Process when
-   * executing the WeasyPrint binary.
-   * @param array
-   */
-  'processEnvironment' => ['LC_ALL' => env('WEASYPRINT_LOCALE', 'en_US.UTF-8')],
+  binary: env('WEASYPRINT_BINARY'),
 
   /**
    * The cache prefix to use for the temporary filename.
-   * @param string
    */
-  'cachePrefix' => env('WEASYPRINT_CACHE_PREFIX', 'weasyprint_cache'),
+  cachePrefix: env('WEASYPRINT_CACHE_PREFIX', 'weasyprint_cache'),
 
   /**
    * The amount of seconds to allow a conversion to run for.
-   * @param int
    */
-  'timeout' => env('WEASYPRINT_TIMEOUT', 120),
+  timeout: (int) env('WEASYPRINT_TIMEOUT', 120),
 
   /**
    * Force the input character encoding. utf-8 is recommended.
-   * @param string
    */
-  'inputEncoding' => env('WEASYPRINT_INPUT_ENCODING', 'utf-8'),
+  inputEncoding: env('WEASYPRINT_INPUT_ENCODING', 'utf-8'),
 
   /**
    * Enable or disable HTML Presentational Hints.
-   * When enabled, `--presentational-hints` is passed to the binary.
-   * @param bool
    */
-  'presentationalHints' => env('WEASYPRINT_PRESENTATIONAL_HINTS', true),
+  presentationalHints: (bool) env('WEASYPRINT_PRESENTATIONAL_HINTS', true),
 
   /**
    * Optionally set the media type to use for CSS @media.
    * Defaults to `print` at binary-level.
-   * @param string|null
    */
-  'mediaType' => env('WEASYPRINT_MEDIA_TYPE'),
+  mediaType: env('WEASYPRINT_MEDIA_TYPE'),
 
   /**
    * Optionally set the base URL for relative URLs in the HTML input.
-   * Defaults to the input’s own URL at binary-level.
-   * @param string|null
    */
-  'baseUrl' => env('WEASYPRINT_BASE_URL'),
+  baseUrl: env('WEASYPRINT_BASE_URL'),
 
   /**
    * Optionally provide an array of stylesheets to use alongside the HTML input.
    * Each stylesheet may the absolute path to a file, or a URL.
    * It is recommended to do this at runtime.
-   * @param string[]|null
    */
-  'stylesheets' => null,
+  stylesheets: [],
+
+  /**
+   * The environment variables passed to Symfony Process when executing
+   * the WeasyPrint binary.
+   */
+  processEnvironment: ['LC_ALL' => env('WEASYPRINT_LOCALE', 'en_US.UTF-8')],
 
   /**
    * Optionally specify a PDF variant.
-   * Use one of: pdf/a-1b, pdf/a-2b, pdf/a-3b, pdf/a-4b, or pdf/ua-1
-   * Or:         case direct from PDFVariant
-   *
-   * @param WeasyPrint\Enums\PDFVariant
    */
-  'pdfVariant' => WeasyPrint\Enums\PDFVariant::fromEnv('WEASYPRINT_PDF_VARIANT'),
+  pdfVariant: WeasyPrint\Enums\PDFVariant::fromEnvironment('WEASYPRINT_PDF_VARIANT'),
 
   /**
    * Optionally specify a PDF version.
-   *
-   * @param string
    */
-  'pdfVersion' => null,
-
-];
+  pdfVersion: WeasyPrint\Enums\PDFVersion::fromEnvironment('WEASYPRINT_PDF_VERSION'),
+);
 ```
 
 As noted before, you may publish the config file if you’d like to make changes to it – but, in most cases, you’ll want to make use of environment variables by adding them to your `.env` file or using whatever mechanism your app uses to resolve them.
@@ -367,9 +355,8 @@ As noted before, you may publish the config file if you’d like to make changes
 
 If you’d like to make a contribution to WeasyPrint for Laravel, you’re more than welcome to [submit a merge request](https://gitlab.com/mikerockett/weasyprint/-/merge_requests/new) against the `main` or current-release branch:
 
-1. If you are introducing a **non-breaking** change and supports WeasyPrint **< v53 (cairo)**, target the `5.x` branch.
-2. If you are introducing a **non-breaking** change and supports WeasyPrint **≥ v53 (pydyf)**, target the `7.x` branch. If accepted, it will also be merged into `6.x`.
-3. If you are introducing a **breaking** change of any kind, target the `main` branch. The change will be released in a new major version when accepted.
+1. If you are introducing a **non-breaking** change, target the `V.x` branch, where `V` is the latest major version of the package. If accepted and does not break any other versions either, it will also be merged into the applicable branches for those versions.
+2. If you are introducing a **breaking** change of any kind, target the `main` branch. The change will be released in a new major version when accepted, and will not be added to older versions.
 
 Your request should be as detailed as possible, unless it’s a trivial change.
 
@@ -377,15 +364,21 @@ Your request should be as detailed as possible, unless it’s a trivial change.
 
 Should it be required, please make sure that any impacted tests are updated, or new tests are created.
 
-1. If you are introducing a new feature, you will more than likely need to create a new test case where each piece of fuctionality the new feature introduces may be tested.
+1. If you are introducing a new feature, you will more than likely need to create a new test case where each piece of functionality the new feature introduces may be tested.
 2. Otherwise, if you are enhancing an existing feature by adding new functionality, you may add the appropriate test method to the applicable test case.
-
-When building tests, you do not need to build them for each [instantiation type](#service-instantiation). Like other tests in the suite, you may use direct service-class instantiation.
 
 Then run the tests before opening your merge request:
 
 ```shell
 $ composer run test
+```
+
+#### Formatting
+
+This package uses `johnbacon/stout` to auto-format code. Before committing your code, please run a format over all dirty files:
+
+```shell
+$ composer run format
 ```
 
 #### Commit Messages

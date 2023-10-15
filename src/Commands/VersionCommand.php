@@ -7,7 +7,7 @@ namespace WeasyPrint\Commands;
 use Illuminate\Support\Collection;
 use WeasyPrint\Objects\Config;
 
-class VersionCommand extends BaseCommand
+final class VersionCommand extends BaseCommand
 {
   use FindsBinary;
 
@@ -17,7 +17,7 @@ class VersionCommand extends BaseCommand
     $this->config = $config;
 
     $this->arguments = new Collection([
-      $config->getBinary() ?? $this->findBinary(),
+      $config->binary ?? $this->findBinary(),
       '--version',
     ]);
   }

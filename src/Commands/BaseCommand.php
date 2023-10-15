@@ -8,12 +8,12 @@ use Illuminate\Support\Collection;
 use Symfony\Component\Process\Process;
 use WeasyPrint\Objects\Config;
 
-class BaseCommand implements Command
+abstract class BaseCommand implements Command
 {
   protected Config $config;
   protected Collection $arguments;
 
-  public function maybePushArgument(string $key, $value): void
+  public function maybePushArgument(string $key, mixed $value): void
   {
     $key = "--$key";
 
@@ -28,8 +28,8 @@ class BaseCommand implements Command
   {
     $process = new Process(
       command: $this->arguments->toArray(),
-      env: $this->config->getProcessEnvironment(),
-      timeout: $this->config->getTimeout()
+      env: $this->config->processEnvironment,
+      timeout: $this->config->timeout,
     );
 
     $process->mustRun();
