@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 use Smalot\PdfParser\Parser;
-use Symfony\Component\HttpFoundation\{ResponseHeaderBag, StreamedResponse};
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use WeasyPrint\Enums\PDFVersion;
 use WeasyPrint\Objects\Config;
 use WeasyPrint\Service;

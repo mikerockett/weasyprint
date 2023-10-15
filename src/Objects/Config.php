@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace WeasyPrint\Objects;
 
 use Illuminate\Contracts\Support\Arrayable;
-use WeasyPrint\Enums\{PDFVariant, PDFVersion};
+use WeasyPrint\Enums\PDFVariant;
+use WeasyPrint\Enums\PDFVersion;
 
 final class Config implements Arrayable
 {

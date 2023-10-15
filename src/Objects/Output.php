@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace WeasyPrint\Objects;
 
-use Illuminate\Support\Facades\{Response, Storage};
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class Output

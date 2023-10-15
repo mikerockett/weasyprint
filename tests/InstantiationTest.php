@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 use WeasyPrint\Contracts\Factory;
-use WeasyPrint\{Facade, Service};
+use WeasyPrint\Facade;
+use WeasyPrint\Service;
 
 test('can be instantiated via dependency injection', function (): void {
   expect($this->app->make(Factory::class))->toBeValidServiceInstance();

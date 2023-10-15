@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace WeasyPrint\Pipeline\Stages;
 
-use WeasyPrint\Pipeline\{BuildStage, BuildTraveler};
+use WeasyPrint\Pipeline\BuildStage;
+use WeasyPrint\Pipeline\BuildTraveler;
 
 class SetInputPath implements BuildStage
 {

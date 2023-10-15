@@ -12,8 +12,11 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use WeasyPrint\Commands\VersionCommand;
 use WeasyPrint\Contracts\Factory;
 use WeasyPrint\Exceptions\MissingSourceException;
-use WeasyPrint\Objects\{Config, Output, Source};
-use WeasyPrint\Pipeline\{BuildTraveler, Stages as Pipes};
+use WeasyPrint\Objects\Config;
+use WeasyPrint\Objects\Output;
+use WeasyPrint\Objects\Source;
+use WeasyPrint\Pipeline\BuildTraveler;
+use WeasyPrint\Pipeline\Stages as Pipes;
 
 class Service implements Factory
 {

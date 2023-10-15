@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace WeasyPrint\Pipeline\Stages;
 
-use WeasyPrint\Exceptions\{MissingOutputFileException, OutputReadFailedException};
+use WeasyPrint\Exceptions\MissingOutputFileException;
+use WeasyPrint\Exceptions\OutputReadFailedException;
 use WeasyPrint\Objects\Output;
-use WeasyPrint\Pipeline\{BuildStage, BuildTraveler};
+use WeasyPrint\Pipeline\BuildStage;
+use WeasyPrint\Pipeline\BuildTraveler;
 
 class PrepareOutput implements BuildStage
 {

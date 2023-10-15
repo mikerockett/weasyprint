@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Env;
-use WeasyPrint\Enums\{PDFVariant, PDFVersion};
+use WeasyPrint\Enums\PDFVariant;
+use WeasyPrint\Enums\PDFVersion;
 use WeasyPrint\Objects\Config;
 use WeasyPrint\Service;
 
@@ -48,7 +49,7 @@ test('service config is overridable', function (): void {
 });
 
 test('pdf variant can be set from environment', function (): void {
-  Env::getRepository()->set($key = 'WEASYPRINT_PDF_VARIANT', 'pdf/a-1b', );
+  Env::getRepository()->set($key = 'WEASYPRINT_PDF_VARIANT', 'pdf/a-1b');
 
   expect(PDFVariant::fromEnvironment($key))
     ->toEqual(PDFVariant::PDF_A_1B);
@@ -57,7 +58,7 @@ test('pdf variant can be set from environment', function (): void {
 });
 
 test('pdf version can be set from environment', function (): void {
-  Env::getRepository()->set($key = 'WEASYPRINT_PDF_VERSION', '1.7', );
+  Env::getRepository()->set($key = 'WEASYPRINT_PDF_VERSION', '1.7');
 
   expect(PDFVersion::fromEnvironment($key))
     ->toEqual(PDFVersion::VERSION_1_7);

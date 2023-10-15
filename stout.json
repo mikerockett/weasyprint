@@ -1,36 +1,7 @@
 {
   "indent": "  ",
-  "preset": "psr12",
+  "preset": "per",
   "rules": {
-    "array_indentation": true,
-    "array_syntax": {
-      "syntax": "short"
-    },
-    "blank_line_between_import_groups": false,
-    "cast_spaces": true,
-    "class_attributes_separation": {
-      "elements": {
-        "case": "none",
-        "const": "none",
-        "method": "one",
-        "property": "only_if_meta",
-        "trait_import": "none"
-      }
-    },
-    "global_namespace_import": true,
-    "group_import": true,
-    "method_chaining_indentation": true,
-    "no_unused_imports": true,
-    "no_useless_else": true,
-    "ordered_class_elements": true,
-    "ordered_imports": true,
-    "ordered_interfaces": true,
-    "return_assignment": true,
-    "self_static_accessor": true,
-    "single_import_per_statement": false,
-    "single_line_empty_body": true,
-    "single_quote": true,
-    "ternary_to_null_coalescing": true,
-    "trailing_comma_in_multiline": true
+    "@PER-CS2.0": true
   }
 }
