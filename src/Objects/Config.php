@@ -25,17 +25,6 @@ final class Config implements Arrayable
     $this->expandEnums();
   }
 
-  private function expandEnums(): void
-  {
-    if (is_string($this->pdfVariant)) {
-      $this->pdfVariant = PDFVariant::tryFrom($this->pdfVariant);
-    }
-
-    if (is_string($this->pdfVersion)) {
-      $this->pdfVersion = PDFVersion::tryFrom($this->pdfVersion);
-    }
-  }
-
   public function toArray(): array
   {
     return [
@@ -51,5 +40,16 @@ final class Config implements Arrayable
       'pdfVariant' => $this->pdfVariant?->value,
       'pdfVersion' => $this->pdfVersion?->value,
     ];
+  }
+
+  private function expandEnums(): void
+  {
+    if (is_string($this->pdfVariant)) {
+      $this->pdfVariant = PDFVariant::tryFrom($this->pdfVariant);
+    }
+
+    if (is_string($this->pdfVersion)) {
+      $this->pdfVersion = PDFVersion::tryFrom($this->pdfVersion);
+    }
   }
 }

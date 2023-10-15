@@ -9,21 +9,6 @@ use WeasyPrint\Contracts\Factory;
 
 class Provider extends ServiceProvider
 {
-  protected function name(): string
-  {
-    return 'weasyprint';
-  }
-
-  protected function identifierFor(string $suffix): string
-  {
-    return "{$this->name()}.$suffix";
-  }
-
-  protected function configFile(): string
-  {
-    return __DIR__ . '/../config/weasyprint.php';
-  }
-
   public function register(): void
   {
     $this->app->scoped(Factory::class, Service::class);
@@ -42,5 +27,20 @@ class Provider extends ServiceProvider
       path: $this->configFile(),
       key: $this->name()
     );
+  }
+
+  protected function name(): string
+  {
+    return 'weasyprint';
+  }
+
+  protected function identifierFor(string $suffix): string
+  {
+    return "{$this->name()}.$suffix";
+  }
+
+  protected function configFile(): string
+  {
+    return __DIR__ . '/../config/weasyprint.php';
   }
 }

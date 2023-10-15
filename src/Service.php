@@ -104,11 +104,6 @@ class Service implements Factory
     )->getOutput();
   }
 
-  private function processPipeline(PipelineContract $pipeline): BuildTraveler
-  {
-    return $pipeline->process(new BuildTraveler($this));
-  }
-
   public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse
   {
     return $this->build()->download($filename, $headers, $inline);
@@ -127,5 +122,10 @@ class Service implements Factory
   public function getData(): string
   {
     return $this->build()->getData();
+  }
+
+  private function processPipeline(PipelineContract $pipeline): BuildTraveler
+  {
+    return $pipeline->process(new BuildTraveler($this));
   }
 }
