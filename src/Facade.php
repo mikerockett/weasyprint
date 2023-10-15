@@ -6,12 +6,12 @@ namespace WeasyPrint;
 
 use Illuminate\Support\Facades\Facade as SupportFacade;
 use WeasyPrint\Contracts\Factory;
-use WeasyPrint\Objects\Config;
 
 /**
- * @method static Factory mergeConfig(mixed ...$config)
- * @method static Factory prepareSource(Source|Renderable|string $source)
- * @method static Config getConfig()
+ * @method static string getWeasyPrintVersion()
+ * @method static Factory setConfig(Objects\Config $config)
+ * @method static Factory tapConfig(callable $callback)
+ * @method static Factory prepareSource(Objects\Source|\Illuminate\Contracts\Support\Renderable|string $source)
  */
 class Facade extends SupportFacade
 {

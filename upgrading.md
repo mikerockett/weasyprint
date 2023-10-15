@@ -1,5 +1,11 @@
 # WeasyPrint for Laravel – Upgrade Guide
 
+## v7 → v8
+
+Version 8 of the package introduces some breaking changes, including the removal of config options that are no longer available in WeasyPrint, as well as a change to the default config and the ways in which it can be overridden.
+
+> WIP
+
 ## v6 → v7
 
 Version 7 of the package does not introduce any new features or changes. The upgrade path simply involves ensuring that you are running at least Laravel 9.x on PHP 8.1+.

@@ -12,11 +12,13 @@ interface Factory
 {
   public function getWeasyPrintVersion(): string;
 
+  public function setConfig(Config $config): self;
+
   public function tapConfig(callable $callback): self;
 
-  public function prepareSource(Source|Renderable|string $source): self;
-
   public function getConfig(): Config;
+
+  public function prepareSource(Source|Renderable|string $source): self;
 
   public function getSource(): Source;
 

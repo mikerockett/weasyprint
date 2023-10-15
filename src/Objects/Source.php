@@ -7,14 +7,13 @@ namespace WeasyPrint\Objects;
 use Illuminate\Contracts\Support\Renderable;
 use WeasyPrint\Exceptions\TemporaryFileException;
 
-class Source
+final class Source
 {
   private array $attachments = [];
 
   public function __construct(
     protected Renderable|string $source
-  ) {
-  }
+  ) {}
 
   public function get(): Renderable|string
   {

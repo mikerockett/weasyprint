@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace WeasyPrint\Pipeline\BuilderPipes;
+namespace WeasyPrint\Pipeline\Stages;
 
 use WeasyPrint\Exceptions\{MissingOutputFileException, OutputReadFailedException};
 use WeasyPrint\Objects\Output;
-use WeasyPrint\Pipeline\{BuilderContainer, BuilderPipelineStage};
+use WeasyPrint\Pipeline\{BuildStage, BuildTraveler};
 
-class PrepareOutput implements BuilderPipelineStage
+class PrepareOutput implements BuildStage
 {
-  public function __invoke(BuilderContainer $container): BuilderContainer
+  public function __invoke(BuildTraveler $container): BuildTraveler
   {
     if (!is_file($outputPath = $container->getOutputPath())) {
       throw new MissingOutputFileException($outputPath);

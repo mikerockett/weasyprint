@@ -13,7 +13,7 @@ use WeasyPrint\Commands\VersionCommand;
 use WeasyPrint\Contracts\Factory;
 use WeasyPrint\Exceptions\MissingSourceException;
 use WeasyPrint\Objects\{Config, Output, Source};
-use WeasyPrint\Pipeline\{BuilderContainer, BuilderPipes as Pipes};
+use WeasyPrint\Pipeline\{BuildTraveler, Stages as Pipes};
 
 class Service implements Factory
 {
@@ -51,6 +51,11 @@ class Service implements Factory
     return $this;
   }
 
+  public function getConfig(): Config
+  {
+    return $this->config;
+  }
+
   public function prepareSource(Source|Renderable|string $source): Factory
   {
     $this->source = match ($source instanceof Source) {
@@ -59,11 +64,6 @@ class Service implements Factory
     };
 
     return $this;
-  }
-
-  public function getConfig(): Config
-  {
-    return $this->config;
   }
 
   public function sourceIsSet(): bool
@@ -104,9 +104,9 @@ class Service implements Factory
     )->getOutput();
   }
 
-  private function processPipeline(PipelineContract $pipeline): BuilderContainer
+  private function processPipeline(PipelineContract $pipeline): BuildTraveler
   {
-    return $pipeline->process(new BuilderContainer($this));
+    return $pipeline->process(new BuildTraveler($this));
   }
 
   public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse

@@ -8,7 +8,7 @@ use WeasyPrint\Commands\BuildCommand;
 use WeasyPrint\Objects\Output;
 use WeasyPrint\Service;
 
-class BuilderContainer
+class BuildTraveler
 {
   private string $inputPath;
   private string $outputPath;
@@ -17,8 +17,7 @@ class BuilderContainer
 
   public function __construct(
     public Service $service
-  ) {
-  }
+  ) {}
 
   public function makeTemporaryFilename(): string|false
   {

@@ -16,7 +16,7 @@ return (array) new \WeasyPrint\Objects\Config(
   /**
    * The amount of seconds to allow a conversion to run for.
    */
-  timeout: (int) env('WEASYPRINT_TIMEOUT', 120),
+  timeout: (int) env('WEASYPRINT_TIMEOUT', '120'),
 
   /**
    * Force the input character encoding. utf-8 is recommended.
@@ -26,7 +26,7 @@ return (array) new \WeasyPrint\Objects\Config(
   /**
    * Enable or disable HTML Presentational Hints.
    */
-  presentationalHints: (bool) env('WEASYPRINT_PRESENTATIONAL_HINTS', true),
+  presentationalHints: env('WEASYPRINT_PRESENTATIONAL_HINTS', 'true'),
 
   /**
    * Optionally set the media type to use for CSS @media.

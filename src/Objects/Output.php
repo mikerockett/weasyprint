@@ -7,12 +7,11 @@ namespace WeasyPrint\Objects;
 use Illuminate\Support\Facades\{Response, Storage};
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class Output
+final class Output
 {
   public function __construct(
     protected string $data
-  ) {
-  }
+  ) {}
 
   public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse
   {

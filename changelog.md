@@ -1,13 +1,15 @@
-# WeasyPrint for Laravel – Release Notes
+# WeasyPrint for Laravel — Changelog
 
 ## 8.0.0 (Breaking Release) `current`
 
 This release drops support for WeasyPrint < v59. Going forward, compatibility of this package against a particular WeasyPrint version will be based solely on CLI flags available the *latest* version of WeasyPrint. If a CLI property is added or removed in a WeasyPrint release, then it will become unsupported in a new version of the package.
 
-## Changes:
+### Changes:
 
 - The `optimizeSize` configuration option has been removed.
-- WIP
+- Default config is now class-based to introduce some type-safety.
+- Config may now only be tapped or overridden.
+- …
 - All tests have been moved to Pest 2. Coverage removed for the time being.
 
 ## 7.1.0 `maintenance`, `minor`
@@ -19,6 +21,11 @@ This release adds support for WeasyPrint 58, along with two new configuration pr
 ## 7.0.0 `maintenance`
 
 This release adds support for Laravel 10 and drops support for Laravel 8. The minimum-required version of PHP is now 8.1. As there have been no significant API changes to WeasyPrint, this package continues to support v53+.
+
+<hr />
+
+<details>
+<summary>Unsupported Versions</summary>
 
 ## 6.1.0 `no support`, `minor`
 
@@ -152,3 +159,5 @@ Given that v5 is a paradigm release, the following changes are considered breaki
 ## 1.0.0 `no support`
 
 - Initial Release
+
+</details>

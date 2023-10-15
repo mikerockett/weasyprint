@@ -88,7 +88,7 @@ class GeneratePDF
 }
 ```
 
-**Global Helpers**
+**Global Helpers:**
 
 ```php
 use WeasyPrint\Contracts\Factory;

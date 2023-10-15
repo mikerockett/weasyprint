@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace WeasyPrint\Pipeline\BuilderPipes;
+namespace WeasyPrint\Pipeline\Stages;
 
 use WeasyPrint\Commands\BuildCommand;
-use WeasyPrint\Pipeline\{BuilderContainer, BuilderPipelineStage};
+use WeasyPrint\Pipeline\{BuildStage, BuildTraveler};
 
-class PrepareBuildCommand implements BuilderPipelineStage
+class PrepareBuildCommand implements BuildStage
 {
-  public function __invoke(BuilderContainer $container): BuilderContainer
+  public function __invoke(BuildTraveler $container): BuildTraveler
   {
     $service = $container->service;
 
