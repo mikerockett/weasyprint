@@ -1,20 +1,30 @@
 # WeasyPrint for Laravel – Release Notes
 
-## 7.1.0 `current`
+## 8.0.0 (Breaking Release) `current`
+
+This release drops support for WeasyPrint < v59. Going forward, compatibility of this package against a particular WeasyPrint version will be based solely on CLI flags available the *latest* version of WeasyPrint. If a CLI property is added or removed in a WeasyPrint release, then it will become unsupported in a new version of the package.
+
+## Changes:
+
+- The `optimizeSize` configuration option has been removed.
+- WIP
+- All tests have been moved to Pest 2. Coverage removed for the time being.
+
+## 7.1.0 `maintenance`, `minor`
 
 This release adds support for WeasyPrint 58, along with two new configuration properties, `pdfVersion` and `pdfVariant`, which may only be used in versions 58 and greater. Custom meta-data has not been added in this release.
 
 > Note: Support for WeasyPrint 59 and 60 to come in the next major package release, which will drop support for older versions of WeasyPrint.
 
-## 7.0.0 `current`
+## 7.0.0 `maintenance`
 
 This release adds support for Laravel 10 and drops support for Laravel 8. The minimum-required version of PHP is now 8.1. As there have been no significant API changes to WeasyPrint, this package continues to support v53+.
 
-## 6.1.0 `maintenance`, `minor`
+## 6.1.0 `no support`, `minor`
 
 This release adds support for Laravel 9, and works just fine with WeasyPrint v54.
 
-## 6.0.0 (Breaking Release) `maintenance`
+## 6.0.0 (Breaking Release) `no support`
 
 This version is specifically designed around WeasyPrint v53, which drops support for PNGs due to its new rendering engine. Overall, this simplifies things from an interface perspective – you only need to prepare the source, build the `Output`, and do what you need with it.
 
@@ -37,7 +47,7 @@ Over and above the changes noted below, the package now requires Laravel 8.47+, 
 - Due to the addition of the scoped singleton, the service class is no longer immutable. Any method that previously cloned the service will no longer do so.
 - Internally, the package now uses a [pipeline](https://github.com/mikerockett/pipeline) to prepare everything and call the WeasyPrint binary.
 
-## 5.0.0 (Paradigm Release) `maintenance`
+## 5.0.0 (Paradigm Release) `no support`
 
 ### What’s New
 
@@ -62,7 +72,7 @@ Given that v5 is a paradigm release, the following changes are considered breaki
 
 - The `download` and `inline` methods may now be called either on the service or on the output returned from `build()`. If it is called on the service, `build()` will be called for you, with the file type inferred from the extension, which defaults to `.pdf` if not provided.
 
-## 4.0.0 `maintenance`
+## 4.0.0 `no support`
 
 ### Changes
 

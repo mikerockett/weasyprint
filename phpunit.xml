@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd" beStrictAboutOutputDuringTests="true" bootstrap="vendor/autoload.php" colors="true" cacheDirectory=".phpunit.cache" requireCoverageMetadata="true" beStrictAboutCoverageMetadata="true">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.4/phpunit.xsd" beStrictAboutOutputDuringTests="true" bootstrap="vendor/autoload.php" colors="true" cacheDirectory=".phpunit.cache">
+	<coverage />
 	<testsuite name="WeasyPrint Test Suite">
-		<directory suffix="Tests.php">
-			./tests/
+		<directory suffix="Test.php">
+			./tests
 		</directory>
 	</testsuite>
+	<source>
+		<include>
+			<directory suffix=".php">
+				./src
+			</directory>
+		</include>
+	</source>
 </phpunit>

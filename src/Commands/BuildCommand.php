@@ -49,18 +49,13 @@ class BuildCommand extends BaseCommand
     );
 
     $this->maybePushArgument(
-      'optimize-size',
-      $this->config->getOptimizeSize()
-    );
-
-    $this->maybePushArgument(
       'pdf-variant',
       $this->config->getPdfVariant()?->value
     );
 
     $this->maybePushArgument(
       'pdf-version',
-      $this->config->getPdfVersion()
+      $this->config->getPdfVersion()?->value
     );
 
     foreach ($this->attachments as $attachment) {

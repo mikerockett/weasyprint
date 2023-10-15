@@ -11,50 +11,35 @@
 See the **[Changelog](changelog.md)** | View the **[Upgrade Guide](upgrading.md)**
 
 ---
-- [Version Requirements](#version-requirements)
-- [Package Installation](#package-installation)
-- [Service Instantiation](#service-instantiation)
-  - [Option 1. Service Class](#option-1-service-class)
-  - [Option 2. Dependency Injection](#option-2-dependency-injection)
-  - [Option 3. Facade](#option-3-facade)
-- [Preparing the Source](#preparing-the-source)
-  - [Source Object](#source-object)
-  - [Renderable](#renderable)
-  - [String](#string)
-- [Building the Output](#building-the-output)
-  - [Implicit Inference](#implicit-inference)
-- [Attachments](#attachments)
-- [Configuration](#configuration)
-  - [Named Parameters and Argument Unpacking](#named-parameters-and-argument-unpacking)
-  - [Merging with the Defaults](#merging-with-the-defaults)
-  - [Available Configuration Options](#available-configuration-options)
-- [TL;DR, gimme a cheat-sheet!](#tldr-gimme-a-cheat-sheet)
+- [Supported Version](#supported-version)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Service Instantiation](#service-instantiation)
+  - [Preparing the Source](#preparing-the-source)
+  - [Building the Output](#building-the-output)
+  - [Attachments](#attachments)
+  - [Configuration](#configuration)
 - [Contributing](#contributing)
-  - [Tests](#tests)
-  - [Commit Messages](#commit-messages)
 - [Open Source](#open-source)
 
 ---
 <!-- /exclude-from-website -->
-## Version Requirements
+## Supported Version
 
 There are three versions of the package that are supported. v7 is the latest, and is the only version that will receive new features. v5 and v6 are the previous versions, and will only receive bug-fixes and security-patches, thus they are in maintenance mode.
 
 The table below outlines supported versions:
 
-| Package Version      | WeasyPrint    | Laravel                         | PHP  | Branch                                                      |
-| -------------------- | ------------- | ------------------------------- | ---- | ----------------------------------------------------------- |
-| `^7.0` (current)     | ≥ v53 (pydyf) | 9.x, 10.x                       | 8.1+ | [7.x](https://gitlab.com/mikerockett/weasyprint/-/tree/7.x) |
-| `^6.0` (maintenance) | ≥ v53 (pydyf) | 8.47+ (scoped singletons)*, 9.x | 8.x  | [6.x](https://gitlab.com/mikerockett/weasyprint/-/tree/6.x) |
-| `^5.0` (maintenance) | < v53 (cairo) | 8.x (immutable singletons)      | 8.x  | [5.x](https://gitlab.com/mikerockett/weasyprint/-/tree/5.x) |
+| Package Version     | WeasyPrint Version | Laravel | PHP  | Branch                                                      |
+| ------------------- | ------------------ | ------- | ---- | ----------------------------------------------------------- |
+| `8.x` (current)     | ≥ v59              | 10.x    | 8.1+ | [8.x](https://gitlab.com/mikerockett/weasyprint/-/tree/8.x) |
+| `7.x` (maintenance) | ≥ v53, < 59        | 10.x    | 8.1+ | [7.x](https://gitlab.com/mikerockett/weasyprint/-/tree/7.x) |
 
-\* The reason a specific minor version of Laravel is required for v6 is due to the addition of [scoped singletons](https://laravel.com/docs/8.x/container#binding-scoped), which adds first-class support for [Laravel Octane](https://github.com/laravel/octane). In the previous version of this package, the singleton was immutable, which meant that every mutable-by-design method would actually return a cloned instance of the service.
+> **Note:** As of version 8, WeasyPrint < 59 is not supported. If you rely on older versions, please use the applicable package version.
 
 ---
 
-> Note: **The guides below are for v6+**
-
-## Package Installation
+## Installation
 
 First make sure **WeasyPrint v53+** is [installed on your system](https://doc.courtbouillon.org/weasyprint/latest/first_steps.html).
 
@@ -72,11 +57,13 @@ If you would like to publish the default configuration, you may run the command 
 $ php artisan vendor:publish --tag=weasyprint.config
 ```
 
-## Service Instantiation
+## Usage
 
-WeasyPrint for Laravel provides different mechanisms you can use to get going. You may make use of the service class directly, use dependency injection, or use the Facade.
+WeasyPrint for Laravel provides different mechanisms you can use to get going. You may make use of the service class directly, use dependency injection, or use the Facade. Once you have a service class instance, there are different ways in which you can prepare your source file or data and build the PDF output.
 
-### Option 1. Service Class
+### Service Instantiation
+
+#### Option 1. Service Class
 
 ```php
 use WeasyPrint\Service as WeasyPrintService;
@@ -104,7 +91,7 @@ If you prefer a short-hand and don’t care much for changing any configuration,
 $service = WeasyPrintService::createFromSource($source);
 ```
 
-### Option 2. Dependency Injection
+#### Option 2. Dependency Injection
 
 ```php
 use WeasyPrint\Contracts\Factory as WeasyPrintFactory;
@@ -132,7 +119,7 @@ $service->mergeConfig(
 
 You do not need to call this method at any specific point in time, but you must call it *before* you build the output.
 
-### Option 3. Facade
+#### Option 3. Facade
 
 ```php
 use WeasyPrint\Facade as WeasyPrint;
@@ -145,7 +132,7 @@ Similar to dependency injection, using the Facade will give you an instance of t
 
 To change the configuration, you may call the `mergeConfig` method, just as you would with dependency injection.
 
-## Preparing the Source
+### Preparing the Source
 
 With the basics out of the way, let’s talk more about preparing the source. The `prepareSource` method takes a single argument that represents your source data.
 
@@ -164,7 +151,7 @@ The `$source` argument may be one of the following:
 - `Illumintate\Support\Contracts\Renderable` if you are passing in an instance of something that is renderable, ie it implements the `render` method. This might be a Laravel View, which also accepts an array of data. For more information, see the Laravel [documentation on views](https://laravel.com/docs/views).
 - `string` if you are passing in an already-rendered piece of HTML, or asking WeasyPrint to fetch and render the source from an external URL.
 
-### Source Object
+#### Source Object
 
 If you would like to use the `Source` object, you may instantiate it as follows:
 
@@ -176,7 +163,7 @@ $source = Source::new('<p>WeasyPrint rocks!</p>');
 $service = WeasyPrint::prepareSource($source);
 ```
 
-### Renderable
+#### Renderable
 
 A Renderable is simply a class that implements the `Renderable` contract, described above.
 
@@ -196,7 +183,7 @@ class MyRenderable implements Renderable
 $service = WeasyPrint::prepareSource(new MyRenderable);
 ```
 
-### String
+#### String
 
 If you prefer to pass in a string:
 
@@ -206,7 +193,7 @@ use WeasyPrint\Facade as WeasyPrint;
 $service = WeasyPrint::prepareSource('<p>WeasyPrint rocks!</p>');
 ```
 
-## Building the Output
+### Building the Output
 
 Now that you know how to instantiate a service class instance and prepare the source input, you are ready to build the output. To do this, you can call the `build()` method, which will return an instance of `Objects\Output`.
 
@@ -240,11 +227,11 @@ public function getData(): string;
 
 This method returns the raw PDF data as a string.
 
-### Implicit Inference
+#### Implicit Inference
 
 If you would prefer to not call `build()`, you can simply omit it and call the methods that are available on the `Output` class. The service will implicitly build the PDF for you, and then call the applicable method on the output.
 
-## Attachments
+### Attachments
 
 WeasyPrint has the ability to add attachments to output PDFs. To add an attachment, call the `addAttachment` method:
 
@@ -256,11 +243,11 @@ $service = WeasyPrint::prepareSource('<p>WeasyPrint rocks!</p>')
 
 Naturally this has no effect when outputting to PNG.
 
-## Configuration
+### Configuration
 
 As mentioned in previous sections, you may change WeasyPrint’s configuration on the fly, either by passing a configuration object to the `new` method of the service class, or by calling `mergeConfig` on an already-resolved service class instance.
 
-### Named Parameters and Argument Unpacking
+#### Named Parameters and Argument Unpacking
 
 Both of these methods use argument unpacking to internally resolve a new instance of `WeasyPrint\Config`, which will be used by the service class instance to interpret the configuration options as and when needed.
 
@@ -282,11 +269,11 @@ $service->mergeConfig(...[
 ])
 ```
 
-### Merging with the Defaults
+#### Merging with the Defaults
 
 No matter which way you pass in the configuration options, they will be merged with the defaults, which are acquired from the default configuration stored in the package source, or from the published config file if you ran `vendor:publish`.
 
-### Available Configuration Options
+#### Available Configuration Options
 
 Here are the configuration options you can set, along with their defaults:
 
@@ -356,21 +343,11 @@ return [
   'stylesheets' => null,
 
   /**
-   * Optionally enable size optimizations, where WeasyPrint will attempt
-   * to reduce the size of embedded images, fonts or both.
-   * Use: 'images', 'fonts', 'all' or 'none' (default)
-   * @param string
-   */
-  'optimizeSize' => env('WEASYPRINT_OPTIMIZE_SIZE', 'none'),
-
-  /**
    * Optionally specify a PDF variant.
    * Use one of: pdf/a-1b, pdf/a-2b, pdf/a-3b, pdf/a-4b, or pdf/ua-1
    * Or:         case direct from PDFVariant
    *
    * @param WeasyPrint\Enums\PDFVariant
-   *
-   * @version Note: This config option requires WeasyPrint v58+
    */
   'pdfVariant' => WeasyPrint\Enums\PDFVariant::fromEnv('WEASYPRINT_PDF_VARIANT'),
 
@@ -378,8 +355,6 @@ return [
    * Optionally specify a PDF version.
    *
    * @param string
-   *
-   * @version Note: This config option requires WeasyPrint v58+
    */
   'pdfVersion' => null,
 
@@ -387,36 +362,6 @@ return [
 ```
 
 As noted before, you may publish the config file if you’d like to make changes to it – but, in most cases, you’ll want to make use of environment variables by adding them to your `.env` file or using whatever mechanism your app uses to resolve them.
-
-## TL;DR, gimme a cheat-sheet!
-
-Here's a cheat-sheet showing all possible approaches and scenarios.
-
-```php
-// Managing Config
-$service = WeasyPrint\Service::new(binary: '/bin/weasyprint');
-$service = WeasyPrint\Service::new(...['binary' => '/bin/weasyprint']);
-$service = WeasyPrint\Facade::mergeConfig(binary: '/bin/weasyprint');
-$service = WeasyPrint\Facade::mergeConfig(...['binary' => '/bin/weasyprint']);
-
-// Preparing the Source
-$service = WeasyPrint\Service::new()->prepareSource('Cheat-sheet!');
-$service = WeasyPrint\Service::createFromSource('Cheat-sheet!');
-$service = WeasyPrint\Facade::prepareSource('Cheat-sheet!');
-$service = app(WeasyPrint\Factory::class)::prepareSource('Cheat-sheet!');
-
-// Using Explicit calls to build()
-$service->build()->download('document.pdf');
-$service->build()->inline('document.pdf');
-$service->build()->putFile('document.pdf', 'disk-name');
-$service->build()->getData();
-
-// Using Implicit Output Inference
-$service->download('document.pdf');
-$service->inline('document.pdf');
-$service->putFile('document.pdf', 'disk-name');
-$service->getData();
-```
 
 ## Contributing
 
@@ -428,7 +373,7 @@ If you’d like to make a contribution to WeasyPrint for Laravel, you’re more 
 
 Your request should be as detailed as possible, unless it’s a trivial change.
 
-### Tests
+#### Tests
 
 Should it be required, please make sure that any impacted tests are updated, or new tests are created.
 
@@ -443,7 +388,7 @@ Then run the tests before opening your merge request:
 $ composer run test
 ```
 
-### Commit Messages
+#### Commit Messages
 
 Your commit message should be clear and concise. If you’re fixing a bug, start the message with `bugfix:`. If it’s a feature: `feature:`. If it’s a chore, like formatting code: `chore:`.
 

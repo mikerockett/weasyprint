@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace WeasyPrint\Objects;
 
-use Illuminate\Container\Container;
 use Illuminate\Contracts\Support\Arrayable;
-use WeasyPrint\Enums\PDFVariant;
+use WeasyPrint\Enums\{PDFVariant, PDFVersion};
 
 class Config implements Arrayable
 {
@@ -16,21 +15,18 @@ class Config implements Arrayable
     protected int $timeout = 3600,
     protected string $inputEncoding = 'utf-8',
     protected bool $presentationalHints = true,
-    protected string $optimizeSize = 'none',
     protected ?string $mediaType = null,
     protected ?string $baseUrl = null,
     protected ?array $stylesheets = null,
     protected array $processEnvironment = ['LC_ALL' => 'en_US.UTF-8'],
     protected ?PDFVariant $pdfVariant = null,
-    protected ?string $pdfVersion = null,
+    protected ?PDFVersion $pdfVersion = null,
   ) {
   }
 
   public static function new(mixed ...$config): static
   {
-    $defaults = Container::getInstance()->make('config')->get('weasyprint');
-
-    return new self(...array_merge($defaults, $config));
+    return new self(...array_merge(config('weasyprint'), $config));
   }
 
   public function getBinary(): ?string
@@ -58,11 +54,6 @@ class Config implements Arrayable
     return $this->presentationalHints;
   }
 
-  public function getOptimizeSize(): string
-  {
-    return $this->optimizeSize;
-  }
-
   public function getMediaType(): ?string
   {
     return $this->mediaType;
@@ -88,7 +79,7 @@ class Config implements Arrayable
     return $this->pdfVariant;
   }
 
-  public function getPdfVersion(): ?string
+  public function getPdfVersion(): ?PDFVersion
   {
     return $this->pdfVersion;
   }
@@ -102,7 +93,6 @@ class Config implements Arrayable
       'timeout' => $this->getTimeout(),
       'inputEncoding' => $this->getInputEncoding(),
       'presentationalHints' => $this->usePresentationalHints(),
-      'optimizeSize' => $this->getOptimizeSize(),
       'mediaType' => $this->getMediaType(),
       'baseUrl' => $this->getBaseUrl(),
       'stylesheets' => $this->getStylesheets(),

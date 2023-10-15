@@ -21,6 +21,6 @@ abstract class TestCase extends OrchestraTestCase
   {
     $app
       ->make(Repository::class)
-      ->set('view.paths', [__DIR__.'/views']);
+      ->set('view.paths', [__DIR__ . '/views']);
   }
 }

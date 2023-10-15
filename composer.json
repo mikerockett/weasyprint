@@ -20,6 +20,7 @@
     "johnbacon/stout": "^1.13",
     "nunomaduro/collision": "^7.0",
     "orchestra/testbench": "^8.0",
+    "pestphp/pest": "^2.23",
     "smalot/pdfparser": "^2.7"
   },
   "autoload": {
@@ -33,7 +34,10 @@
     }
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
   },
   "extra": {
     "laravel": {
@@ -45,10 +49,10 @@
   "scripts": {
     "test": [
       "@dump",
-      "@testbench"
+      "@pest"
     ],
     "dump": "composer dumpautoload",
-    "testbench": "./vendor/bin/testbench package:test",
+    "pest": "./vendor/bin/pest",
     "format": "./vendor/bin/stout"
   }
 }
