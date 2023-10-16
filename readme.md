@@ -26,16 +26,14 @@ See the **[Changelog](changelog.md)** | View the **[Upgrade Guide](upgrading.md)
 <!-- /exclude-from-website -->
 ## Supported Versions
 
-There are three versions of the package that are supported. v7 is the latest, and is the only version that will receive new features. v5 and v6 are the previous versions, and will only receive bug-fixes and security-patches, thus they are in maintenance mode.
-
-The table below outlines supported versions:
-
-| Package Version     | WeasyPrint Version | Laravel | PHP  | Branch                                                      |
-| ------------------- | ------------------ | ------- | ---- | ----------------------------------------------------------- |
-| `8.x` (current)     | ≥ v59              | 10.x    | 8.1+ | [8.x](https://gitlab.com/mikerockett/weasyprint/-/tree/8.x) |
-| `7.x` (maintenance) | ≥ v53, < 59        | 10.x    | 8.1+ | [7.x](https://gitlab.com/mikerockett/weasyprint/-/tree/7.x) |
+The table below outlines supported versions, where `current` means it the latest supported version, and `maintenance` is supported by way of bug and security fixes only.
 
 > **Note:** As of version 8, WeasyPrint < 59 is not supported. If you rely on older versions, please use the applicable package version.
+
+| Package Version     | WeasyPrint Version      | Laravel | PHP  | Branch                                                      |
+| ------------------- | ----------------------- | ------- | ---- | ----------------------------------------------------------- |
+| `8.x` (current)     | `^59.0\|^60.0` (semver) | 10.x    | 8.1+ | [8.x](https://gitlab.com/mikerockett/weasyprint/-/tree/8.x) |
+| `7.x` (maintenance) | ≥ v53, < 59 (unchecked) | 10.x    | 8.1+ | [7.x](https://gitlab.com/mikerockett/weasyprint/-/tree/7.x) |
 
 ---
 

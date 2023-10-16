@@ -26,7 +26,7 @@ return (array) new \WeasyPrint\Objects\Config(
   /**
    * Enable or disable HTML Presentational Hints.
    */
-  presentationalHints: env('WEASYPRINT_PRESENTATIONAL_HINTS', 'true'),
+  presentationalHints: env('WEASYPRINT_PRESENTATIONAL_HINTS', true),
 
   /**
    * Optionally set the media type to use for CSS @media.
