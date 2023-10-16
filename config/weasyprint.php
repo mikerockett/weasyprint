@@ -16,7 +16,7 @@ return (array) new \WeasyPrint\Objects\Config(
   /**
    * The amount of seconds to allow a conversion to run for.
    */
-  timeout: (int) env('WEASYPRINT_TIMEOUT', '120'),
+  timeout: (int) env('WEASYPRINT_TIMEOUT', '60'),
 
   /**
    * Force the input character encoding. utf-8 is recommended.
@@ -40,9 +40,9 @@ return (array) new \WeasyPrint\Objects\Config(
   baseUrl: env('WEASYPRINT_BASE_URL'),
 
   /**
-   * Optionally provide an array of stylesheets to use alongside the HTML input.
+   * Stylesheets to use alongside the HTML input.
    * Each stylesheet may the absolute path to a file, or a URL.
-   * It is recommended to do this at runtime.
+   * NOTE: It is recommended to do this at runtime.
    */
   stylesheets: [],
 
@@ -61,4 +61,39 @@ return (array) new \WeasyPrint\Objects\Config(
    * Optionally specify a PDF version.
    */
   pdfVersion: WeasyPrint\Enums\PDFVersion::fromEnvironment('WEASYPRINT_PDF_VERSION'),
+
+  /**
+   * For debugging purposes, do not compress PDFs.
+   */
+  skipCompression: env('WEASYPRINT_SKIP_COMPRESSION', false),
+
+  /**
+   * Optimize the size of embedded images with no quality loss.
+   */
+  optimizeImages: env('WEASYPRINT_OPTIMIZE_IMAGES', false),
+
+  /**
+   * When possible, embed unmodified font files in the PDF.
+   */
+  fullFonts: env('WEASYPRINT_FULL_FONTS', false),
+
+  /**
+   * Keep hinting information in embedded font files.
+   */
+  hinting: env('WEASYPRINT_HINTING', false),
+
+  /**
+   * Set the maximum resolution of images embedded in the PDF.
+   */
+  dpi: env('WEASYPRINT_DPI', null),
+
+  /**
+   * Set the JPEG output quality, from 0 (worst) to 95 (best).
+   */
+  jpegQuality: env('WEASYPRINT_JPEG_QUALITY', null),
+
+  /**
+   * Render PDF forms from HTML elements.
+   */
+  pdfForms: env('WEASYPRINT_PDF_FORMS', false),
 );

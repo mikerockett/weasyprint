@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace WeasyPrint\Commands;
 
-use Illuminate\Support\Collection;
 use WeasyPrint\Exceptions\AttachmentNotFoundException;
 use WeasyPrint\Objects\Config;
 
@@ -20,25 +19,32 @@ final class BuildCommand extends BaseCommand
   ) {
     $this->config = $config;
 
-    $this->arguments = new Collection([
+    $this->arguments = collect([
       $config->binary ?? $this->findBinary(),
       $inputPath,
       $outputPath,
-      '--quiet',
-      '--encoding', $config->inputEncoding,
     ]);
 
-    $this->prepareOptionalArguments();
+    $this->prepareArguments();
   }
 
-  private function prepareOptionalArguments(): void
+  private function prepareArguments(): void
   {
     $arguments = collect([
+      'quiet' => true,
+      'encoding' => $this->config->inputEncoding,
       'presentational-hints' => $this->config->presentationalHints,
       'base-url' => $this->config->baseUrl,
       'media-type' => $this->config->mediaType,
       'pdf-variant' => $this->config->pdfVariant?->value,
       'pdf-version' => $this->config->pdfVersion?->value,
+      'uncompressed-pdf' => $this->config->skipCompression,
+      'optimize-images' => $this->config->optimizeImages,
+      'full-fonts' => $this->config->fullFonts,
+      'hinting' => $this->config->hinting,
+      'dpi' => $this->config->dpi,
+      'jpeg-quality' => $this->config->jpegQuality,
+      'pdf-forms' => $this->config->pdfForms,
     ]);
 
     $arguments->each(

@@ -346,6 +346,41 @@ return (array) new \WeasyPrint\Objects\Config(
    * Optionally specify a PDF version.
    */
   pdfVersion: WeasyPrint\Enums\PDFVersion::fromEnvironment('WEASYPRINT_PDF_VERSION'),
+
+  /**
+   * For debugging purposes, do not compress PDFs.
+   */
+  skipCompression: env('WEASYPRINT_SKIP_COMPRESSION', false),
+
+  /**
+   * Optimize the size of embedded images with no quality loss.
+   */
+  optimizeImages: env('WEASYPRINT_OPTIMIZE_IMAGES', false),
+
+  /**
+   * When possible, embed unmodified font files in the PDF.
+   */
+  fullFonts: env('WEASYPRINT_FULL_FONTS', false),
+
+  /**
+   * Keep hinting information in embedded font files.
+   */
+  hinting: env('WEASYPRINT_HINTING', false),
+
+  /**
+   * Set the maximum resolution of images embedded in the PDF.
+   */
+  dpi: env('WEASYPRINT_DPI', null),
+
+  /**
+   * Set the JPEG output quality, from 0 (worst) to 95 (best).
+   */
+  jpegQuality: env('WEASYPRINT_JPEG_QUALITY', null),
+
+  /**
+   * Render PDF forms from HTML elements.
+   */
+  pdfForms: env('WEASYPRINT_PDF_FORMS', false),
 );
 ```
 

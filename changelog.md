@@ -10,10 +10,12 @@ In general, only the latest major version of WeasyPrint and, by extension, the p
 
 ### Changes:
 
-- The `optimizeSize` configuration option has been removed.
 - Default config is now class-based to introduce some type-safety.
 - Config may now only be tapped or overridden.
-- …
+- The `timeout` default is now 60 seconds.
+- The `optimizeSize` configuration option has been removed.
+- The `skipCompression`, `optimizeImages`, `fullFonts`, `hinting`, `dpi`, `jpegQuality`, `pdfForms` config options have been added.
+- Some config options are now validated, including the new `jpegQuality` option, along with `mediaType` and `inputEncoding`. An exception will be thrown if these options are invalid.
 - All tests have been moved to Pest 2. Coverage removed for the time being.
 
 ## 7.1.0 `maintenance`, `minor`
