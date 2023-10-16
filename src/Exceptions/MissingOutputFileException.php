@@ -10,6 +10,11 @@ class MissingOutputFileException extends RuntimeException
 {
   public function __construct(string $outputFilePath)
   {
-    parent::__construct("An output file was expected at $outputFilePath, but one was not found.");
+    parent::__construct(
+      sprintf(
+        'An output file was expected at %s, but one was not found.',
+        $outputFilePath
+      )
+    );
   }
 }

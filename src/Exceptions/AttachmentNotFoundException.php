@@ -10,6 +10,11 @@ class AttachmentNotFoundException extends RuntimeException
 {
   public function __construct(string $attachmentPath)
   {
-    parent::__construct("Unable to add attachment: file at $attachmentPath does not exist.");
+    parent::__construct(
+      sprintf(
+        'Unable to add attachment: file at %s does not exist.',
+        $attachmentPath,
+      )
+    );
   }
 }

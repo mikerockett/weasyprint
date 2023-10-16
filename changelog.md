@@ -2,7 +2,11 @@
 
 ## 8.0.0 (Breaking Release) `current`
 
-This release drops support for WeasyPrint < v59. Going forward, compatibility of this package against a particular WeasyPrint version will be based solely on CLI flags available the *latest* version of WeasyPrint. If a CLI property is added or removed in a WeasyPrint release, then it will become unsupported in a new version of the package.
+This release drops support for WeasyPrint < v59. If you are constrained to an older version, an older version of the package that supports that version will be required.
+
+Going forward, compatibility of this package against a particular WeasyPrint version will be based solely on CLI flags available the *latest* version of WeasyPrint. If a CLI property is removed in a WeasyPrint release, then it will become unsupported in a new version of the package. If one is added, then it will be unsupported until a new version of the package is released.
+
+In general, only the latest major version of WeasyPrint and, by extension, the package will be supported at any given time.
 
 ### Changes:
 

@@ -95,6 +95,7 @@ class Service implements Factory
     return $this->processPipeline(
       new Pipeline(
         null,
+        new Pipes\AssertSupportedVersion(),
         new Pipes\EnsureSourceIsSet(),
         new Pipes\SetInputPath(),
         new Pipes\SetOutputPath(),

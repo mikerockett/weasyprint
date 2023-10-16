@@ -9,6 +9,8 @@ use WeasyPrint\Contracts\Factory;
 
 class Provider extends ServiceProvider
 {
+  public const SUPPORTED_VERSIONS = '^59.0|^60.0';
+
   public function register(): void
   {
     $this->app->scoped(Factory::class, Service::class);

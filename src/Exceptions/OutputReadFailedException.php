@@ -10,6 +10,11 @@ class OutputReadFailedException extends RuntimeException
 {
   public function __construct(string $outputFilePath)
   {
-    parent::__construct("The output file $outputFilePath could not be streamed into memory.");
+    parent::__construct(
+      sprintf(
+        'The output file located at %s could not be streamed into memory.',
+        $outputFilePath,
+      )
+    );
   }
 }
