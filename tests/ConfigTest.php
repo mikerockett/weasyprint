@@ -8,60 +8,72 @@ use WeasyPrint\Enums\PDFVersion;
 use WeasyPrint\Objects\Config;
 use WeasyPrint\Service;
 
-test('defult configuration can be loaded', function (): void {
-  expect(config('weasyprint'))->toEqual(
-    require __DIR__ . '/../config/weasyprint.php'
-  );
+describe('default config', function (): void {
+  test('can be loaded', function (): void {
+    expect(config('weasyprint'))->toEqual(
+      require __DIR__ . '/../config/weasyprint.php'
+    );
+  });
+
+  test('prepared as config object', function (): void {
+    expect(
+      Service::instance()->getConfig()
+    )->toBeInstanceOf(Config::class);
+  });
+
+  test('prepared with defaults', function (): void {
+    expect(
+      Service::instance()->getConfig()->toArray()
+    )->toEqual(config('weasyprint'));
+  });
 });
 
-test('service prepares config object by default', function (): void {
-  expect(
-    Service::instance()->getConfig()
-  )->toBeInstanceOf(Config::class);
+describe('runtime config', function (): void {
+  test('via tapping', function (): void {
+    expect(
+      Service::instance()
+        ->tapConfig(static function (Config $config) {
+          $config->binary = '/bin/weasyprint';
+        })
+        ->getConfig()
+        ->binary
+    )->toEqual('/bin/weasyprint');
+  });
+
+  test('via overriding', function (): void {
+    expect(
+      Service::instance()
+        ->setConfig(new Config(
+          binary: '/bin/weasyprint'
+        ))
+        ->getConfig()
+        ->binary
+    )->toEqual('/bin/weasyprint');
+  });
 });
 
-test('service prepares default config with default options', function (): void {
-  expect(
-    Service::instance()->getConfig()->toArray()
-  )->toEqual(config('weasyprint'));
-});
+describe('environment', function (): void {
+  test('sets pdf variant', function (): void {
+    $this->scopeEnv(
+      envKey: 'WEASYPRINT_PDF_VARIANT',
+      envValue: 'pdf/a-1b',
+      callback: fn (string $key) => expect(
+        PDFVariant::fromEnvironment($key)
+      )->toEqual(
+        PDFVariant::PDF_A_1B
+      )
+    );
+  });
 
-test('service config is tappable', function (): void {
-  expect(
-    Service::instance()
-      ->tapConfig(static function (Config $config) {
-        $config->binary = '/bin/weasyprint';
-      })
-      ->getConfig()
-      ->binary
-  )->toEqual('/bin/weasyprint');
-});
-
-test('service config is overridable', function (): void {
-  expect(
-    Service::instance()
-      ->setConfig(new Config(
-        binary: '/bin/weasyprint'
-      ))
-      ->getConfig()
-      ->binary
-  )->toEqual('/bin/weasyprint');
-});
-
-test('pdf variant can be set from environment', function (): void {
-  Env::getRepository()->set($key = 'WEASYPRINT_PDF_VARIANT', 'pdf/a-1b');
-
-  expect(PDFVariant::fromEnvironment($key))
-    ->toEqual(PDFVariant::PDF_A_1B);
-
-  Env::getRepository()->clear($key);
-});
-
-test('pdf version can be set from environment', function (): void {
-  Env::getRepository()->set($key = 'WEASYPRINT_PDF_VERSION', '1.7');
-
-  expect(PDFVersion::fromEnvironment($key))
-    ->toEqual(PDFVersion::VERSION_1_7);
-
-  Env::getRepository()->clear($key);
+  test('sets pdf version', function (): void {
+    $this->scopeEnv(
+      envKey: 'WEASYPRINT_PDF_VERSION',
+      envValue: '1.7',
+      callback: fn (string $key) => expect(
+        PDFVersion::fromEnvironment($key)
+      )->toEqual(
+        PDFVersion::VERSION_1_7
+      )
+    );
+  });
 });

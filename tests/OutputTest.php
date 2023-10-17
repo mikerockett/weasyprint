@@ -2,123 +2,85 @@
 
 declare(strict_types=1);
 
-use Smalot\PdfParser\Parser;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use WeasyPrint\Enums\PDFVersion;
 use WeasyPrint\Objects\Config;
+use WeasyPrint\Objects\Source;
 use WeasyPrint\Service;
 
-test('can render from string', function (): void {
-  runPdfAssertions(
-    Service::instance()->prepareSource('<p>WeasyPrint rocks!</p>')
-      ->build()
-      ->getData()
-  );
+describe('from source', function (): void {
+  test('can render', function (mixed $source): void {
+    $this->runPdfAssertions(
+      Service::instance()
+        ->prepareSource($source)
+        ->build()
+        ->getData()
+    );
+  })->with([
+    'instance' => fn () => new Source('<p>WeasyPrint rocks!</p>'),
+    'argument' => fn () => '<p>WeasyPrint rocks!</p>',
+    'url' => fn () => 'https://example.org',
+    'renderable' => fn () => view('test-pdf'),
+  ]);
 });
 
-test('can render from url', function (): void {
-  runPdfAssertions(
-    Service::instance()->prepareSource('https://google.com')
-      ->build()
-      ->getData()
-  );
-});
-
-test('can render from renderable', function (): void {
-  runPdfAssertions(
-    Service::instance()->prepareSource(view('test-pdf'))
-      ->build()
-      ->getData()
-  );
-});
-
-test('can render and inline pdf output', function (): void {
-  runOutputFileAssertions(
-    Service::instance()
-      ->prepareSource(view('test-pdf'))->build()
-      ->inline('test.pdf'),
-    'application/pdf',
-    'inline; filename=test.pdf'
-  );
-});
-
-test('can render and download pdf output', function (): void {
-  runOutputFileAssertions(
-    Service::instance()
-      ->prepareSource(view('test-pdf'))->build()
-      ->download('test.pdf'),
-    'application/pdf',
-    'attachment; filename=test.pdf'
-  );
-});
-
-test('can render and download pdf output with shorthands', function (): void {
-  runOutputFileAssertions(
-    Service::instance()
-      ->prepareSource(view('test-pdf'))
-      ->download('test.pdf'),
-    'application/pdf',
-    'attachment; filename=test.pdf'
-  );
-});
-
-test('can render different pdf versions', function (): void {
-  collect([PDFVersion::VERSION_1_4, PDFVersion::VERSION_1_7])->each(
-    function (PDFVersion $version): void {
-      $data = Service::instance()
-        ->tapConfig(static function (Config $config) use ($version) {
-          $config->pdfVersion = $version;
-        })
+describe('streamed responses', function (): void {
+  test('download via output object', function (): void {
+    $this->runOutputAssertions(
+      Service::instance()
         ->prepareSource(view('test-pdf'))
-        ->getData('test.pdf');
+        ->build()
+        ->download('test.pdf'),
+      'application/pdf',
+      'attachment; filename=test.pdf'
+    );
+  });
 
-      expect($data)->toStartWith("%PDF-{$version->value}");
-    }
-  );
+  test('download via shorthand', function (): void {
+    $this->runOutputAssertions(
+      Service::instance()
+        ->prepareSource(view('test-pdf'))
+        ->download('test.pdf'),
+      'application/pdf',
+      'attachment; filename=test.pdf'
+    );
+  });
+
+  test('inline via output object', function (): void {
+    $this->runOutputAssertions(
+      Service::instance()
+        ->prepareSource(view('test-pdf'))
+        ->build()
+        ->inline('test.pdf'),
+      'application/pdf',
+      'inline; filename=test.pdf'
+    );
+  });
+
+  test('inline via shorthand', function (): void {
+    $this->runOutputAssertions(
+      Service::instance()
+        ->prepareSource(view('test-pdf'))
+        ->inline('test.pdf'),
+      'application/pdf',
+      'inline; filename=test.pdf'
+    );
+  });
 });
 
-function writeTempFile($contents): string
-{
-  file_put_contents(
-    filename: $tempFilename = tempnam(
-      sys_get_temp_dir(),
-      config('weasyprint.cachePrefix', 'weasyprint_cache')
-    ),
-    data: $contents
-  );
 
-  return $tempFilename;
-}
+describe('versions', function (): void {
+  test('can render', function (PDFVersion $version): void {
+    $data = Service::instance()
+      ->tapConfig(static function (Config $config) use ($version): void {
+        $config->pdfVersion = $version;
+      })
+      ->prepareSource(view('test-pdf'))
+      ->getData();
 
-function runPdfAssertions($output): void
-{
-  $finfo = finfo_open(FILEINFO_MIME_TYPE);
-  $tempFilename = writeTempFile($output);
-  $mime = finfo_file($finfo, $tempFilename);
-
-  expect($output)->not->toBeNull();
-  expect($output)->not->toBeEmpty();
-  expect($mime)->toEqual('application/pdf');
-
-  $parser = new Parser();
-  $document = $parser->parseFile($tempFilename);
-
-  expect($document->getDetails()['Producer'])->toStartWith('WeasyPrint');
-  unlink($tempFilename);
-  expect(is_file($tempFilename))->toBeFalse();
-}
-
-function runOutputFileAssertions(mixed $output, string $expectedMime, string $expectedDisposition): void
-{
-  $headers = $output->headers;
-  $hasHeaderBag = $headers instanceof ResponseHeaderBag;
-
-  expect($output instanceof StreamedResponse)->toBeTrue();
-  expect($hasHeaderBag)->toBeTrue();
-
-  if ($hasHeaderBag) {
-    expect($headers->get('content-type'))->toEqual($expectedMime);
-    expect($headers->get('content-disposition'))->toEqual($expectedDisposition);
-  }
-}
+    expect($data)->toStartWith("%PDF-{$version->value}");
+  })->with([
+    'version 1.4' => PDFVersion::VERSION_1_4,
+    'version 1.7' => PDFVersion::VERSION_1_4,
+    'version 2.0' => PDFVersion::VERSION_1_4,
+  ]);
+});

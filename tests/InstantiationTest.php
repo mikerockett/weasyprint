@@ -6,14 +6,16 @@ use WeasyPrint\Contracts\Factory;
 use WeasyPrint\Facade;
 use WeasyPrint\Service;
 
-test('can be instantiated via dependency injection', function (): void {
-  expect($this->app->make(Factory::class))->toBeValidServiceInstance();
-});
+describe('can be instantiated via', function (): void {
+  test('dependency injection', function (): void {
+    expect($this->app->make(Factory::class))->toBeValidServiceInstance();
+  });
 
-test('can be instantiated via instance container helper', function (): void {
-  expect(Service::instance())->toBeValidServiceInstance();
-});
+  test('instance() helper', function (): void {
+    expect(Service::instance())->toBeValidServiceInstance();
+  });
 
-test('can be instantiated via facade', function (): void {
-  expect(Facade::getFacadeRoot())->toBeValidServiceInstance();
+  test('facade', function (): void {
+    expect(Facade::getFacadeRoot())->toBeValidServiceInstance();
+  });
 });

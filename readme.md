@@ -4,7 +4,7 @@
 ![License](https://img.shields.io/badge/license-isc-green.svg?style=for-the-badge)
 ![Version](https://img.shields.io/packagist/v/rockett/weasyprint?label=Release&style=for-the-badge)
 ![Downloads](https://img.shields.io/packagist/dm/rockett/weasyprint?label=Installs&style=for-the-badge)
-![Pipeline Status](https://img.shields.io/gitlab/pipeline/mikerockett/weasyprint/6.x?style=for-the-badge)
+![Pipeline Status](https://img.shields.io/gitlab/pipeline/mikerockett/weasyprint/main?style=for-the-badge)
 
 **A feature-rich Laravel wrapper for the [WeasyPrint Document Factory](https://weasyprint.org/).**
 

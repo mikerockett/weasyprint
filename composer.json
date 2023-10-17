@@ -52,7 +52,7 @@
       "@pest"
     ],
     "dump": "composer dumpautoload",
-    "pest": "./vendor/bin/pest",
+    "pest": "./vendor/bin/pest --profile",
     "format": "./vendor/bin/stout --dirty",
     "format-all": "./vendor/bin/stout"
   }
