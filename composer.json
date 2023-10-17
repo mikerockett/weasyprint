@@ -12,6 +12,7 @@
   "minimum-stability": "stable",
   "require": {
     "php": "^8.1",
+    "composer/semver": "^3.4",
     "illuminate/support": "^9.0|^10.0",
     "rockett/pipeline": "^2.0",
     "symfony/process": "^6.0"
