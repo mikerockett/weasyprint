@@ -4,12 +4,12 @@
 
 This release drops support for WeasyPrint < v59. If you are constrained to an older version, an older version of the package that supports that version will be required.
 
-Going forward, compatibility of this package against a particular WeasyPrint version will be based solely on CLI flags available that version:
+Going forward, compatibility of this package against a particular WeasyPrint version will be based solely on CLI flags available in that version.
 
 - If a CLI property is removed in a WeasyPrint release, then it will become unsupported in a new version of the package.
 - If one is added, then it will be unsupported until a new version of the package is released.
 
-In general, only the latest major version of WeasyPrint and, by extension, the package will be supported at any given time.
+In general, only the latest major version of WeasyPrint and, by extension, the package will be supported at any given time. However, where CLI flags do not change between versions, and WeasyPrint only updates internal features in relation to rendering PDFs, then all such versions will continue to be supported. An example of this is WeasyPrint 59.0 → 60.0, where CLI flags did not change.
 
 If you are using an unsupported version of WeasyPrint, attempts to build a PDF will fail with an exception.
 

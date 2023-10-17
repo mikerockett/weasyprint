@@ -24,9 +24,8 @@ class Service implements Factory
   private Config $config;
   private Source $source;
 
-  public function __construct(
-    Repository $config,
-  ) {
+  public function __construct(Repository $config)
+  {
     $this->config = new Config(...$config->get('weasyprint'));
   }
 
