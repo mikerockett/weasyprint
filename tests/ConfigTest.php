@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Env;
 use WeasyPrint\Enums\PDFVariant;
 use WeasyPrint\Enums\PDFVersion;
 use WeasyPrint\Exceptions\InvalidConfigValueException;
@@ -80,6 +79,18 @@ describe('environment', function (): void {
 });
 
 describe('validation', function (): void {
+  test('valid dpi', function (): void {
+    Service::instance()->tapConfig(function (Config $config) {
+      $config->dpi = 300;
+    });
+  })->throwsNoExceptions();
+
+  test('invalid dpi', function (): void {
+    Service::instance()->tapConfig(function (Config $config) {
+      $config->dpi = -10;
+    });
+  })->throws(InvalidConfigValueException::class);
+
   test('valid jpeg quality', function (): void {
     Service::instance()->tapConfig(function (Config $config) {
       $config->jpegQuality = 50;

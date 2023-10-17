@@ -37,6 +37,14 @@ final class Config implements Arrayable
 
   public function runAssertions(): void
   {
+    if ($this->dpi && $this->dpi < 0) {
+      throw new InvalidConfigValueException(
+        key: 'dpi',
+        value: (string) $this->dpi,
+        expected: '>0'
+      );
+    }
+
     if ($this->jpegQuality && ($this->jpegQuality < 0 || $this->jpegQuality > 95)) {
       throw new InvalidConfigValueException(
         key: 'jpegQuality',

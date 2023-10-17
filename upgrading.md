@@ -48,15 +48,15 @@ If you have published the config file, it is recommended that you republish it, 
 
 The following options have been added:
 
-| Name              | Environment Variable          |
-| ----------------- | ----------------------------- |
-| `skipCompression` | `WEASYPRINT_SKIP_COMPRESSION` |
-| `optimizeImages`  | `WEASYPRINT_OPTIMIZE_IMAGES`  |
-| `fullFonts`       | `WEASYPRINT_FULL_FONTS`       |
-| `hinting`         | `WEASYPRINT_HINTING`          |
-| `dpi`             | `WEASYPRINT_DPI`              |
-| `jpegQuality`     | `WEASYPRINT_JPEG_QUALITY`     |
-| `pdfForms`        | `WEASYPRINT_PDF_FORMS`        |
+| Name              | Environment Variable          | Type           |
+| ----------------- | ----------------------------- | -------------- |
+| `skipCompression` | `WEASYPRINT_SKIP_COMPRESSION` | boolean        |
+| `optimizeImages`  | `WEASYPRINT_OPTIMIZE_IMAGES`  | boolean        |
+| `fullFonts`       | `WEASYPRINT_FULL_FONTS`       | boolean        |
+| `hinting`         | `WEASYPRINT_HINTING`          | boolean        |
+| `dpi`             | `WEASYPRINT_DPI`              | number (>0)    |
+| `jpegQuality`     | `WEASYPRINT_JPEG_QUALITY`     | number (0..95) |
+| `pdfForms`        | `WEASYPRINT_PDF_FORMS`        | boolean        |
 
 If you would like to configure these, you may do so using the new environment variables for each, or you may set them in a published config file, or at runtime using `tapConfig` or `setConfig`.
 

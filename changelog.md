@@ -21,7 +21,7 @@ If you are using an unsupported version of WeasyPrint, attempts to build a PDF w
 - The default `timeout` is now 60 seconds.
 - The `optimizeSize` config option has been removed.
 - The `skipCompression`, `optimizeImages`, `fullFonts`, `hinting`, `dpi`, `jpegQuality`, `pdfForms` config options have been added.
-- Some config options are now validated, including the new `jpegQuality` option, as well as `mediaType` and `inputEncoding`. An exception will be thrown if these options are invalid.
+- Some config options are now validated, including the new `dpi` and `jpegQuality` options, as well as existing `mediaType` and `inputEncoding` options. An exception will be thrown if these options are invalid.
 - All tests have been moved to Pest 2. Coverage removed for the time being.
 
 ## 7.1.0 `maintenance`, `minor`
