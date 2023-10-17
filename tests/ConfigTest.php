@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Env;
 use WeasyPrint\Enums\PDFVariant;
 use WeasyPrint\Enums\PDFVersion;
+use WeasyPrint\Exceptions\InvalidConfigValueException;
 use WeasyPrint\Objects\Config;
 use WeasyPrint\Service;
 
@@ -76,4 +77,30 @@ describe('environment', function (): void {
       )
     );
   });
+});
+
+describe('validation', function (): void {
+  test('valid jpeg quality', function (): void {
+    Service::instance()->tapConfig(function (Config $config) {
+      $config->jpegQuality = 50;
+    });
+  })->throwsNoExceptions();
+
+  test('invalid jpeg quality', function (): void {
+    Service::instance()->tapConfig(function (Config $config) {
+      $config->jpegQuality = 99;
+    });
+  })->throws(InvalidConfigValueException::class);
+
+  test('valid input encoding', function (): void {
+    Service::instance()->tapConfig(function (Config $config) {
+      $config->inputEncoding = 'utf-16';
+    });
+  })->throwsNoExceptions();
+
+  test('invalid input encoding', function (): void {
+    Service::instance()->tapConfig(function (Config $config) {
+      $config->inputEncoding = 'non-existent';
+    });
+  })->throws(InvalidConfigValueException::class);
 });

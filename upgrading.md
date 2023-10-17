@@ -4,11 +4,76 @@
 
 Version 8 of the package introduces some breaking changes, including the removal of config options that are no longer available in WeasyPrint, as well as a change to the default config and the ways in which it can be overridden.
 
-> WIP
+### Service Instance
+
+Previously, you could create a fresh service instance using `Service::new()`. This is no longer supported, as the package now always resolves a scoped singleton from Laravel’s [Service Container](https://laravel.com/docs/container).
+
+If you do not want to use dependency injection (using `Factory`) or the facade, you can use `Service::instance()` to get an instance from the service container.
+
+### Config File Format
+
+If you have published the config file, it is recommended that you republish it, for two reasons:
+
+1. New options have been added to support WeasyPrint 59.0.
+2. Whilst the config file still returns an array, it is no longer a raw array, but rather cast from a `Config` instance.
+
+    **Before:**
+
+    ```php
+    return [
+      'binary' => env('WEASYPRINT_BINARY'),
+      // …
+    ]
+    ```
+
+    **After:**
+
+    ```php
+    return (array) new \WeasyPrint\Objects\Config(
+      binary: env('WEASYPRINT_BINARY'),
+      // …
+    ]
+    ```
+
+    You are, however, welcome to retain the raw array format. If you do so, ensure that none of the enum-based options, namely `pdfVersion` and `pdfVariant`, return enum instances. They must return values instead, and the package will cast them to enums automatically. For example:
+
+    ```diff
+    return [
+    -- 'pdfVariant' => \WeasyPrint\Enums\PDFVariant::fromEnvironment('WEASYPRINT_PDF_VARIANT'),
+    ++ 'pdfVariant' => \WeasyPrint\Enums\PDFVariant::fromEnvironment('WEASYPRINT_PDF_VARIANT')->value,
+    ]
+    ```
+
+### New Options
+
+The following options have been added:
+
+| Name              | Environment Variable          |
+| ----------------- | ----------------------------- |
+| `skipCompression` | `WEASYPRINT_SKIP_COMPRESSION` |
+| `optimizeImages`  | `WEASYPRINT_OPTIMIZE_IMAGES`  |
+| `fullFonts`       | `WEASYPRINT_FULL_FONTS`       |
+| `hinting`         | `WEASYPRINT_HINTING`          |
+| `dpi`             | `WEASYPRINT_DPI`              |
+| `jpegQuality`     | `WEASYPRINT_JPEG_QUALITY`     |
+| `pdfForms`        | `WEASYPRINT_PDF_FORMS`        |
+
+If you would like to configure these, you may do so using the new environment variables for each, or you may set them in a published config file, or at runtime using `tapConfig` or `setConfig`.
+
+### Removed Option
+
+The `optimizeSize` option has been removed, having been superceded by the `skipCompression`, `optimizeImages`, `fullFonts`, `hinting`, `dpi`, and `jpegQuality` options above.
+
+If you are using it (by way of setting runtime config or by way of a published config file), it should be removed as it is no longer used. Use the new options individually instead.
 
 ## v6 → v7
 
 Version 7 of the package does not introduce any new features or changes. The upgrade path simply involves ensuring that you are running at least Laravel 9.x on PHP 8.1+.
+
+<hr />
+
+<details>
+<summary>Unsupported Versions</summary>
 
 ## v5 → v6
 
@@ -257,3 +322,5 @@ The diffs below show what needs to be changed. Each of them show the longhand an
 ++ $stream = WeasyPrint\Service::createFromSource('<p>Test</p>')
 ++   ->download('document.pdf') // or inline() or putFile();
 ```
+
+</details>

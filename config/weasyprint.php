@@ -55,12 +55,12 @@ return (array) new \WeasyPrint\Objects\Config(
   /**
    * Optionally specify a PDF variant.
    */
-  pdfVariant: WeasyPrint\Enums\PDFVariant::fromEnvironment('WEASYPRINT_PDF_VARIANT'),
+  pdfVariant: \WeasyPrint\Enums\PDFVariant::fromEnvironment('WEASYPRINT_PDF_VARIANT'),
 
   /**
    * Optionally specify a PDF version.
    */
-  pdfVersion: WeasyPrint\Enums\PDFVersion::fromEnvironment('WEASYPRINT_PDF_VERSION'),
+  pdfVersion: \WeasyPrint\Enums\PDFVersion::fromEnvironment('WEASYPRINT_PDF_VERSION'),
 
   /**
    * For debugging purposes, do not compress PDFs.

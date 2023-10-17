@@ -45,6 +45,7 @@ class Service implements Factory
   public function setConfig(Config $config): self
   {
     $this->config = $config;
+    $this->config->runAssertions();
 
     return $this;
   }
@@ -52,6 +53,7 @@ class Service implements Factory
   public function tapConfig(callable $callback): self
   {
     $callback($this->config);
+    $this->config->runAssertions();
 
     return $this;
   }

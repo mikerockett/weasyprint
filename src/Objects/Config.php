@@ -35,9 +35,9 @@ final class Config implements Arrayable
     $this->expandEnums();
   }
 
-  private function runAssertions(): void
+  public function runAssertions(): void
   {
-    if ($this->jpegQuality && $this->jpegQuality >= 0 && $this->jpegQuality <= 95) {
+    if ($this->jpegQuality && ($this->jpegQuality < 0 || $this->jpegQuality > 95)) {
       throw new InvalidConfigValueException(
         key: 'jpegQuality',
         value: (string) $this->jpegQuality,

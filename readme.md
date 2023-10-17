@@ -59,7 +59,7 @@ $ php artisan vendor:publish --tag=weasyprint.config
 
 WeasyPrint for Laravel is easy to use.
 
-All you need is an instance of the WeasyPrint service class, which can be resolved from the Laravel [Service Container](https://laravel.com/docs/container) as a [scoped singleton](https://laravel.com/docs/10.x/container#binding-scoped).
+All you need is an instance of the WeasyPrint service class, which can be resolved from the Laravel [Service Container](https://laravel.com/docs/container) as a [scoped singleton](https://laravel.com/docs/container#binding-scoped).
 
 Once you have an instance, you can prepare your source, change config (if needed), and build the output for processing by your application.
 
