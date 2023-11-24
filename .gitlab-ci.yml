@@ -11,7 +11,7 @@
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install -qo
   script:
-    - ./vendor/bin/testbench package:test --without-tty
+    - ./vendor/bin/pest --profile
 
 php8.1:
   extends: .template
