@@ -48,7 +48,7 @@ describe('streamed responses', function (): void {
 
   test('download via class', function (): void {
     $this->runOutputAssertions(
-      (new TestPDF)->download(),
+      (new TestPDF())->download(),
       'application/pdf',
       'attachment; filename=test.pdf'
     );
@@ -77,7 +77,7 @@ describe('streamed responses', function (): void {
 
   test('inline via class', function (): void {
     $this->runOutputAssertions(
-      (new TestPDF)->inline(),
+      (new TestPDF())->inline(),
       'application/pdf',
       'inline; filename=test.pdf'
     );

@@ -13,8 +13,7 @@ final class Output
 {
   public function __construct(
     protected string $data
-  ) {
-  }
+  ) {}
 
   public function stream(
     string $filename,
