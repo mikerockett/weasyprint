@@ -55,12 +55,6 @@
     "dump": "composer dumpautoload",
     "pest": "./vendor/bin/pest --profile",
     "format": "./vendor/bin/stout --dirty",
-    "format-all": "./vendor/bin/stout",
-    "post-install-cmd": [
-      "bash setup/init.sh"
-    ],
-    "post-update-cmd": [
-      "bash setup/init.sh"
-    ]
+    "format-all": "./vendor/bin/stout"
   }
 }
