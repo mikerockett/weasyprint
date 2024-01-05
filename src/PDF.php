@@ -34,10 +34,25 @@ abstract class PDF implements Responsable
     return $this->streamMode;
   }
 
-  public function toResponse($request): StreamedResponse
+  public function stream(StreamMode $mode): StreamedResponse
   {
     return Service::instance()
       ->prepareSource($this->source())
-      ->stream($this->filename(), $this->headers(), $this->streamMode());
+      ->stream($this->filename(), $this->headers(), $mode);
+  }
+
+  public function download(): StreamedResponse
+  {
+    return $this->stream(StreamMode::DOWNLOAD);
+  }
+
+  public function inline(): StreamedResponse
+  {
+    return $this->stream(StreamMode::INLINE);
+  }
+
+  public function toResponse($request): StreamedResponse
+  {
+    return $this->stream($this->streamMode());
   }
 }

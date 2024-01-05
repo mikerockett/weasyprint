@@ -13,12 +13,13 @@ final class Output
 {
   public function __construct(
     protected string $data
-  ) {}
+  ) {
+  }
 
   public function stream(
     string $filename,
     array $headers = [],
-    StreamMode $mode = false
+    StreamMode $mode = StreamMode::INLINE
   ): StreamedResponse {
     return Response::streamDownload(
       fn () => print $this->data,

@@ -6,6 +6,7 @@ use WeasyPrint\Enums\PDFVersion;
 use WeasyPrint\Objects\Config;
 use WeasyPrint\Objects\Source;
 use WeasyPrint\Service;
+use WeasyPrint\Tests\Fixtures\TestPDF;
 
 describe('from source', function (): void {
   test('can render', function (mixed $source): void {
@@ -45,6 +46,14 @@ describe('streamed responses', function (): void {
     );
   });
 
+  test('download via class', function (): void {
+    $this->runOutputAssertions(
+      (new TestPDF)->download(),
+      'application/pdf',
+      'attachment; filename=test.pdf'
+    );
+  });
+
   test('inline via output object', function (): void {
     $this->runOutputAssertions(
       Service::instance()
@@ -61,6 +70,14 @@ describe('streamed responses', function (): void {
       Service::instance()
         ->prepareSource(view('test-pdf'))
         ->inline('test.pdf'),
+      'application/pdf',
+      'inline; filename=test.pdf'
+    );
+  });
+
+  test('inline via class', function (): void {
+    $this->runOutputAssertions(
+      (new TestPDF)->inline(),
       'application/pdf',
       'inline; filename=test.pdf'
     );
