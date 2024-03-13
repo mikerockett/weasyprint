@@ -1,5 +1,11 @@
 # WeasyPrint for Laravel — Changelog
 
+## 8.1.0 (Minor Release) `latest`
+
+This release adds support for Laravel 11 and WeasyPrint 61.2+. Versions 61.0 and 61.1 are not supported due to a security issue noted [here](https://github.com/Kozea/WeasyPrint/releases/tag/v61.2).
+
+Version 8 of the package will be the last to support PHP 8.1 and versions of WeasyPrint < 61.2.
+
 ## 8.0.0 (Breaking Release) `current`
 
 This release drops support for WeasyPrint < v59. If you are constrained to an older version, an older version of the package that supports that version will be required.
