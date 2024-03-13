@@ -30,11 +30,11 @@ The table below outlines supported versions, where `current` means it the latest
 
 > **Note:** As of version 8, WeasyPrint < 59 is not supported. If you rely on older versions, please use the applicable package version.
 
-> **Note:** As of version 8.1, WeasyPrint 61 is supported, excluding versions 61.0 and 61.1, which contain security issues resolved in 61.2. Version 9 of the package will drop support for PHP 8.1, and WeasyPrint < 61.2.
+> **Note:** As of version 8.1, WeasyPrint 61 is supported. Version 9 of the package will drop support for PHP 8.1, and WeasyPrint < 61.
 
 | Package Version     | WeasyPrint Version             | Laravel    | PHP  | Branch                                                      |
 | ------------------- | ------------------------------ | ---------- | ---- | ----------------------------------------------------------- |
-| `8.1.x` (latest)    | `^59.0\|^60.0\|^61.2` (semver) | 10.x, 11.x | 8.1+ | [8.x](https://gitlab.com/mikerockett/weasyprint/-/tree/8.x) |
+| `8.1.x` (latest)    | `^59.0\|^60.0\|^61.0` (semver) | 10.x, 11.x | 8.1+ | [8.x](https://gitlab.com/mikerockett/weasyprint/-/tree/8.x) |
 | `8.0.x` (current)   | `^59.0\|^60.0` (semver)        | 10.x       | 8.1+ | [8.x](https://gitlab.com/mikerockett/weasyprint/-/tree/8.x) |
 | `7.x` (maintenance) | ≥ v53, < 59 (unchecked)        | 10.x       | 8.1+ | [7.x](https://gitlab.com/mikerockett/weasyprint/-/tree/7.x) |
 
