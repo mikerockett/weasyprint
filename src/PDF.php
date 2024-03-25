@@ -6,37 +6,34 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Support\Responsable;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use WeasyPrint\Enums\StreamMode;
+use WeasyPrint\Objects\Config;
 use WeasyPrint\Objects\Source;
 
 abstract class PDF implements Responsable
 {
-  protected StreamMode $streamMode = StreamMode::INLINE;
-  protected string $filename;
-
-  /** @var array<string, string> */
-  protected array $headers = [];
-
   abstract public function source(): Source|Renderable|string;
-
-  public function filename(): string
-  {
-    return $this->filename;
-  }
+  abstract public function filename(): string;
 
   /** @return array<string, string> */
   public function headers(): array
   {
-    return $this->headers;
+    return [];
   }
 
-  public function streamMode(): StreamMode
+  public function config(Config $config): void
   {
-    return $this->streamMode;
+    // noop by default
+  }
+
+  public function defaultStreamMode(): StreamMode
+  {
+    return StreamMode::INLINE;
   }
 
   public function stream(StreamMode $mode): StreamedResponse
   {
     return Service::instance()
+      ->tapConfig($this->config(...))
       ->prepareSource($this->source())
       ->stream($this->filename(), $this->headers(), $mode);
   }
@@ -53,6 +50,6 @@ abstract class PDF implements Responsable
 
   public function toResponse($request): StreamedResponse
   {
-    return $this->stream($this->streamMode());
+    return $this->stream($this->defaultStreamMode());
   }
 }

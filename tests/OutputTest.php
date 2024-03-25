@@ -17,10 +17,10 @@ describe('from source', function (): void {
         ->getData()
     );
   })->with([
-    'instance' => fn () => new Source('<p>WeasyPrint rocks!</p>'),
-    'argument' => fn () => '<p>WeasyPrint rocks!</p>',
-    'url' => fn () => 'https://example.org',
-    'renderable' => fn () => view('test-pdf'),
+    'instance' => fn() => new Source('<p>WeasyPrint rocks!</p>'),
+    'argument' => fn() => '<p>WeasyPrint rocks!</p>',
+    'url' => fn() => 'https://example.org',
+    'renderable' => fn() => view('test-pdf'),
   ]);
 });
 

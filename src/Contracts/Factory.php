@@ -21,9 +21,9 @@ interface Factory
   public function getSource(): Source;
   public function addAttachment(string $pathToAttachment): Factory;
   public function build(): Output;
-  public function stream(string $filename, array $headers = [], StreamMode $mode = StreamMode::INLINE): StreamedResponse;
-  public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse;
+  public function stream(string $filename, array $headers = [], StreamMode $mode): StreamedResponse;
+  public function download(string $filename, array $headers = []): StreamedResponse;
   public function inline(string $filename, array $headers = []): StreamedResponse;
-  public function putFile(string $path, string $disk = null, array $options = []): bool;
+  public function putFile(string $path, string|null $disk = null, array $options = []): bool;
   public function getData(): string;
 }

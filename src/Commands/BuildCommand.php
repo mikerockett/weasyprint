@@ -48,7 +48,7 @@ final class BuildCommand extends BaseCommand
     ]);
 
     $arguments->each(
-      fn (mixed $value, string $name) => $this->maybePushArgument($name, $value)
+      fn(mixed $value, string $name) => $this->maybePushArgument($name, $value)
     );
 
     collect($this->attachments)->each(
@@ -62,7 +62,7 @@ final class BuildCommand extends BaseCommand
     );
 
     collect($this->config->stylesheets)->each(
-      fn (string $path) => $this->maybePushArgument('stylesheet', $path)
+      fn(string $path) => $this->maybePushArgument('stylesheet', $path)
     );
   }
 }

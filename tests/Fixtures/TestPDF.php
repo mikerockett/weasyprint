@@ -7,10 +7,13 @@ use WeasyPrint\PDF;
 
 class TestPDF extends PDF
 {
-  protected string $filename = 'test.pdf';
-
   public function source(): Renderable
   {
     return view('test-pdf');
+  }
+
+  public function filename(): string
+  {
+    return 'test.pdf';
   }
 }

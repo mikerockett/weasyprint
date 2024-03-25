@@ -15,36 +15,29 @@ final class Output
     protected string $data
   ) {}
 
-  public function stream(
-    string $filename,
-    array $headers = [],
-    StreamMode $mode = StreamMode::INLINE
-  ): StreamedResponse {
+  public function stream(string $filename, array $headers = [], StreamMode $mode): StreamedResponse
+  {
     return Response::streamDownload(
-      fn () => print $this->data,
-      $filename,
-      array_merge($headers, ['Content-Type' => 'application/pdf']),
-      $mode->disposition()
+      callback: fn() => print $this->data,
+      name: $filename,
+      headers: array_merge($headers, [
+        'Content-Type' => 'application/pdf'
+      ]),
+      disposition: $mode->disposition()
     );
   }
 
-  /** @todo this method will be point to `stream` with a StreamMode in v9.x */
-  public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse
+  public function download(string $filename, array $headers = []): StreamedResponse
   {
-    return Response::streamDownload(
-      fn () => print $this->data,
-      $filename,
-      array_merge($headers, ['Content-Type' => 'application/pdf']),
-      $inline ? 'inline' : 'attachment'
-    );
+    return $this->stream($filename, $headers, StreamMode::DOWNLOAD);
   }
 
   public function inline(string $filename, array $headers = []): StreamedResponse
   {
-    return $this->download($filename, $headers, inline: true);
+    return $this->stream($filename, $headers, StreamMode::INLINE);
   }
 
-  public function putFile(string $path, string $disk = null, array $options = []): bool
+  public function putFile(string $path, string|null $disk = null, array $options = []): bool
   {
     return Storage::disk($disk)->put($path, $this->data, $options);
   }
