@@ -3,15 +3,15 @@
     paths: [vendor/]
   parallel:
     matrix:
-      - WEASYPRINT: ['59', '60']
+      - WEASYPRINT: ['59', '60', '61.2']
   before_script:
     - apk -q add py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
-    - pip3 -q install weasyprint==$WEASYPRINT
+    - pip3 -q install weasyprint==$WEASYPRINT --break-system-packages
     - weasyprint --info
     - curl -sS https://getcomposer.org/installer | php
     - php composer.phar install -qo
   script:
-    - ./vendor/bin/testbench package:test --without-tty
+    - ./vendor/bin/pest --profile
 
 php8.1:
   extends: .template
@@ -20,3 +20,7 @@ php8.1:
 php8.2:
   extends: .template
   image: php:8.2-cli-alpine
+
+php8.3:
+  extends: .template
+  image: php:8.3-cli-alpine
