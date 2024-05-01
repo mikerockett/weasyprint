@@ -15,7 +15,7 @@
     "composer/semver": "^3.4",
     "illuminate/support": "^9.0|^10.0|^11.0",
     "rockett/pipeline": "^3.0",
-    "symfony/process": "^6.0"
+    "symfony/process": "^6.0|^7.0"
   },
   "require-dev": {
     "johnbacon/stout": "^1.13",
