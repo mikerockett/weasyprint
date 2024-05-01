@@ -57,7 +57,7 @@ describe('environment', function (): void {
     $this->scopeEnv(
       envKey: 'WEASYPRINT_PDF_VARIANT',
       envValue: 'pdf/a-1b',
-      callback: fn (string $key) => expect(
+      callback: fn(string $key) => expect(
         PDFVariant::fromEnvironment($key)
       )->toEqual(
         PDFVariant::PDF_A_1B
@@ -69,7 +69,7 @@ describe('environment', function (): void {
     $this->scopeEnv(
       envKey: 'WEASYPRINT_PDF_VERSION',
       envValue: '1.7',
-      callback: fn (string $key) => expect(
+      callback: fn(string $key) => expect(
         PDFVersion::fromEnvironment($key)
       )->toEqual(
         PDFVersion::VERSION_1_7

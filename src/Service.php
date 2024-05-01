@@ -12,6 +12,7 @@ use Rockett\Pipeline\Pipeline;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use WeasyPrint\Commands\VersionCommand;
 use WeasyPrint\Contracts\Factory;
+use WeasyPrint\Enums\StreamMode;
 use WeasyPrint\Exceptions\MissingSourceException;
 use WeasyPrint\Objects\Config;
 use WeasyPrint\Objects\Output;
@@ -111,17 +112,22 @@ class Service implements Factory
     )->getOutput();
   }
 
-  public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse
+  public function stream(string $filename, array $headers = [], StreamMode $mode): StreamedResponse
   {
-    return $this->build()->download($filename, $headers, $inline);
+    return $this->build()->stream($filename, $headers, $mode);
+  }
+
+  public function download(string $filename, array $headers = []): StreamedResponse
+  {
+    return $this->stream($filename, $headers, StreamMode::DOWNLOAD);
   }
 
   public function inline(string $filename, array $headers = []): StreamedResponse
   {
-    return $this->download($filename, $headers, true);
+    return $this->stream($filename, $headers, StreamMode::INLINE);
   }
 
-  public function putFile(string $path, string $disk = null, array $options = []): bool
+  public function putFile(string $path, string|null $disk = null, array $options = []): bool
   {
     return $this->build()->putFile($path, $disk, $options);
   }

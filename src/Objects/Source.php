@@ -12,7 +12,7 @@ final class Source
   private array $attachments = [];
 
   public function __construct(
-    protected Renderable|string $source
+    private Renderable|string $source
   ) {}
 
   public function get(): Renderable|string
@@ -30,7 +30,10 @@ final class Source
 
   public function addAttachment(string $pathToAttachment): static
   {
-    array_push($this->attachments, $pathToAttachment);
+    array_push(
+      $this->attachments,
+      $pathToAttachment
+    );
 
     return $this;
   }

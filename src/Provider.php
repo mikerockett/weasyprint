@@ -9,7 +9,7 @@ use WeasyPrint\Contracts\Factory;
 
 class Provider extends ServiceProvider
 {
-  public const SUPPORTED_VERSIONS = '^59.0|^60.0|^61.0';
+  public const SUPPORTED_VERSIONS = '^61.0|^62.0';
 
   public function register(): void
   {
@@ -21,13 +21,13 @@ class Provider extends ServiceProvider
     if ($this->app->runningInConsole()) {
       $this->publishes(
         paths: [$this->configFile() => config_path("{$this->name()}.php")],
-        groups: $this->identifierFor('config')
+        groups: $this->identifierFor('config'),
       );
     }
 
     $this->mergeConfigFrom(
       path: $this->configFile(),
-      key: $this->name()
+      key: $this->name(),
     );
   }
 

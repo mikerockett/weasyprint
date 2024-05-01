@@ -1,12 +1,30 @@
 # WeasyPrint for Laravel — Changelog
 
-## 8.1.0 (Minor Release) `latest`
+## 9.x (Major Release) `Current`
+
+#### Features and Enhancements
+
+- Adds support for [class-based sources](https://weasyprint.rockett.pw/class-instantiation.html).
+- Adds support for the **PDF/A-2u**, **PDF/A-3u** and **PDF/A-4u** variants.
+- Introduces a `StreamMode` enum to dynamically distinguish between `download()` and `inline()`. Alongside this, a `stream()` helper method is available, should you not want to use the `download()` or `inline()` helpers directly (these use `stream()` under the hood). ([docs](https://weasyprint.rockett.pw/output.html#stream-download-and-inline))
+
+#### Changes
+
+- Internal: `Source::$source` is now private.
+- Versioning: Drops support for WeasyPrint < 61.0.
+- Versioning: Drops support for PHP < 8.2.
+
+#### Deprecations
+
+- The PDF/UA-1 variant is marked as deprecated as WeasyPrint’s source does not account for it.
+
+## 8.1.0 (Minor Release) `Maintenance`
 
 This release adds support for Laravel 11 and WeasyPrint 61. Versions 61.0 and 61.1 are not supported due to a security issue noted [here](https://github.com/Kozea/WeasyPrint/releases/tag/v61.2).
 
 Version 8 of the package will be the last to support PHP 8.1 and versions of WeasyPrint < 61.
 
-## 8.0.0 (Breaking Release) `current`
+## 8.0.0 (Breaking Release) `Maintenance`
 
 This release drops support for WeasyPrint < v59. If you are constrained to an older version, an older version of the package that supports that version will be required.
 
@@ -30,26 +48,26 @@ If you are using an unsupported version of WeasyPrint, attempts to build a PDF w
 - Some config options are now validated, including the new `dpi` and `jpegQuality` options, as well as existing `mediaType` and `inputEncoding` options. An exception will be thrown if these options are invalid.
 - All tests have been moved to Pest 2. Coverage removed for the time being.
 
-## 7.1.0 `maintenance`, `minor`
-
-This release adds support for WeasyPrint 58, along with two new configuration properties, `pdfVersion` and `pdfVariant`, which may only be used in versions 58 and greater. Custom meta-data has not been added in this release.
-
-> Note: Support for WeasyPrint 59 and 60 to come in the next major package release, which will drop support for older versions of WeasyPrint.
-
-## 7.0.0 `maintenance`
-
-This release adds support for Laravel 10 and drops support for Laravel 8. The minimum-required version of PHP is now 8.1. As there have been no significant API changes to WeasyPrint, this package continues to support v53+.
-
 <hr />
 
 <details>
 <summary>Unsupported Versions</summary>
 
-## 6.1.0 `no support`, `minor`
+## 7.1.0 `Unsupported`
+
+This release adds support for WeasyPrint 58, along with two new configuration properties, `pdfVersion` and `pdfVariant`, which may only be used in versions 58 and greater. Custom meta-data has not been added in this release.
+
+> Note: Support for WeasyPrint 59 and 60 to come in the next major package release, which will drop support for older versions of WeasyPrint.
+
+## 7.0.0 `Unsupported`
+
+This release adds support for Laravel 10 and drops support for Laravel 8. The minimum-required version of PHP is now 8.1. As there have been no significant API changes to WeasyPrint, this package continues to support v53+.
+
+## 6.1.0 `Unsupported`
 
 This release adds support for Laravel 9, and works just fine with WeasyPrint v54.
 
-## 6.0.0 (Breaking Release) `no support`
+## 6.0.0 (Breaking Release) `Unsupported`
 
 This version is specifically designed around WeasyPrint v53, which drops support for PNGs due to its new rendering engine. Overall, this simplifies things from an interface perspective – you only need to prepare the source, build the `Output`, and do what you need with it.
 
@@ -72,7 +90,7 @@ Over and above the changes noted below, the package now requires Laravel 8.47+, 
 - Due to the addition of the scoped singleton, the service class is no longer immutable. Any method that previously cloned the service will no longer do so.
 - Internally, the package now uses a [pipeline](https://github.com/mikerockett/pipeline) to prepare everything and call the WeasyPrint binary.
 
-## 5.0.0 (Paradigm Release) `no support`
+## 5.0.0 (Paradigm Release) `Unsupported`
 
 ### What’s New
 
@@ -97,7 +115,7 @@ Given that v5 is a paradigm release, the following changes are considered breaki
 
 - The `download` and `inline` methods may now be called either on the service or on the output returned from `build()`. If it is called on the service, `build()` will be called for you, with the file type inferred from the extension, which defaults to `.pdf` if not provided.
 
-## 4.0.0 `no support`
+## 4.0.0 `Unsupported`
 
 ### Changes
 
@@ -106,19 +124,19 @@ Given that v5 is a paradigm release, the following changes are considered breaki
 - Upgrades `orchestra/testbench` to v6
 - Adds class coverage to test suite
 
-## 3.0.0 `no support`
+## 3.0.0 `Unsupported`
 
 ### Changes
 
 - Adds support for `symfony/process` v5
 
-## 2.0.1 `no support`
+## 2.0.1 `Unsupported`
 
 ### Changes
 
 - Adds support for Laravel 7
 
-## 2.0.0 (Major Breaking Release) `no support`
+## 2.0.0 (Major Breaking Release) `Unsupported`
 
 ### Breaking Changes
 
@@ -134,7 +152,7 @@ Given that v5 is a paradigm release, the following changes are considered breaki
   - `setOutputEncoding` to set the `--encoding`
 - Throws `InvalidOutputModeException` when the output mode is not `pdf` or `pdf`
 
-## 1.0.5 `no support`
+## 1.0.5 `Unsupported`
 
 ### What’s New
 
@@ -145,7 +163,7 @@ Given that v5 is a paradigm release, the following changes are considered breaki
 - Does not re-convert if the output is already available
 - Adds the `toPdf` and `toPng` shorthand helpers
 
-## 1.0.4 `no support`
+## 1.0.4 `Unsupported`
 
 ### What’s New
 
@@ -157,7 +175,7 @@ Given that v5 is a paradigm release, the following changes are considered breaki
 - [Internal] Adds an ISC license file
 - [Readme] Documents the `download` and `inline` methods
 
-## 1.0.3 `no support`
+## 1.0.3 `Unsupported`
 
 ### What’s New
 
@@ -168,13 +186,13 @@ Given that v5 is a paradigm release, the following changes are considered breaki
 
 - [Internal] Adds proper tests
 
-## 1.0.2 `no support`
+## 1.0.2 `Unsupported`
 
 ### Fixes
 
 - Corrects the `view` method to be static, as intended
 
-## 1.0.0 `no support`
+## 1.0.0 `Unsupported`
 
 - Initial Release
 
