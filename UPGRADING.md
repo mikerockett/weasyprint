@@ -2,10 +2,49 @@
 
 ## v8 → v9
 
-Version 9 of the package is largely a feature release, and doesn't contain large breaking changes like previous releases did. The only significant breaking changes are to versions that are supported:
+Version 9 of the package is largely a feature release, and doesn't contain paradigm changes like previous releases did.
 
-- If you are running WeasyPrint < 60, you will need to upgrade to the latest version.
+The only notable breaking changes are as follows:
+
+### Versioning
+
+**Impact-level:** Medium
+
+- If you are running WeasyPrint < 61, you will need to upgrade to the latest version.
 - Likewise with PHP < 8.2, which are no longer supported.
+
+### Explicit-inline when using `download()`
+
+**Impact-level:** Low
+
+The `download()` method no longer accepts an `$inline` argument. If you were previously using this argument instead of the `inline()` method, you should either switch to the `stream()` method or use the `inline()` method as a short-hand (recommended unless the decision between a download and returning an inline PDF must be decided by your application at runtime, from user input for example).
+
+```diff
+-- ->download('filename.pdf', headers: [], inline: true)
+++ ->inline('filename.pdf', [])
+
+# OR
+
+use WeasyPrint\Enums\StreamMode;
+
+-- ->download('filename.pdf', headers: [], inline: true)
+++ ->stream('filename.pdf', headers: [], mode: StreamMode::INLINE)
+```
+
+For clarity, the signature to the `download` method has changed as follows:
+
+```diff
+-- public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse;
+++ public function download(string $filename, array $headers = []): StreamedResponse;
+```
+
+The `stream` method has been added with the following signature:
+
+```php
+public function stream(string $filename, array $headers = [], StreamMode $mode): StreamedResponse;
+```
+
+> Note: This applies to both the service instance (see the `Factory` contract) and the `Output` object.
 
 ## v7 → v8
 
