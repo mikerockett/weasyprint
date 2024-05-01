@@ -6,7 +6,7 @@
 
 - Adds support for [class-based sources](https://weasyprint.rockett.pw/class-instantiation.html).
 - Adds support for the **PDF/A-2u**, **PDF/A-3u** and **PDF/A-4u** variants.
-- Introduces `StreamMode` to dynamically distinguish between `download` and `inline`. Alongside this, a `Factory::stream` helper method is available, should you not want to use the `download` or `inline` helpers directly. ([docs](https://weasyprint.rockett.pw/output.html#stream-download-and-inline))
+- Introduces a `StreamMode` enum to dynamically distinguish between `download()` and `inline()`. Alongside this, a `stream()` helper method is available, should you not want to use the `download()` or `inline()` helpers directly (these use `stream()` under the hood). ([docs](https://weasyprint.rockett.pw/output.html#stream-download-and-inline))
 
 #### Changes
 
