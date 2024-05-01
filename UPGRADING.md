@@ -112,14 +112,14 @@ The `optimizeSize` option has been removed, having been superceded by the `skipC
 
 If you are using it (by way of setting runtime config or by way of a published config file), it should be removed as it is no longer used. Use the new options individually instead.
 
-## v6 → v7
-
-Version 7 of the package does not introduce any new features or changes. The upgrade path simply involves ensuring that you are running at least Laravel 9.x on PHP 8.1+.
-
 <hr />
 
 <details>
 <summary>Unsupported Versions</summary>
+
+## v6 → v7
+
+Version 7 of the package does not introduce any new features or changes. The upgrade path simply involves ensuring that you are running at least Laravel 9.x on PHP 8.1+.
 
 ## v5 → v6
 
