@@ -2,7 +2,10 @@
 
 ## v8 → v9
 
-Unreleased.
+Version 9 of the package is largely a feature release, and doesn't contain large breaking changes like previous releases did. The only significant breaking changes are to versions that are supported:
+
+- If you are running WeasyPrint < 60, you will need to upgrade to the latest version.
+- Likewise with PHP < 8.2, which are no longer supported.
 
 ## v7 → v8
 

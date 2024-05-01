@@ -1,16 +1,30 @@
 # WeasyPrint for Laravel — Changelog
 
-## 9.x (Unreleased)
+## 9.x (Major Release) `Current`
 
-WIP
+#### Features and Enhancements
 
-## 8.1.0 (Minor Release) `latest`
+- Adds support for [class-based sources](https://weasyprint.rockett.pw/class-instantiation.html).
+- Adds support for the **PDF/A-2u**, **PDF/A-3u** and **PDF/A-4u** variants.
+- Introduces `StreamMode` to dynamically distinguish between `download` and `inline`. Alongside this, a `Factory::stream` helper method is available, should you not want to use the `download` or `inline` helpers directly. ([docs](https://weasyprint.rockett.pw/output.html#stream-download-and-inline))
+
+#### Changes
+
+- Internal: `Source::$source` is now private.
+- Versioning: Drops support for WeasyPrint < 61.0.
+- Versioning: Drops support for PHP < 8.2.
+
+#### Deprecations
+
+- The PDF/UA-1 variant is marked as deprecated as WeasyPrint’s source does not account for it.
+
+## 8.1.0 (Minor Release) `Maintenance`
 
 This release adds support for Laravel 11 and WeasyPrint 61. Versions 61.0 and 61.1 are not supported due to a security issue noted [here](https://github.com/Kozea/WeasyPrint/releases/tag/v61.2).
 
 Version 8 of the package will be the last to support PHP 8.1 and versions of WeasyPrint < 61.
 
-## 8.0.0 (Breaking Release) `current`
+## 8.0.0 (Breaking Release) `Maintenance`
 
 This release drops support for WeasyPrint < v59. If you are constrained to an older version, an older version of the package that supports that version will be required.
 
@@ -34,6 +48,11 @@ If you are using an unsupported version of WeasyPrint, attempts to build a PDF w
 - Some config options are now validated, including the new `dpi` and `jpegQuality` options, as well as existing `mediaType` and `inputEncoding` options. An exception will be thrown if these options are invalid.
 - All tests have been moved to Pest 2. Coverage removed for the time being.
 
+<hr />
+
+<details>
+<summary>Unsupported Versions</summary>
+
 ## 7.1.0 `maintenance`, `minor`
 
 This release adds support for WeasyPrint 58, along with two new configuration properties, `pdfVersion` and `pdfVariant`, which may only be used in versions 58 and greater. Custom meta-data has not been added in this release.
@@ -43,11 +62,6 @@ This release adds support for WeasyPrint 58, along with two new configuration pr
 ## 7.0.0 `maintenance`
 
 This release adds support for Laravel 10 and drops support for Laravel 8. The minimum-required version of PHP is now 8.1. As there have been no significant API changes to WeasyPrint, this package continues to support v53+.
-
-<hr />
-
-<details>
-<summary>Unsupported Versions</summary>
 
 ## 6.1.0 `no support`, `minor`
 
