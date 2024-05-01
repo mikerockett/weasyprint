@@ -1,5 +1,51 @@
 # WeasyPrint for Laravel – Upgrade Guide
 
+## v8 → v9
+
+Version 9 of the package is largely a feature release, and doesn't contain paradigm changes like previous releases did.
+
+The only notable breaking changes are as follows:
+
+### Versioning
+
+**Impact-level:** Medium
+
+- If you are running WeasyPrint < 61, you will need to upgrade to the latest version.
+- Likewise with PHP < 8.2, which are no longer supported.
+
+### Explicit-inline when using `download()`
+
+**Impact-level:** Low
+
+The `download()` method no longer accepts an `$inline` argument. If you were previously using this argument instead of the `inline()` method, you should either switch to the `stream()` method or use the `inline()` method as a short-hand (recommended unless the decision between a download and returning an inline PDF must be decided by your application at runtime, from user input for example).
+
+```diff
+-- ->download('filename.pdf', headers: [], inline: true)
+++ ->inline('filename.pdf', [])
+
+# OR
+
+use WeasyPrint\Enums\StreamMode;
+
+-- ->download('filename.pdf', headers: [], inline: true)
+++ ->stream('filename.pdf', headers: [], mode: StreamMode::INLINE)
+```
+
+For clarity, the signature to the `download` method has changed as follows:
+
+```diff
+-- public function download(string $filename, array $headers = [], bool $inline = false): StreamedResponse;
+++ public function download(string $filename, array $headers = []): StreamedResponse;
+```
+
+The `stream` method has been added with the following signature:
+
+```php
+public function stream(string $filename, array $headers = [], StreamMode $mode): StreamedResponse;
+```
+
+> Note: This applies to both the service instance (see the `Factory` contract) and the `Output` object.
+
 ## v7 → v8
 
 Version 8 of the package introduces some breaking changes, including the removal of config options that are no longer available in WeasyPrint, as well as a change to the default config and the ways in which it can be overridden.
@@ -66,14 +112,14 @@ The `optimizeSize` option has been removed, having been superceded by the `skipC
 
 If you are using it (by way of setting runtime config or by way of a published config file), it should be removed as it is no longer used. Use the new options individually instead.
 
-## v6 → v7
-
-Version 7 of the package does not introduce any new features or changes. The upgrade path simply involves ensuring that you are running at least Laravel 9.x on PHP 8.1+.
-
 <hr />
 
 <details>
 <summary>Unsupported Versions</summary>
+
+## v6 → v7
+
+Version 7 of the package does not introduce any new features or changes. The upgrade path simply involves ensuring that you are running at least Laravel 9.x on PHP 8.1+.
 
 ## v5 → v6
 
