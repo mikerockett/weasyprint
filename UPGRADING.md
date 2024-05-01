@@ -1,5 +1,9 @@
 # WeasyPrint for Laravel – Upgrade Guide
 
+## v8 → v9
+
+Unreleased.
+
 ## v7 → v8
 
 Version 8 of the package introduces some breaking changes, including the removal of config options that are no longer available in WeasyPrint, as well as a change to the default config and the ways in which it can be overridden.
