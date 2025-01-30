@@ -3,7 +3,7 @@
     paths: [vendor/]
   parallel:
     matrix:
-      - WEASYPRINT: ['61.2', '62.0']
+      - WEASYPRINT: ['61.2', '62.0', '63.0', '64.0']
   before_script:
     - apk -q add py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
     - pip3 -q install weasyprint==$WEASYPRINT --break-system-packages
@@ -20,3 +20,7 @@ php8.2:
 php8.3:
   extends: .template
   image: php:8.3-cli-alpine
+
+php8.4:
+  extends: .template
+  image: php:8.4-cli-alpine
