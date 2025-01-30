@@ -9,7 +9,7 @@ use WeasyPrint\Contracts\Factory;
 
 class Provider extends ServiceProvider
 {
-  public const SUPPORTED_VERSIONS = '^62.0|^63.0|^64.0';
+  public const SUPPORTED_VERSIONS = '^63.0|^64.0';
 
   public function register(): void
   {

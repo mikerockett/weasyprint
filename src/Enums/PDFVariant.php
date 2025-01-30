@@ -15,6 +15,5 @@ enum PDFVariant: string
   case PDF_A_3U = 'pdf/a-3u';
   case PDF_A_4U = 'pdf/a-4u';
 
-  /** @deprecated (not present in WeasyPrint) */
   case PDF_UA_1 = 'pdf/ua-1';
 }

@@ -25,9 +25,9 @@
   },
   "require-dev": {
     "johnbacon/stout": "^1.13",
-    "nunomaduro/collision": "^7.0|^8.0",
+    "nunomaduro/collision": "^8.0",
     "orchestra/testbench": "^8.0|^9.0",
-    "pestphp/pest": "^2.23",
+    "pestphp/pest": "^3.0",
     "smalot/pdfparser": "^2.7"
   },
   "autoload": {

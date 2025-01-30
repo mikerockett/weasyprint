@@ -1,6 +1,21 @@
 # WeasyPrint for Laravel — Changelog
 
-## 9.x (Major Release) `Current`
+## 10.x (Major Release) `Current`
+
+#### Features and Enhancements
+
+- Adds support for the `srgb` and `custom-metadata` boolean flags via Config (both default to `false`).
+
+#### Changes
+
+- Documentation: Config property descriptions in the default config file have been moved into the Config class.
+- Versioning: Adds support for WeasyPrint **63.x** and **64.x** and drops support for older versions.
+
+#### Deprecations
+
+- The PDF/UA-1 variant deprecation has been reverted.
+
+## 9.x (Major Release) `Maintenance`
 
 #### Features and Enhancements
 
@@ -18,13 +33,18 @@
 
 - The PDF/UA-1 variant is marked as deprecated as WeasyPrint’s source does not account for it.
 
-## 8.1.0 (Minor Release) `Maintenance`
+<hr />
+
+<details>
+<summary>Unsupported Versions</summary>
+
+## 8.1.0 (Minor Release) `Unsupported`
 
 This release adds support for Laravel 11 and WeasyPrint 61. Versions 61.0 and 61.1 are not supported due to a security issue noted [here](https://github.com/Kozea/WeasyPrint/releases/tag/v61.2).
 
 Version 8 of the package will be the last to support PHP 8.1 and versions of WeasyPrint < 61.
 
-## 8.0.0 (Breaking Release) `Maintenance`
+## 8.0.0 (Breaking Release) `Unsupported`
 
 This release drops support for WeasyPrint < v59. If you are constrained to an older version, an older version of the package that supports that version will be required.
 
@@ -47,11 +67,6 @@ If you are using an unsupported version of WeasyPrint, attempts to build a PDF w
 - The `skipCompression`, `optimizeImages`, `fullFonts`, `hinting`, `dpi`, `jpegQuality`, `pdfForms` config options have been added.
 - Some config options are now validated, including the new `dpi` and `jpegQuality` options, as well as existing `mediaType` and `inputEncoding` options. An exception will be thrown if these options are invalid.
 - All tests have been moved to Pest 2. Coverage removed for the time being.
-
-<hr />
-
-<details>
-<summary>Unsupported Versions</summary>
 
 ## 7.1.0 `Unsupported`
 

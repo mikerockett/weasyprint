@@ -15,7 +15,7 @@ final class BuildCommand extends BaseCommand
     Config $config,
     string $inputPath,
     string $outputPath,
-    protected array $attachments = []
+    protected array $attachments = [],
   ) {
     $this->config = $config;
 
@@ -39,6 +39,8 @@ final class BuildCommand extends BaseCommand
       'pdf-variant' => $this->config->pdfVariant?->value,
       'pdf-version' => $this->config->pdfVersion?->value,
       'uncompressed-pdf' => $this->config->skipCompression,
+      'custom-metadata' => $this->config->customMetadata,
+      'srgb' => $this->config->srgb,
       'optimize-images' => $this->config->optimizeImages,
       'full-fonts' => $this->config->fullFonts,
       'hinting' => $this->config->hinting,
@@ -48,7 +50,7 @@ final class BuildCommand extends BaseCommand
     ]);
 
     $arguments->each(
-      fn(mixed $value, string $name) => $this->maybePushArgument($name, $value)
+      fn(mixed $value, string $name) => $this->maybePushArgument($name, $value),
     );
 
     collect($this->attachments)->each(
@@ -58,11 +60,11 @@ final class BuildCommand extends BaseCommand
         }
 
         $this->maybePushArgument('attachment', $path);
-      }
+      },
     );
 
     collect($this->config->stylesheets)->each(
-      fn(string $path) => $this->maybePushArgument('stylesheet', $path)
+      fn(string $path) => $this->maybePushArgument('stylesheet', $path),
     );
   }
 }

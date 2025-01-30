@@ -2,6 +2,28 @@
 
 ## v8 → v9
 
+Version 10 doesn't contain any paradigm changes.
+
+**Impact-level:** Low
+
+This release adds two new configuration options (`srgb` and `customMetadata`), which can now be used if desired.
+
+To set them in your default config file, add these lines just under `skipCompression`:
+
+```diff
+   skipCompression: env('WEASYPRINT_SKIP_COMPRESSION', false),
++  customMetadata: env('WEASYPRINT_SRGB', false),
++  srgb: env('WEASYPRINT_SRGB', false),
+```
+
+**Note:** Doc-blocks have been moved into the `Config` class, and so they are not displayed in this diff. Feel free to remove them, as the documentation for each property should now be available via your IDE or code-editor.
+
+**Impact-level:** Medium
+
+- Versions prior to 63.0 of WeasyPrint are no longer supported. If you are not running 63.x or 64.x, you will need to upgrade to the latest version.
+
+## v8 → v9
+
 Version 9 of the package is largely a feature release, and doesn't contain paradigm changes like previous releases did.
 
 The only notable breaking changes are as follows:
