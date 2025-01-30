@@ -19,7 +19,7 @@ return (array) new \WeasyPrint\Objects\Config(
     'WEASYPRINT_PDF_VERSION',
   ),
   skipCompression: env('WEASYPRINT_SKIP_COMPRESSION', false),
-  customMetadata: env('WEASYPRINT_SRGB', false),
+  customMetadata: env('WEASYPRINT_CUSTOM_METADATA', false),
   srgb: env('WEASYPRINT_SRGB', false),
   optimizeImages: env('WEASYPRINT_OPTIMIZE_IMAGES', false),
   fullFonts: env('WEASYPRINT_FULL_FONTS', false),
