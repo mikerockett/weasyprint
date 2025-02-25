@@ -1,6 +1,6 @@
 # WeasyPrint for Laravel – Upgrade Guide
 
-## v8 → v9
+## v9 → v10
 
 Version 10 doesn't contain any paradigm changes.
 
