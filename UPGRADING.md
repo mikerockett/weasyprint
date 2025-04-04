@@ -20,7 +20,7 @@ To set them in your default config file, add these lines just under `skipCompres
 
 **Impact-level:** Medium
 
-- Versions prior to 63.0 of WeasyPrint are no longer supported. If you are not running 63.x or 64.x, you will need to upgrade to the latest version.
+- Versions prior to 63.0 of WeasyPrint are no longer supported. If you are not running 63.x or higher, you will need to upgrade to the latest version.
 
 ## v8 → v9
 

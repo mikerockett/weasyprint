@@ -15,6 +15,17 @@
 
 - The PDF/UA-1 variant deprecation has been reverted.
 
+### Minor Releases
+
+- `10.1.0` - Versioning: Adds support for Laravel 12.
+- `10.2.0` - Versioning: Adds support for WeasyPrint 65.
+
+### Patch Releases
+
+- `10.0.1` - fix srgb config env default [37baef00]
+
+---
+
 ## 9.x (Major Release) `Maintenance`
 
 #### Features and Enhancements
