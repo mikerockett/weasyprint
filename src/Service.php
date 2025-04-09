@@ -112,7 +112,7 @@ class Service implements Factory
     )->getOutput();
   }
 
-  public function stream(string $filename, array $headers = [], StreamMode $mode): StreamedResponse
+  public function stream(string $filename, array $headers = [], StreamMode $mode = StreamMode::INLINE): StreamedResponse
   {
     return $this->build()->stream($filename, $headers, $mode);
   }

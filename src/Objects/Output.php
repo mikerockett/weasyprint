@@ -15,7 +15,7 @@ final class Output
     protected string $data
   ) {}
 
-  public function stream(string $filename, array $headers = [], StreamMode $mode): StreamedResponse
+  public function stream(string $filename, array $headers = [], StreamMode $mode = StreamMode::INLINE): StreamedResponse
   {
     return Response::streamDownload(
       callback: fn() => print $this->data,
