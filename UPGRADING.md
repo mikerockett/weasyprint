@@ -6,7 +6,7 @@
 
 Version 11 refactors the package to be framework-agnostic. The package has been renamed to **WeasyPrint for PHP**, and core classes have been moved and renamed.
 
-### New namespace for Laravel
+### New namespace for the Laravel integration
 
 Laravel-specific features remain supported, but are now organised under the `Integration\Laravel` namespace.
 
@@ -28,6 +28,16 @@ You'll need to update all imports to use the new class names:
 -- use WeasyPrint\PDF;
 ++ use WeasyPrint\Integration\Laravel\PDF;
 ```
+
+### Servcie helper removed
+
+**Impact-level:** Medium
+
+Previously, the package provided a `Service::instance()` helper method, intended to be an option over and above the facade and dependency injection.
+
+In the spirit of going framework-agnostic, this has been removed.
+
+The other two methods are still available in Laravel environments, but you'll want to use your own container or just direct invocation (`new Service($config)`) outside of Laravel.
 
 ___
 

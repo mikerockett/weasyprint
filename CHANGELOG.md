@@ -8,11 +8,12 @@ As such, it has been renamed to **WeasyPrint for PHP** and Laravel-specific feat
 
 While it maintains Laravel compatibility, core functionality can now be used independently of any framework.
 
-**Breaking Changes:** Due to this shift, there are breaking changes in this release, specifically with regard to classes having been moved and renamed. Existing Laravel users will need to update their imports and configuration. Please refer to the [UPGRADING.md](UPGRADING.md) guide for detailed migration instructions.
+**⚠️ Breaking Changes:** Due to this shift, there are breaking changes in this release, specifically with regard to classes having been moved and renamed. Existing Laravel users will need to update their imports and configuration. Please refer to the [UPGRADING.md](UPGRADING.md) guide for detailed migration instructions.
 
 #### Changes
 
 - Core classes have been renamed, and Laravel-specific classes have been moved into `Integration\Laravel`.
+- `Service::instance` has been removed.
 - Default config file has been moved into the same directory.
 - Streamed responses now use Symfony's `StreamedResponse` directly instead of via Laravel’s `ResponseFactory::streamDownload`.
 - Internal pipeline now uses the latest package version, and is assembled with a `PipelineBuilder`.
