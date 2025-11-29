@@ -1,6 +1,6 @@
 # WeasyPrint for PHP — Changelog
 
-## 11.x (Unreleased) `Current`
+## 11.x (Major Release) `Pending Release`
 
 Version 11 refactors the package to be framework-agnostic.
 
@@ -53,7 +53,10 @@ ___
 
 ---
 
-## 9.x (Major Release) `Maintenance`
+<details>
+<summary>Unsupported Versions</summary>
+
+## 9.x (Major Release) `Unsupported`
 
 #### Features and Enhancements
 
@@ -70,11 +73,6 @@ ___
 #### Deprecations
 
 - The PDF/UA-1 variant is marked as deprecated as WeasyPrint’s source does not account for it.
-
-<hr />
-
-<details>
-<summary>Unsupported Versions</summary>
 
 ## 8.1.0 (Minor Release) `Unsupported`
 
