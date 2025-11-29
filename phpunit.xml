@@ -8,10 +8,6 @@
 		<testsuite name="Laravel">
 			<directory suffix="Test.php">./tests/Laravel</directory>
 		</testsuite>
-		<testsuite name="All">
-			<directory suffix="Test.php">./tests/Core</directory>
-			<directory suffix="Test.php">./tests/Laravel</directory>
-		</testsuite>
 	</testsuites>
 	<source>
 		<include>
