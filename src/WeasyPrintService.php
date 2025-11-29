@@ -108,7 +108,7 @@ class WeasyPrintService implements WeasyPrintFactory
   public function stream(
     string $filename,
     array $headers = [],
-    StreamMode $mode = StreamMode::INLINE
+    StreamMode $mode = StreamMode::INLINE,
   ): StreamedResponse {
     return $this->build()->stream($filename, $headers, $mode);
   }
@@ -121,14 +121,6 @@ class WeasyPrintService implements WeasyPrintFactory
   public function inline(string $filename, array $headers = []): StreamedResponse
   {
     return $this->stream($filename, $headers, StreamMode::INLINE);
-  }
-
-  /**
-   * This method requires Laravel.
-   */
-  public function putFile(string $path, string|null $disk = null, array $options = []): bool
-  {
-    return $this->build()->putFile($path, $disk, $options);
   }
 
   public function getData(): string

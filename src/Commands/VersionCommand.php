@@ -11,7 +11,8 @@ final class VersionCommand extends BaseCommand
 {
   use FindsBinary;
 
-  public function __construct(Config $config) {
+  public function __construct(Config $config)
+  {
     $this->config = $config;
 
     $this->arguments = new Collection([

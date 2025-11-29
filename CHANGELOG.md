@@ -14,8 +14,10 @@ While it maintains Laravel compatibility, core functionality can now be used ind
 
 - Core classes have been renamed, and Laravel-specific classes have been moved into `Integration\Laravel`.
 - `Service::instance` has been removed.
-- Default config file has been moved into the same directory.
+- Default config file has been moved into `Integration\Laravel`.
 - Streamed responses now use Symfony's `StreamedResponse` directly instead of via Laravel’s `ResponseFactory::streamDownload`.
+- `Output::putFile` has been removed.
+- `Output` is now `Stringable` (useful to pass to `Storage::put`).
 - Internal pipeline now uses the latest package version, and is assembled with a `PipelineBuilder`.
 - Formatting is now done with PHP CS Fixer directly, using `@PER-CS2x0` with some extra rules for strictness (including strict-types).
 - Tests are now split: one suite for the core package, another for Laravel integration testing.

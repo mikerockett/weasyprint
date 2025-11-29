@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace WeasyPrint\Objects;
 
-use Illuminate\Support\Facades\Storage;
+use Stringable;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use WeasyPrint\Enums\StreamMode;
 
-final class Output
+final class Output implements Stringable
 {
   public function __construct(
     protected string $data,
@@ -17,15 +17,15 @@ final class Output
   public function stream(
     string $filename,
     array $headers = [],
-    StreamMode $mode = StreamMode::INLINE
+    StreamMode $mode = StreamMode::INLINE,
   ): StreamedResponse {
     $response = new StreamedResponse(
       fn() => print $this->data,
       status: 200,
       headers: array_merge(
         $headers,
-        ['Content-Type' => 'application/pdf']
-      )
+        ['Content-Type' => 'application/pdf'],
+      ),
     );
 
     $response->headers->set(
@@ -50,16 +50,13 @@ final class Output
     return $this->stream($filename, $headers, StreamMode::INLINE);
   }
 
-  /**
-   * This method requires Laravel.
-   */
-  public function putFile(string $path, string|null $disk = null, array $options = []): bool
-  {
-    return Storage::disk($disk)->put($path, $this->data, $options);
-  }
-
   public function getData(): string
   {
     return $this->data;
+  }
+
+  public function __toString(): string
+  {
+    return $this->getData();
   }
 }

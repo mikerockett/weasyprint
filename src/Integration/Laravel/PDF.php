@@ -17,15 +17,12 @@ abstract class PDF implements Responsable
   abstract public function source(): Source|Renderable|string;
   abstract public function filename(): string;
 
+  public function config(Config $config): void {}
+
   /** @return array<string, string> */
   public function headers(): array
   {
     return [];
-  }
-
-  public function config(Config $config): void
-  {
-    // noop by default
   }
 
   public function defaultStreamMode(): StreamMode
