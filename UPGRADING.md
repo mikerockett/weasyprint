@@ -27,22 +27,6 @@ Update all imports to use the new class names:
 ++ use WeasyPrint\Integration\Laravel\PDF;
 ```
 
-### Type-Hinted Dependencies
-
-Update any type-hinted dependencies in your application:
-
-```diff
--- public function generate(WeasyPrint\Contracts\Factory $weasyprint)
-++ public function generate(WeasyPrint\Contracts\WeasyPrintFactory $weasyprint)
-{
-    return $weasyprint->prepareSource('<p>Test</p>')->getData();
-}
-```
-
-### Config File Location
-
-The published config file location has moved. If you've published the config, it remains at `config/weasyprint.php` and will continue to work.
-
 ___
 
 # WeasyPrint for Laravel – Upgrade Guide
