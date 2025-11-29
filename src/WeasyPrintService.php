@@ -19,7 +19,7 @@ use WeasyPrint\Pipeline\Stages as Pipes;
 
 class WeasyPrintService implements WeasyPrintFactory
 {
-  public const SUPPORTED_VERSIONS = '^63.0|^64.0|^65.0|^66.0';
+  public const SUPPORTED_VERSIONS = '^66.0';
 
   private Config $config;
   private Source $source;
