@@ -1,6 +1,6 @@
-# Contributing to WeasyPrint for Laravel
+# Contributing to WeasyPrint for PHP
 
-If you’d like to make a contribution to WeasyPrint for Laravel, you’re more than welcome to [submit a merge request](https://gitlab.com/mikerockett/weasyprint/-/merge_requests/new) against the `main` or current-release branch:
+If you’d like to make a contribution to WeasyPrint for PHP, you’re more than welcome to [submit a pull request](https://github.com/mikerockett/weasyprint/issues) against the `main` or current-release branch:
 
 1. If you are introducing a **non-breaking** change, target the `V.x` branch, where `V` is the latest major version of the package. If accepted and does not break any other versions either, it will also be merged into the applicable branches for those versions.
 2. If you are introducing a **breaking** change of any kind, target the `main` branch. The change will be released in a new major version when accepted, and will not be added to older versions.
@@ -22,7 +22,7 @@ $ composer run test
 
 #### Formatting
 
-This package uses PHP CS Fixer to auto-format code. Before committing your code, please run a format over all dirty files:
+This package uses PHP CS Fixer to auto-format code. Before committing your code, please run a format over all files:
 
 ```shell
 $ composer fix

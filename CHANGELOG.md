@@ -1,3 +1,17 @@
+# WeasyPrint for PHP — Changelog
+
+## 11.x (Unreleased) `Current`
+
+Version 11 refactors the package to be framework-agnostic.
+
+As such, it has been renamed to **WeasyPrint for PHP** and Laravel-specific features are now organised under the `Integration\Laravel` namespace.
+
+While it maintains Laravel compatibility, core functionality can now be used independently of any framework.
+
+**Breaking Changes:** Due to this shift, there are breaking changes in this release, specifically with regard to classes having been moved and renamed. Existing Laravel users will need to update their imports and configuration. Please refer to the [UPGRADING.md](UPGRADING.md) guide for detailed migration instructions.
+
+___
+
 # WeasyPrint for Laravel — Changelog
 
 ## 10.x (Major Release) `Current`

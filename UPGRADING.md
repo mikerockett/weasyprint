@@ -1,3 +1,50 @@
+# WeasyPrint for PHP – Upgrade Guide
+
+## v10 → v11 (Migration)
+
+**Impact-level:** High
+
+Version 11 refactors the package to be framework-agnostic. The package has been renamed to **WeasyPrint for PHP**, and core classes have been moved and renamed. Laravel-specific features remain supported but are now organised under the `Integration\Laravel` namespace.
+
+### Class Renames
+
+Update all imports to use the new class names:
+
+```diff
+-- use WeasyPrint\Facade;
+++ use WeasyPrint\Integration\Laravel\WeasyPrint;
+
+-- use WeasyPrint\Provider;
+++ use WeasyPrint\Integration\Laravel\WeasyPrintServiceProvider;
+
+-- use WeasyPrint\Service;
+++ use WeasyPrint\WeasyPrintService;
+
+-- use WeasyPrint\Contracts\Factory;
+++ use WeasyPrint\Contracts\WeasyPrintFactory;
+
+-- use WeasyPrint\PDF;
+++ use WeasyPrint\Integration\Laravel\PDF;
+```
+
+### Type-Hinted Dependencies
+
+Update any type-hinted dependencies in your application:
+
+```diff
+-- public function generate(WeasyPrint\Contracts\Factory $weasyprint)
+++ public function generate(WeasyPrint\Contracts\WeasyPrintFactory $weasyprint)
+{
+    return $weasyprint->prepareSource('<p>Test</p>')->getData();
+}
+```
+
+### Config File Location
+
+The published config file location has moved. If you've published the config, it remains at `config/weasyprint.php` and will continue to work.
+
+___
+
 # WeasyPrint for Laravel – Upgrade Guide
 
 ## v9 → v10

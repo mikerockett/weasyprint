@@ -7,6 +7,7 @@ namespace WeasyPrint\Integration\Laravel;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Support\Responsable;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use WeasyPrint\Contracts\WeasyPrintFactory;
 use WeasyPrint\Enums\StreamMode;
 use WeasyPrint\Objects\Config;
 use WeasyPrint\Objects\Source;
@@ -34,7 +35,7 @@ abstract class PDF implements Responsable
 
   public function stream(StreamMode $mode): StreamedResponse
   {
-    return app(\WeasyPrint\Contracts\WeasyPrintFactory::class)
+    return app(WeasyPrintFactory::class)
       ->tapConfig($this->config(...))
       ->prepareSource($this->source())
       ->stream($this->filename(), $this->headers(), $mode);
