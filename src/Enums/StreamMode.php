@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WeasyPrint\Enums;
 
 enum StreamMode
@@ -11,7 +13,7 @@ enum StreamMode
   {
     return match ($this) {
       static::DOWNLOAD => 'attachment',
-      static::INLINE => 'inline'
+      static::INLINE => 'inline',
     };
   }
 }

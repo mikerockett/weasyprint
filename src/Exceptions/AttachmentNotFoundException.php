@@ -14,7 +14,7 @@ class AttachmentNotFoundException extends RuntimeException
       sprintf(
         'Unable to add attachment: file at %s does not exist.',
         $attachmentPath,
-      )
+      ),
     );
   }
 }

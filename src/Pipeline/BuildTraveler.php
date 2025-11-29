@@ -16,14 +16,14 @@ class BuildTraveler
   private Output $output;
 
   public function __construct(
-    public Service $service
+    public Service $service,
   ) {}
 
   public function makeTemporaryFilename(): string|false
   {
     return tempnam(
       directory: sys_get_temp_dir(),
-      prefix: $this->service->getConfig()->cachePrefix
+      prefix: $this->service->getConfig()->cachePrefix,
     );
   }
 

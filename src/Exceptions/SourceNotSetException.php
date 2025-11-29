@@ -11,7 +11,7 @@ class SourceNotSetException extends RuntimeException
   public function __construct()
   {
     parent::__construct(
-      'A source has not been provided to the WeasyPrint service.'
+      'A source has not been provided to the WeasyPrint service.',
     );
   }
 }

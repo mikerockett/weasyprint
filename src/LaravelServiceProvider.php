@@ -7,14 +7,12 @@ namespace WeasyPrint;
 use Illuminate\Support\ServiceProvider;
 use WeasyPrint\Contracts\Factory;
 
-class Provider extends ServiceProvider
+class LaravelServiceProvider extends ServiceProvider
 {
-  public const SUPPORTED_VERSIONS = '^63.0|^64.0|^65.0|^66.0';
-
   public function register(): void
   {
     $this->app->scoped(Factory::class, fn($app) => new Service(
-      data_get($app, 'config.weasyprint', [])
+      data_get($app, 'config.weasyprint', []),
     ));
   }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WeasyPrint\Enums;
 
 trait DerivesFromEnvironment
@@ -8,7 +10,7 @@ trait DerivesFromEnvironment
   {
     return match ($env = env($key)) {
       null => null,
-      default => static::tryFrom($env)
+      default => static::tryFrom($env),
     };
   }
 }

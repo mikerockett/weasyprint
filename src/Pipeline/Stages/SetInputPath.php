@@ -14,8 +14,8 @@ class SetInputPath implements BuildStage
     $container->setInputPath(
       match (($source = $container->service->getSource())->isUrl()) {
         true => $source->get(),
-        default => $container->makeTemporaryFilename()
-      }
+        default => $container->makeTemporaryFilename(),
+      },
     );
 
     return $container;

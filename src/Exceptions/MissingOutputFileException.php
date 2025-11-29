@@ -13,8 +13,8 @@ class MissingOutputFileException extends RuntimeException
     parent::__construct(
       sprintf(
         'An output file was expected at %s, but one was not found.',
-        $outputFilePath
-      )
+        $outputFilePath,
+      ),
     );
   }
 }

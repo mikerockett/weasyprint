@@ -11,7 +11,7 @@ class MissingSourceException extends RuntimeException
   public function __construct()
   {
     parent::__construct(
-      'A source has not yet been set!'
+      'A source has not yet been set!',
     );
   }
 }

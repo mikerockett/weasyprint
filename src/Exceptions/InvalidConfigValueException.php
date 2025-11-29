@@ -15,8 +15,8 @@ class InvalidConfigValueException extends RuntimeException
         'Config value for %s is invalid. Provided %s, but expected %s.',
         $key,
         $value,
-        $expected
-      )
+        $expected,
+      ),
     );
   }
 }

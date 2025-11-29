@@ -14,7 +14,7 @@ class OutputReadFailedException extends RuntimeException
       sprintf(
         'The output file located at %s could not be streamed into memory.',
         $outputFilePath,
-      )
+      ),
     );
   }
 }

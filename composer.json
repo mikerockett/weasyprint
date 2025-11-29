@@ -20,11 +20,11 @@
     "php": "^8.3",
     "composer/semver": "^3.4",
     "illuminate/support": "^11.0|^12.0",
-    "rockett/pipeline": "^3.0|^4.0",
+    "rockett/pipeline": "^4.1",
     "symfony/process": "^7.4|^8.0"
   },
   "require-dev": {
-    "johnbacon/stout": "^1.13",
+    "friendsofphp/php-cs-fixer": "^3.91",
     "nunomaduro/collision": "^8.0",
     "orchestra/testbench": "^9.0|^10.0",
     "pestphp/pest": "^4.1",
@@ -47,8 +47,12 @@
     ],
     "dump": "composer dumpautoload",
     "pest": "./vendor/bin/pest --profile",
-    "format": "./vendor/bin/stout --dirty",
-    "format:all": "./vendor/bin/stout"
+    "fix": "@php php-cs-fixer fix --allow-risky=yes",
+    "fix:watch": [
+      "@fix",
+      "Composer\\Config::disableProcessTimeout",
+      "bun x onchange '**/*.php' '!vendor/**' '!node_modules/**' '!storage/**' '!bootstrap/cache/**' -- ./vendor/bin/php-cs-fixer fix {{changed}} --path-mode=intersection --allow-risky=yes -q"
+    ]
   },
   "extra": {
     "laravel": {

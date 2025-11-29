@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return (array) new \WeasyPrint\Objects\Config(
   binary: env('WEASYPRINT_BINARY'),
   cachePrefix: env('WEASYPRINT_CACHE_PREFIX', 'weasyprint_cache'),

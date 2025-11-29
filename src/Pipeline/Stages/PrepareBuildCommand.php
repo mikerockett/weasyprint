@@ -18,7 +18,7 @@ class PrepareBuildCommand implements BuildStage
       config: $service->getConfig(),
       inputPath: $container->getInputPath(),
       outputPath: $container->getOutputPath(),
-      attachments: $service->getSource()->getAttachments()
+      attachments: $service->getSource()->getAttachments(),
     ));
 
     return $container;

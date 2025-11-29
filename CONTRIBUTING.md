@@ -22,10 +22,10 @@ $ composer run test
 
 #### Formatting
 
-This package uses `johnbacon/stout` to auto-format code. Before committing your code, please run a format over all dirty files:
+This package uses PHP CS Fixer to auto-format code. Before committing your code, please run a format over all dirty files:
 
 ```shell
-$ composer run format
+$ composer fix
 ```
 
 #### Commit Messages

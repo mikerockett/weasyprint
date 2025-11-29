@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace WeasyPrint;
 
 use Illuminate\Contracts\Support\Renderable;
-use Rockett\Pipeline\Contracts\PipelineContract;
-use Rockett\Pipeline\Pipeline;
+use Rockett\Pipeline\Builder\PipelineBuilder;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use WeasyPrint\Commands\VersionCommand;
 use WeasyPrint\Contracts\Factory;
@@ -20,6 +19,8 @@ use WeasyPrint\Pipeline\Stages as Pipes;
 
 class Service implements Factory
 {
+  public const SUPPORTED_VERSIONS = '^63.0|^64.0|^65.0|^66.0';
+
   private Config $config;
   private Source $source;
 
@@ -60,7 +61,7 @@ class Service implements Factory
   {
     $this->source = match ($source instanceof Source) {
       true => $source,
-      default => new Source($source)
+      default => new Source($source),
     };
 
     return $this;
@@ -89,24 +90,26 @@ class Service implements Factory
 
   public function build(): Output
   {
-    return $this->processPipeline(
-      new Pipeline(
-        null,
-        new Pipes\AssertSupportedVersion(),
-        new Pipes\EnsureSourceIsSet(),
-        new Pipes\SetInputPath(),
-        new Pipes\SetOutputPath(),
-        new Pipes\PersistTemporaryInput(),
-        new Pipes\PrepareBuildCommand(),
-        new Pipes\Execute(),
-        new Pipes\UnlinkTemporaryInput(),
-        new Pipes\PrepareOutput(),
-      )
-    )->getOutput();
+    return new PipelineBuilder()
+      ->add(new Pipes\AssertSupportedVersion())
+      ->add(new Pipes\EnsureSourceIsSet())
+      ->add(new Pipes\SetInputPath())
+      ->add(new Pipes\SetOutputPath())
+      ->add(new Pipes\PersistTemporaryInput())
+      ->add(new Pipes\PrepareBuildCommand())
+      ->add(new Pipes\Execute())
+      ->add(new Pipes\UnlinkTemporaryInput())
+      ->add(new Pipes\PrepareOutput())
+      ->build()
+      ->process(new BuildTraveler($this))
+      ->getOutput();
   }
 
-  public function stream(string $filename, array $headers = [], StreamMode $mode = StreamMode::INLINE): StreamedResponse
-  {
+  public function stream(
+    string $filename,
+    array $headers = [],
+    StreamMode $mode = StreamMode::INLINE
+  ): StreamedResponse {
     return $this->build()->stream($filename, $headers, $mode);
   }
 
@@ -128,10 +131,5 @@ class Service implements Factory
   public function getData(): string
   {
     return $this->build()->getData();
-  }
-
-  private function processPipeline(PipelineContract $pipeline): BuildTraveler
-  {
-    return $pipeline->process(new BuildTraveler($this));
   }
 }

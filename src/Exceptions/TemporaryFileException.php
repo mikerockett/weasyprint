@@ -11,7 +11,7 @@ class TemporaryFileException extends RuntimeException
   public function __construct(string $inputPath)
   {
     parent::__construct(
-      sprintf('Unable to write a temporary file to %s', $inputPath)
+      sprintf('Unable to write a temporary file to %s', $inputPath),
     );
   }
 }

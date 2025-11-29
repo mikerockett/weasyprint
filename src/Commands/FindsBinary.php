@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WeasyPrint\Commands;
 
 use RuntimeException;
@@ -14,7 +16,7 @@ trait FindsBinary
 
     if (!$process->isSuccessful()) {
       throw new RuntimeException(
-        'Unable to find WeasyPrint binary. Please specify the absolute path to WeasyPrint in config [binary].'
+        'Unable to find WeasyPrint binary. Please specify the absolute path to WeasyPrint in config [binary].',
       );
     }
 
