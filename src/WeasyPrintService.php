@@ -90,7 +90,7 @@ class WeasyPrintService implements WeasyPrintFactory
 
   public function build(): Output
   {
-    return new PipelineBuilder()
+    return (new PipelineBuilder())
       ->add(new Pipes\AssertSupportedVersion())
       ->add(new Pipes\EnsureSourceIsSet())
       ->add(new Pipes\SetInputPath())

@@ -10,6 +10,17 @@ While it maintains Laravel compatibility, core functionality can now be used ind
 
 **Breaking Changes:** Due to this shift, there are breaking changes in this release, specifically with regard to classes having been moved and renamed. Existing Laravel users will need to update their imports and configuration. Please refer to the [UPGRADING.md](UPGRADING.md) guide for detailed migration instructions.
 
+#### Changes
+
+- Core classes have been renamed, and Laravel-specific classes have been moved into `Integration\Laravel`.
+- Default config file has been moved into the same directory.
+- Streamed responses now use Symfony's `StreamedResponse` directly instead of via Laravel’s `ResponseFactory::streamDownload`.
+- Internal pipeline now uses the latest package version, and is assembled with a `PipelineBuilder`.
+- Formatting is now done with PHP CS Fixer directly, using `@PER-CS2x0` with some extra rules for strictness (including strict-types).
+- Tests are now split: one suite for the core package, another for Laravel integration testing.
+- Versioning: Drops support for PHP < 8.3.
+- Versioning: Drops support for WeasyPrint < 66.0.
+
 ___
 
 # WeasyPrint for Laravel — Changelog

@@ -4,11 +4,13 @@
 
 **Impact-level:** High
 
-Version 11 refactors the package to be framework-agnostic. The package has been renamed to **WeasyPrint for PHP**, and core classes have been moved and renamed. Laravel-specific features remain supported but are now organised under the `Integration\Laravel` namespace.
+Version 11 refactors the package to be framework-agnostic. The package has been renamed to **WeasyPrint for PHP**, and core classes have been moved and renamed.
 
-### Class Renames
+### New namespace for Laravel
 
-Update all imports to use the new class names:
+Laravel-specific features remain supported, but are now organised under the `Integration\Laravel` namespace.
+
+You'll need to update all imports to use the new class names:
 
 ```diff
 -- use WeasyPrint\Facade;
