@@ -123,6 +123,9 @@ class Service implements Factory
     return $this->stream($filename, $headers, StreamMode::INLINE);
   }
 
+  /**
+   * This method requires Laravel.
+   */
   public function putFile(string $path, string|null $disk = null, array $options = []): bool
   {
     return $this->build()->putFile($path, $disk, $options);
