@@ -32,7 +32,7 @@ abstract class PDF implements Responsable
 
   public function stream(StreamMode $mode): StreamedResponse
   {
-    return Service::instance()
+    return app(Contracts\Factory::class)
       ->tapConfig($this->config(...))
       ->prepareSource($this->source())
       ->stream($this->filename(), $this->headers(), $mode);

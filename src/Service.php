@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace WeasyPrint;
 
-use Illuminate\Config\Repository;
-use Illuminate\Container\Container;
 use Illuminate\Contracts\Support\Renderable;
 use Rockett\Pipeline\Contracts\PipelineContract;
 use Rockett\Pipeline\Pipeline;
@@ -25,14 +23,9 @@ class Service implements Factory
   private Config $config;
   private Source $source;
 
-  public function __construct(Repository $config)
+  public function __construct(array $config = [])
   {
-    $this->config = new Config(...$config->get('weasyprint'));
-  }
-
-  public static function instance(): self
-  {
-    return Container::getInstance()->make(Factory::class);
+    $this->config = new Config(...$config);
   }
 
   public function getWeasyPrintVersion(): string

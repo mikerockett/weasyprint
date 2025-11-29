@@ -13,7 +13,9 @@ class Provider extends ServiceProvider
 
   public function register(): void
   {
-    $this->app->scoped(Factory::class, Service::class);
+    $this->app->scoped(Factory::class, fn($app) => new Service(
+      data_get($app, 'config.weasyprint', [])
+    ));
   }
 
   public function boot(): void

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
+use WeasyPrint\Contracts\Factory;
 use WeasyPrint\Enums\PDFVariant;
 use WeasyPrint\Enums\PDFVersion;
 use WeasyPrint\Exceptions\InvalidConfigValueException;
 use WeasyPrint\Objects\Config;
-use WeasyPrint\Service;
 
 describe('default config', function (): void {
   test('can be loaded', function (): void {
@@ -17,13 +17,13 @@ describe('default config', function (): void {
 
   test('prepared as config object', function (): void {
     expect(
-      Service::instance()->getConfig()
+      app(Factory::class)->getConfig()
     )->toBeInstanceOf(Config::class);
   });
 
   test('prepared with defaults', function (): void {
     expect(
-      Service::instance()->getConfig()->toArray()
+      app(Factory::class)->getConfig()->toArray()
     )->toEqual(config('weasyprint'));
   });
 });
@@ -31,7 +31,7 @@ describe('default config', function (): void {
 describe('runtime config', function (): void {
   test('via tapping', function (): void {
     expect(
-      Service::instance()
+      app(Factory::class)
         ->tapConfig(static function (Config $config) {
           $config->binary = '/bin/weasyprint';
         })
@@ -42,7 +42,7 @@ describe('runtime config', function (): void {
 
   test('via overriding', function (): void {
     expect(
-      Service::instance()
+      app(Factory::class)
         ->setConfig(new Config(
           binary: '/bin/weasyprint'
         ))
@@ -80,37 +80,37 @@ describe('environment', function (): void {
 
 describe('validation', function (): void {
   test('valid dpi', function (): void {
-    Service::instance()->tapConfig(function (Config $config) {
+    app(Factory::class)->tapConfig(function (Config $config) {
       $config->dpi = 300;
     });
   })->throwsNoExceptions();
 
   test('invalid dpi', function (): void {
-    Service::instance()->tapConfig(function (Config $config) {
+    app(Factory::class)->tapConfig(function (Config $config) {
       $config->dpi = -10;
     });
   })->throws(InvalidConfigValueException::class);
 
   test('valid jpeg quality', function (): void {
-    Service::instance()->tapConfig(function (Config $config) {
+    app(Factory::class)->tapConfig(function (Config $config) {
       $config->jpegQuality = 50;
     });
   })->throwsNoExceptions();
 
   test('invalid jpeg quality', function (): void {
-    Service::instance()->tapConfig(function (Config $config) {
+    app(Factory::class)->tapConfig(function (Config $config) {
       $config->jpegQuality = 99;
     });
   })->throws(InvalidConfigValueException::class);
 
   test('valid input encoding', function (): void {
-    Service::instance()->tapConfig(function (Config $config) {
+    app(Factory::class)->tapConfig(function (Config $config) {
       $config->inputEncoding = 'utf-16';
     });
   })->throwsNoExceptions();
 
   test('invalid input encoding', function (): void {
-    Service::instance()->tapConfig(function (Config $config) {
+    app(Factory::class)->tapConfig(function (Config $config) {
       $config->inputEncoding = 'non-existent';
     });
   })->throws(InvalidConfigValueException::class);

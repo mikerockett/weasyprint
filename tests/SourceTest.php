@@ -3,14 +3,14 @@
 declare(strict_types=1);
 
 use Illuminate\Contracts\Support\Renderable;
+use WeasyPrint\Contracts\Factory;
 use WeasyPrint\Exceptions\AttachmentNotFoundException;
 use WeasyPrint\Exceptions\SourceNotSetException;
 use WeasyPrint\Objects\Source;
-use WeasyPrint\Service;
 
 describe('can prepare source', function (): void {
   test('from source instance', function (): void {
-    $source = Service::instance()
+    $source = app(Factory::class)
       ->prepareSource(new Source('WeasyPrint rocks!'))
       ->getSource();
 
@@ -19,7 +19,7 @@ describe('can prepare source', function (): void {
   });
 
   test('from argument', function (): void {
-    $source = Service::instance()
+    $source = app(Factory::class)
       ->prepareSource('WeasyPrint rocks!')
       ->getSource();
 
@@ -28,7 +28,7 @@ describe('can prepare source', function (): void {
   });
 
   test('from renderable', function (): void {
-    $source = Service::instance()
+    $source = app(Factory::class)
       ->prepareSource(view('test-pdf'))
       ->getSource();
 
@@ -36,7 +36,7 @@ describe('can prepare source', function (): void {
   });
 
   test('from url', function (): void {
-    $source = Service::instance()
+    $source = app(Factory::class)
       ->prepareSource('https://google.com')
       ->getSource();
 
@@ -44,7 +44,7 @@ describe('can prepare source', function (): void {
   });
 
   test('with attachments', function (): void {
-    $source = Service::instance()
+    $source = app(Factory::class)
       ->prepareSource('WeasyPrint rocks!')
       ->addAttachment($attachmentPath = __DIR__ . '/attachments/test-attachment.txt')
       ->getSource();
@@ -56,11 +56,11 @@ describe('can prepare source', function (): void {
 
 describe('exceptions', function (): void {
   test('source not set exception', function (): void {
-    Service::instance()->build();
+    app(Factory::class)->build();
   })->throws(SourceNotSetException::class);
 
   test('attachment not found exception', function (): void {
-    Service::instance()
+    app(Factory::class)
       ->prepareSource('Attachment')
       ->addAttachment('/path/to/non-existent-file')
       ->build();

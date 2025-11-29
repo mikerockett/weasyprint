@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
+use WeasyPrint\Contracts\Factory;
 use WeasyPrint\Enums\PDFVersion;
 use WeasyPrint\Objects\Config;
 use WeasyPrint\Objects\Source;
-use WeasyPrint\Service;
 use WeasyPrint\Tests\Fixtures\TestPDF;
 
 describe('from source', function (): void {
   test('can render', function (mixed $source): void {
     $this->runPdfAssertions(
-      Service::instance()
+      app(Factory::class)
         ->prepareSource($source)
         ->build()
         ->getData()
@@ -27,7 +27,7 @@ describe('from source', function (): void {
 describe('streamed responses', function (): void {
   test('download via output object', function (): void {
     $this->runOutputAssertions(
-      Service::instance()
+      app(Factory::class)
         ->prepareSource(view('test-pdf'))
         ->build()
         ->download('test.pdf'),
@@ -38,7 +38,7 @@ describe('streamed responses', function (): void {
 
   test('download via shorthand', function (): void {
     $this->runOutputAssertions(
-      Service::instance()
+      app(Factory::class)
         ->prepareSource(view('test-pdf'))
         ->download('test.pdf'),
       'application/pdf',
@@ -56,7 +56,7 @@ describe('streamed responses', function (): void {
 
   test('inline via output object', function (): void {
     $this->runOutputAssertions(
-      Service::instance()
+      app(Factory::class)
         ->prepareSource(view('test-pdf'))
         ->build()
         ->inline('test.pdf'),
@@ -67,7 +67,7 @@ describe('streamed responses', function (): void {
 
   test('inline via shorthand', function (): void {
     $this->runOutputAssertions(
-      Service::instance()
+      app(Factory::class)
         ->prepareSource(view('test-pdf'))
         ->inline('test.pdf'),
       'application/pdf',
@@ -87,7 +87,7 @@ describe('streamed responses', function (): void {
 
 describe('versions', function (): void {
   test('can render', function (PDFVersion $version): void {
-    $data = Service::instance()
+    $data = app(Factory::class)
       ->tapConfig(static function (Config $config) use ($version): void {
         $config->pdfVersion = $version;
       })

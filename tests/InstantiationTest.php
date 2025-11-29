@@ -11,8 +11,8 @@ describe('can be instantiated via', function (): void {
     expect($this->app->make(Factory::class))->toBeValidServiceInstance();
   });
 
-  test('instance() helper', function (): void {
-    expect(Service::instance())->toBeValidServiceInstance();
+  test('app() helper', function (): void {
+    expect(app(Factory::class))->toBeValidServiceInstance();
   });
 
   test('facade', function (): void {
