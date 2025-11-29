@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-use WeasyPrint\Facade;
+use WeasyPrint\Integration\Laravel\WeasyPrint;
 
 describe('facade', function (): void {
   test('can access service via facade', function (): void {
-    expect(Facade::getFacadeRoot())->toBeValidServiceInstance();
+    expect(WeasyPrint::getFacadeRoot())->toBeValidServiceInstance();
   });
 
   test('facade proxies methods to service', function (): void {
-    Facade::prepareSource('<p>Test</p>');
+    WeasyPrint::prepareSource('<p>Test</p>');
 
-    expect(Facade::sourceIsSet())->toBeTrue();
+    expect(WeasyPrint::sourceIsSet())->toBeTrue();
   });
 });

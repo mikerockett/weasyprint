@@ -8,7 +8,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Rockett\Pipeline\Builder\PipelineBuilder;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use WeasyPrint\Commands\VersionCommand;
-use WeasyPrint\Contracts\Factory;
+use WeasyPrint\Contracts\WeasyPrintFactory;
 use WeasyPrint\Enums\StreamMode;
 use WeasyPrint\Exceptions\MissingSourceException;
 use WeasyPrint\Objects\Config;
@@ -17,7 +17,7 @@ use WeasyPrint\Objects\Source;
 use WeasyPrint\Pipeline\BuildTraveler;
 use WeasyPrint\Pipeline\Stages as Pipes;
 
-class Service implements Factory
+class WeasyPrintService implements WeasyPrintFactory
 {
   public const SUPPORTED_VERSIONS = '^63.0|^64.0|^65.0|^66.0';
 
@@ -57,7 +57,7 @@ class Service implements Factory
     return $this->config;
   }
 
-  public function prepareSource(Source|Renderable|string $source): Factory
+  public function prepareSource(Source|Renderable|string $source): WeasyPrintFactory
   {
     $this->source = match ($source instanceof Source) {
       true => $source,
@@ -77,7 +77,7 @@ class Service implements Factory
     return $this->source;
   }
 
-  public function addAttachment(string $pathToAttachment): Factory
+  public function addAttachment(string $pathToAttachment): WeasyPrintFactory
   {
     if (!$this->source) {
       throw new MissingSourceException();

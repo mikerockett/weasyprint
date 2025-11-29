@@ -36,7 +36,7 @@ describe('abstract PDF class', function (): void {
   });
 
   test('respects custom headers', function (): void {
-    $pdf = new class extends \WeasyPrint\PDF {
+    $pdf = new class extends \WeasyPrint\Integration\Laravel\PDF {
       public function source(): \Illuminate\Contracts\Support\Renderable
       {
         return view('test-pdf');

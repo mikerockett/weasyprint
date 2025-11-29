@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace WeasyPrint;
+namespace WeasyPrint\Integration\Laravel;
 
 use Illuminate\Support\ServiceProvider;
-use WeasyPrint\Contracts\Factory;
+use WeasyPrint\Contracts\WeasyPrintFactory;
+use WeasyPrint\WeasyPrintService;
 
-class LaravelServiceProvider extends ServiceProvider
+class WeasyPrintServiceProvider extends ServiceProvider
 {
   public function register(): void
   {
-    $this->app->scoped(Factory::class, fn($app) => new Service(
+    $this->app->scoped(WeasyPrintFactory::class, fn($app) => new WeasyPrintService(
       data_get($app, 'config.weasyprint', []),
     ));
   }
@@ -43,6 +44,6 @@ class LaravelServiceProvider extends ServiceProvider
 
   protected function configFile(): string
   {
-    return __DIR__ . '/../config/weasyprint.php';
+    return __DIR__ . '/config/weasyprint.php';
   }
 }

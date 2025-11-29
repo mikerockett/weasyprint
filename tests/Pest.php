@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use WeasyPrint\Service;
+use WeasyPrint\WeasyPrintService;
 use WeasyPrint\Tests\Core\Support\CoreTestCase;
 use WeasyPrint\Tests\Laravel\Support\LaravelTestCase;
 
@@ -14,7 +14,7 @@ uses(LaravelTestCase::class)->in('Laravel');
 
 // Shared expectations
 expect()->extend('toBeValidServiceInstance', function () {
-  return $this->toBeInstanceOf(Service::class);
+  return $this->toBeInstanceOf(WeasyPrintService::class);
 });
 
 expect()->extend('toBeValidPdfData', function () {

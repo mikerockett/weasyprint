@@ -3,12 +3,12 @@
 declare(strict_types=1);
 
 use WeasyPrint\Objects\Source;
-use WeasyPrint\Service;
+use WeasyPrint\WeasyPrintService;
 use WeasyPrint\Tests\Fixtures\SampleHtml;
 
 describe('string sources', function (): void {
   test('can prepare from source instance', function (): void {
-    $service = new Service();
+    $service = new WeasyPrintService();
     $source = new Source(SampleHtml::simple());
     $service->prepareSource($source);
 
@@ -18,7 +18,7 @@ describe('string sources', function (): void {
   });
 
   test('can prepare from string argument', function (): void {
-    $service = new Service();
+    $service = new WeasyPrintService();
     $service->prepareSource(SampleHtml::simple());
 
     expect($service->sourceIsSet())->toBeTrue();
@@ -27,7 +27,7 @@ describe('string sources', function (): void {
   });
 
   test('source render() returns string content', function (): void {
-    $service = new Service();
+    $service = new WeasyPrintService();
     $service->prepareSource(SampleHtml::withStyles());
     $rendered = $service->getSource()->render();
 
@@ -36,7 +36,7 @@ describe('string sources', function (): void {
   });
 
   test('prepareSource returns self for fluent interface', function (): void {
-    $service = new Service();
+    $service = new WeasyPrintService();
     $result = $service->prepareSource('test content');
 
     expect($result)->toBe($service);

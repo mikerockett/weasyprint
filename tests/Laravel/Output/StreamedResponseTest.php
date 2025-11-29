@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use WeasyPrint\Contracts\Factory;
+use WeasyPrint\Contracts\WeasyPrintFactory;
 
 describe('streamed responses', function (): void {
   test('download via build()->download()', function (): void {
-    $response = app(Factory::class)
+    $response = app(WeasyPrintFactory::class)
       ->prepareSource(view('test-pdf'))
       ->build()
       ->download('test.pdf');
@@ -19,7 +19,7 @@ describe('streamed responses', function (): void {
   });
 
   test('download via shorthand download()', function (): void {
-    $response = app(Factory::class)
+    $response = app(WeasyPrintFactory::class)
       ->prepareSource(view('test-pdf'))
       ->download('test.pdf');
 
@@ -31,7 +31,7 @@ describe('streamed responses', function (): void {
   });
 
   test('inline via build()->inline()', function (): void {
-    $response = app(Factory::class)
+    $response = app(WeasyPrintFactory::class)
       ->prepareSource(view('test-pdf'))
       ->build()
       ->inline('test.pdf');
@@ -44,7 +44,7 @@ describe('streamed responses', function (): void {
   });
 
   test('inline via shorthand inline()', function (): void {
-    $response = app(Factory::class)
+    $response = app(WeasyPrintFactory::class)
       ->prepareSource(view('test-pdf'))
       ->inline('test.pdf');
 

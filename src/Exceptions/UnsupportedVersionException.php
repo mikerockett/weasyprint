@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace WeasyPrint\Exceptions;
 
 use RuntimeException;
-use WeasyPrint\Service;
+use WeasyPrint\WeasyPrintService;
 
 class UnsupportedVersionException extends RuntimeException
 {
@@ -15,7 +15,7 @@ class UnsupportedVersionException extends RuntimeException
       sprintf(
         'You are running an unsupported version of WeasyPrint. You have version %s installed, which does not satisfy constraint %s.',
         $installedVersion,
-        Service::SUPPORTED_VERSIONS,
+        WeasyPrintService::SUPPORTED_VERSIONS,
       ),
     );
   }

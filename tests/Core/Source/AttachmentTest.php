@@ -3,12 +3,12 @@
 declare(strict_types=1);
 
 use WeasyPrint\Exceptions\SourceNotSetException;
-use WeasyPrint\Service;
+use WeasyPrint\WeasyPrintService;
 use WeasyPrint\Tests\Fixtures\SampleHtml;
 
 describe('attachments', function (): void {
   test('can add attachment', function (): void {
-    $service = new Service();
+    $service = new WeasyPrintService();
     $service->prepareSource(SampleHtml::simple());
     $attachmentPath = __DIR__ . '/../../attachments/test-attachment.txt';
     $result = $service->addAttachment($attachmentPath);
@@ -20,7 +20,7 @@ describe('attachments', function (): void {
   });
 
   test('can add multiple attachments', function (): void {
-    $service = new Service();
+    $service = new WeasyPrintService();
     $service->prepareSource(SampleHtml::simple());
     $attachmentPath = __DIR__ . '/../../attachments/test-attachment.txt';
 
@@ -32,19 +32,19 @@ describe('attachments', function (): void {
   });
 
   test('hasAttachments() returns false when no attachments', function (): void {
-    $service = new Service();
+    $service = new WeasyPrintService();
     $service->prepareSource(SampleHtml::simple());
 
     expect($service->getSource()->hasAttachments())->toBeFalse();
   });
 
   test('throws exception when adding attachment without source', function (): void {
-    $service = new Service();
+    $service = new WeasyPrintService();
     $service->addAttachment('/some/file.txt');
   })->throws(Error::class, 'must not be accessed before initialization');
 
   test('throws exception when source not set on build', function (): void {
-    $service = new Service();
+    $service = new WeasyPrintService();
     $service->build();
   })->throws(SourceNotSetException::class);
 });

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace WeasyPrint\Tests\Fixtures;
 
 use Illuminate\Contracts\Support\Renderable;
-use WeasyPrint\PDF;
+use WeasyPrint\Integration\Laravel\PDF;
 
 class TestPDF extends PDF
 {

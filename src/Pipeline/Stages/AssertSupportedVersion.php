@@ -8,7 +8,7 @@ use Composer\Semver\Semver;
 use WeasyPrint\Exceptions\UnsupportedVersionException;
 use WeasyPrint\Pipeline\BuildStage;
 use WeasyPrint\Pipeline\BuildTraveler;
-use WeasyPrint\Service;
+use WeasyPrint\WeasyPrintService;
 
 class AssertSupportedVersion implements BuildStage
 {
@@ -16,7 +16,7 @@ class AssertSupportedVersion implements BuildStage
   {
     $installed = $container->service->getWeasyPrintVersion();
 
-    if (!Semver::satisfies($installed, Service::SUPPORTED_VERSIONS)) {
+    if (!Semver::satisfies($installed, WeasyPrintService::SUPPORTED_VERSIONS)) {
       throw new UnsupportedVersionException($installed);
     }
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WeasyPrint;
+namespace WeasyPrint\Integration\Laravel;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\Support\Responsable;
@@ -34,7 +34,7 @@ abstract class PDF implements Responsable
 
   public function stream(StreamMode $mode): StreamedResponse
   {
-    return app(Contracts\Factory::class)
+    return app(\WeasyPrint\Contracts\WeasyPrintFactory::class)
       ->tapConfig($this->config(...))
       ->prepareSource($this->source())
       ->stream($this->filename(), $this->headers(), $mode);

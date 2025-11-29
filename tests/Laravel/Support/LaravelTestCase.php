@@ -9,7 +9,7 @@ use Illuminate\Support\Env;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use WeasyPrint\LaravelServiceProvider;
+use WeasyPrint\Integration\Laravel\WeasyPrintServiceProvider;
 use WeasyPrint\Tests\Core\Support\PdfAssertions;
 
 abstract class LaravelTestCase extends OrchestraTestCase
@@ -18,7 +18,7 @@ abstract class LaravelTestCase extends OrchestraTestCase
 
   protected function getPackageProviders($app)
   {
-    return [LaravelServiceProvider::class];
+    return [WeasyPrintServiceProvider::class];
   }
 
   protected function getEnvironmentSetUp($app)
