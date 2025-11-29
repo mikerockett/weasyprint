@@ -1,0 +1,42 @@
+name: Run Tests
+
+on: [pull_request]
+
+jobs:
+  test:
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.2', '8.3', '8.4']
+        weasyprint-version: ['63.0', '64.0', '65.0', '66.0']
+    runs-on: ubuntu-latest
+    container:
+      image: php:${{ matrix.php-version }}-cli-alpine
+    steps:
+      - name: Install system dependencies
+        run: apk -q add nodejs py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
+
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Install Composer
+        run: curl -sS https://getcomposer.org/installer | php
+
+      - name: Restore cached vendor directory
+        uses: actions/cache@v4
+        with:
+          path: vendor/
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install PHP dependencies
+        run: php composer.phar install -qo
+
+      - name: Install and verify WeasyPrint
+        run: pip3 -q install weasyprint==${{ matrix.weasyprint-version }} --break-system-packages && weasyprint --info
+
+      - name: Run tests
+        run: ./vendor/bin/pest --profile
