@@ -1,11 +1,11 @@
 # WeasyPrint for PHP
 
-A feature-rich PHP wrapper for the [WeasyPrint Document Factory](https://weasyprint.org/).
-
 ![License](https://img.shields.io/badge/License-ISC-green.svg)
 ![Version](https://img.shields.io/packagist/v/rockett/weasyprint?label=Release)
 ![Downloads](https://img.shields.io/packagist/dm/rockett/weasyprint?label=Installs)
 ![Tests](https://git.rockett.pw/rockett/pipeline/actions/workflows/tests.yml/badge.svg)
+
+A feature-rich PHP wrapper for the [WeasyPrint Document Factory](https://weasyprint.org/).
 
 ## Documentation
 
