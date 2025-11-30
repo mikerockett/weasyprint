@@ -24,9 +24,11 @@ class WeasyPrintFactory implements WeasyPrint
   private Config $config;
   private Source $source;
 
-  public function __construct(array $config = [])
+  public function __construct(array|Config $config = [])
   {
-    $this->config = new Config(...$config);
+    $this->config = $config instanceof Config
+      ? $config
+      : new Config(...$config);
   }
 
   public function getWeasyPrintVersion(): string
