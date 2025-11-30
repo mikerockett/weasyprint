@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace WeasyPrint\Tests\Core\Support;
 
 use PHPUnit\Framework\TestCase;
-use WeasyPrint\WeasyPrintService;
+use WeasyPrint\WeasyPrintFactory;
 
 abstract class CoreTestCase extends TestCase
 {
   use PdfAssertions;
 
-  protected function createService(array $config = []): WeasyPrintService
+  protected function createService(array $config = []): WeasyPrintFactory
   {
-    return new WeasyPrintService($config);
+    return new WeasyPrintFactory($config);
   }
 }

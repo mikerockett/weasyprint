@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-use WeasyPrint\Contracts\WeasyPrintFactory;
+use WeasyPrint\Contracts\WeasyPrint;
 
 describe('container bindings', function (): void {
   test('can resolve via dependency injection', function (): void {
-    expect($this->app->make(WeasyPrintFactory::class))->toBeValidServiceInstance();
+    expect($this->app->make(WeasyPrint::class))->toBeValidServiceInstance();
   });
 
   test('can resolve via app() helper', function (): void {
-    expect(app(WeasyPrintFactory::class))->toBeValidServiceInstance();
+    expect(app(WeasyPrint::class))->toBeValidServiceInstance();
   });
 
   test('binding is scoped', function (): void {
-    $first = app(WeasyPrintFactory::class);
-    $second = app(WeasyPrintFactory::class);
+    $first = app(WeasyPrint::class);
+    $second = app(WeasyPrint::class);
 
     expect($first)->toBe($second);
   });

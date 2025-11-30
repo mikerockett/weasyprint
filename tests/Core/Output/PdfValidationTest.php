@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 use WeasyPrint\Enums\PDFVersion;
 use WeasyPrint\Objects\Config;
-use WeasyPrint\WeasyPrintService;
+use WeasyPrint\WeasyPrintFactory;
 use WeasyPrint\Tests\Fixtures\SampleHtml;
 
 describe('pdf validation', function (): void {
   test('pdf has correct mime type', function (): void {
-    $service = new WeasyPrintService();
+    $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
     $data = $service->getData();
 
@@ -22,7 +22,7 @@ describe('pdf validation', function (): void {
   });
 
   test('pdf contains producer metadata', function (): void {
-    $service = new WeasyPrintService();
+    $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
     $data = $service->getData();
 
@@ -36,7 +36,7 @@ describe('pdf validation', function (): void {
   });
 
   test('can set pdf version', function (): void {
-    $service = new WeasyPrintService();
+    $service = new WeasyPrintFactory();
     $service->setConfig(new Config(pdfVersion: PDFVersion::VERSION_1_7));
     $service->prepareSource(SampleHtml::simple());
     $data = $service->getData();

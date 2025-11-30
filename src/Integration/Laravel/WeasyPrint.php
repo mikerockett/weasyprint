@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace WeasyPrint\Integration\Laravel;
 
 use Illuminate\Support\Facades\Facade;
-use WeasyPrint\Contracts\WeasyPrintFactory;
+use WeasyPrint\Contracts\WeasyPrint as Contract;
 
 /**
  * @method static string getWeasyPrintVersion()
- * @method static WeasyPrintFactory setConfig(Objects\Config $config)
- * @method static WeasyPrintFactory tapConfig(callable $callback)
- * @method static WeasyPrintFactory prepareSource(Objects\Source|\Illuminate\Contracts\Support\Renderable|string $source)
+ * @method static WeasyPrint setConfig(Objects\Config $config)
+ * @method static WeasyPrint tapConfig(callable $callback)
+ * @method static WeasyPrint prepareSource(Objects\Source|\Illuminate\Contracts\Support\Renderable|string $source)
  *
- * @see WeasyPrint\Contracts\WeasyPrintFactory
+ * @see WeasyPrint\Contracts\WeasyPrint
  */
 class WeasyPrint extends Facade
 {
   public static function getFacadeAccessor(): string
   {
-    return WeasyPrintFactory::class;
+    return Contract::class;
   }
 }

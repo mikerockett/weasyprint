@@ -6,7 +6,7 @@ namespace WeasyPrint\Pipeline;
 
 use WeasyPrint\Commands\BuildCommand;
 use WeasyPrint\Objects\Output;
-use WeasyPrint\WeasyPrintService;
+use WeasyPrint\WeasyPrintFactory;
 
 class BuildTraveler
 {
@@ -16,7 +16,7 @@ class BuildTraveler
   private Output $output;
 
   public function __construct(
-    public WeasyPrintService $service,
+    public WeasyPrintFactory $service,
   ) {}
 
   public function makeTemporaryFilename(): string|false

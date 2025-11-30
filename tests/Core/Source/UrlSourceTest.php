@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use WeasyPrint\WeasyPrintService;
+use WeasyPrint\WeasyPrintFactory;
 
 describe('url sources', function (): void {
   test('can prepare from url', function (): void {
-    $service = new WeasyPrintService();
+    $service = new WeasyPrintFactory();
     $url = 'https://example.org';
     $service->prepareSource($url);
 
@@ -15,7 +15,7 @@ describe('url sources', function (): void {
   });
 
   test('isUrl() detects valid urls', function (): void {
-    $service = new WeasyPrintService();
+    $service = new WeasyPrintFactory();
 
     $service->prepareSource('https://example.org');
     expect($service->getSource()->isUrl())->toBeTrue();
@@ -28,7 +28,7 @@ describe('url sources', function (): void {
   });
 
   test('isUrl() returns false for non-urls', function (): void {
-    $service = new WeasyPrintService();
+    $service = new WeasyPrintFactory();
 
     $service->prepareSource('<p>Not a URL</p>');
     expect($service->getSource()->isUrl())->toBeFalse();
