@@ -10,7 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         php-version: ['8.3', '8.4', '8.5']
-        weasyprint-version: ['66.0']
+        weasyprint-version: ['67.0']
     runs-on: ubuntu-latest
     container:
       image: php:${{ matrix.php-version }}-cli-alpine

@@ -19,10 +19,11 @@ While it maintains Laravel compatibility, core functionality can now be used ind
 - `Output::putFile` has been removed.
 - `Output` is now `Stringable` (useful to pass to `Storage::put`).
 - Internal pipeline now uses the latest package version, and is assembled with a `PipelineBuilder`.
+- PDF Variants: Adds support for PDF/A-1a, PDF/A-2a, PDF/A-3a, PDF/A-4e, PDF/A-4f, PDF/UA-2, PDF/X, and debug.
 - Formatting is now done with PHP CS Fixer directly, using `@PER-CS2x0` with some extra rules for strictness (including strict-types).
 - Tests are now split: one suite for the core package, another for Laravel integration testing.
 - Versioning: Drops support for PHP < 8.3.
-- Versioning: Drops support for WeasyPrint < 66.0.
+- Versioning: Requires WeasyPrint 67.
 
 ___
 
