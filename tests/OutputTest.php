@@ -19,7 +19,7 @@ describe('from source', function (): void {
   })->with([
     'instance' => fn() => new Source('<p>WeasyPrint rocks!</p>'),
     'argument' => fn() => '<p>WeasyPrint rocks!</p>',
-    'url' => fn() => 'https://example.org',
+    'url' => fn() => 'http://example.org',
     'renderable' => fn() => view('test-pdf'),
   ]);
 });
