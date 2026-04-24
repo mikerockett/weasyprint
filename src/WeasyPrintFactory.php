@@ -79,15 +79,29 @@ class WeasyPrintFactory implements WeasyPrint
     return $this->source;
   }
 
-  public function addAttachment(string $pathToAttachment): WeasyPrint
+  private array $xmpMetadata = [];
+
+  public function addAttachment(string $pathToAttachment, ?string $relationship = null): WeasyPrint
   {
     if (!$this->source) {
       throw new MissingSourceException();
     }
 
-    $this->source->addAttachment($pathToAttachment);
+    $this->source->addAttachment($pathToAttachment, $relationship);
 
     return $this;
+  }
+
+  public function addXmpMetadata(string $path): WeasyPrint
+  {
+    $this->xmpMetadata[] = $path;
+
+    return $this;
+  }
+
+  public function getXmpMetadata(): array
+  {
+    return $this->xmpMetadata;
   }
 
   public function build(): Output
@@ -127,6 +141,6 @@ class WeasyPrintFactory implements WeasyPrint
 
   public function getData(): string
   {
-    return $this->build()->getData();
+    return $this->build()->data;
   }
 }

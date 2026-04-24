@@ -29,4 +29,6 @@ return (array) new \WeasyPrint\Objects\Config(
   dpi: env('WEASYPRINT_DPI', null),
   jpegQuality: env('WEASYPRINT_JPEG_QUALITY', null),
   pdfForms: env('WEASYPRINT_PDF_FORMS', false),
+  noHttpRedirects: env('WEASYPRINT_NO_HTTP_REDIRECTS', false),
+  failOnHttpErrors: env('WEASYPRINT_FAIL_ON_HTTP_ERRORS', false),
 );

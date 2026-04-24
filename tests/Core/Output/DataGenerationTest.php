@@ -11,7 +11,7 @@ describe('data generation', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
 
-    $data = $service->build()->getData();
+    $data = $service->build()->data;
 
     expect($data)->toBeValidPdfData();
     $this->assertValidPdf($data);
@@ -21,7 +21,7 @@ describe('data generation', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(new Source(SampleHtml::withStyles()));
 
-    $data = $service->build()->getData();
+    $data = $service->build()->data;
 
     expect($data)->toBeValidPdfData();
     $this->assertValidPdf($data);
@@ -31,7 +31,7 @@ describe('data generation', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource('https://example.org');
 
-    $data = $service->build()->getData();
+    $data = $service->build()->data;
 
     expect($data)->toBeValidPdfData();
     $this->assertValidPdf($data);
@@ -45,6 +45,11 @@ describe('data generation', function (): void {
 
     expect($output)->toBeInstanceOf(WeasyPrint\Objects\Output::class);
   });
+
+  test('output data is immutable', function (): void {
+    $output = new WeasyPrint\Objects\Output('test');
+    $output->data = 'changed';
+  })->throws(Error::class);
 
   test('getData() shorthand works', function (): void {
     $service = new WeasyPrintFactory();

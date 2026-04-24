@@ -28,12 +28,9 @@ final class Source
     };
   }
 
-  public function addAttachment(string $pathToAttachment): static
+  public function addAttachment(string $pathToAttachment, ?string $relationship = null): static
   {
-    array_push(
-      $this->attachments,
-      $pathToAttachment,
-    );
+    $this->attachments[] = new Attachment($pathToAttachment, $relationship);
 
     return $this;
   }

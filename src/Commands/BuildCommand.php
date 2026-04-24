@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WeasyPrint\Commands;
 
 use WeasyPrint\Exceptions\AttachmentNotFoundException;
+use WeasyPrint\Objects\Attachment;
 use WeasyPrint\Objects\Config;
 
 final class BuildCommand extends BaseCommand
@@ -16,6 +17,7 @@ final class BuildCommand extends BaseCommand
     string $inputPath,
     string $outputPath,
     protected array $attachments = [],
+    protected array $xmpMetadata = [],
   ) {
     $this->config = $config;
 
@@ -47,6 +49,8 @@ final class BuildCommand extends BaseCommand
       'dpi' => $this->config->dpi,
       'jpeg-quality' => $this->config->jpegQuality,
       'pdf-forms' => $this->config->pdfForms,
+      'no-http-redirects' => $this->config->noHttpRedirects,
+      'fail-on-http-errors' => $this->config->failOnHttpErrors,
     ]);
 
     $arguments->each(
@@ -54,13 +58,18 @@ final class BuildCommand extends BaseCommand
     );
 
     collect($this->attachments)->each(
-      function (string $path): void {
-        if (!is_file($path)) {
-          throw new AttachmentNotFoundException($path);
+      function (Attachment $attachment): void {
+        if (!is_file($attachment->path)) {
+          throw new AttachmentNotFoundException($attachment->path);
         }
 
-        $this->maybePushArgument('attachment', $path);
+        $this->maybePushArgument('attachment', $attachment->path);
+        $this->maybePushArgument('attachment-relationship', $attachment->relationship);
       },
+    );
+
+    collect($this->xmpMetadata)->each(
+      fn(string $path) => $this->maybePushArgument('xmp-metadata', $path),
     );
 
     collect($this->config->stylesheets)->each(

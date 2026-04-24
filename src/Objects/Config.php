@@ -74,6 +74,10 @@ final class Config implements Arrayable
    * from 0 (worst) to 95 (best).
    *
    * @param bool $pdfForms Render PDF forms from HTML elements.
+   *
+   * @param bool $noHttpRedirects Disable HTTP redirect following.
+   *
+   * @param bool $failOnHttpErrors Abort on HTTP errors.
    */
   public function __construct(
     public string|null $binary = null,
@@ -96,6 +100,8 @@ final class Config implements Arrayable
     public int|null $dpi = null,
     public int|null $jpegQuality = null,
     public bool $pdfForms = false,
+    public bool $noHttpRedirects = false,
+    public bool $failOnHttpErrors = false,
   ) {
     $this->runAssertions();
     $this->expandEnums();
@@ -153,6 +159,8 @@ final class Config implements Arrayable
       'dpi' => $this->dpi,
       'jpegQuality' => $this->jpegQuality,
       'pdfForms' => $this->pdfForms,
+      'noHttpRedirects' => $this->noHttpRedirects,
+      'failOnHttpErrors' => $this->failOnHttpErrors,
     ];
   }
 

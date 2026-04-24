@@ -8,10 +8,10 @@ use Stringable;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use WeasyPrint\Enums\StreamMode;
 
-final class Output implements Stringable
+final readonly class Output implements Stringable
 {
   public function __construct(
-    protected string $data,
+    public string $data,
   ) {}
 
   public function stream(
@@ -50,13 +50,8 @@ final class Output implements Stringable
     return $this->stream($filename, $headers, StreamMode::INLINE);
   }
 
-  public function getData(): string
-  {
-    return $this->data;
-  }
-
   public function __toString(): string
   {
-    return $this->getData();
+    return $this->data;
   }
 }

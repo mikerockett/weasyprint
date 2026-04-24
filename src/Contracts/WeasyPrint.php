@@ -19,7 +19,8 @@ interface WeasyPrint
   public function getConfig(): Config;
   public function prepareSource(Source|Renderable|string $source): self;
   public function getSource(): Source;
-  public function addAttachment(string $pathToAttachment): WeasyPrint;
+  public function addAttachment(string $pathToAttachment, ?string $relationship = null): WeasyPrint;
+  public function addXmpMetadata(string $path): WeasyPrint;
   public function build(): Output;
   public function stream(string $filename, array $headers = [], StreamMode $mode = StreamMode::INLINE): StreamedResponse;
   public function download(string $filename, array $headers = []): StreamedResponse;

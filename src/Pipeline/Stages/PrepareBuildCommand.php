@@ -19,6 +19,7 @@ class PrepareBuildCommand implements BuildStage
       inputPath: $container->getInputPath(),
       outputPath: $container->getOutputPath(),
       attachments: $service->getSource()->getAttachments(),
+      xmpMetadata: $service->getXmpMetadata(),
     ));
 
     return $container;
