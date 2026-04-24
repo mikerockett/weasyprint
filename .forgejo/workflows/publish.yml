@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install dependencies
-        run: apt-get update && apt-get install -y zip curl
+        run: apt-get update && apt-get install -y curl
 
       - name: Checkout
         uses: actions/checkout@v6
 
       - name: Create archive
-        run: zip -r package.zip . -x '.git/*' -x '.forgejo/*'
+        run: git archive --format=zip HEAD -o package.zip
 
       - name: Extract version
         id: version
