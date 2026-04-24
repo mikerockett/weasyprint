@@ -6,6 +6,7 @@ namespace WeasyPrint\Integration\Laravel;
 
 use Illuminate\Support\Facades\Facade;
 use WeasyPrint\Contracts\WeasyPrint as Contract;
+use WeasyPrint\Testing\FakeWeasyPrint;
 
 /**
  * @method static string getWeasyPrintVersion()
@@ -17,6 +18,15 @@ use WeasyPrint\Contracts\WeasyPrint as Contract;
  */
 class WeasyPrint extends Facade
 {
+  public static function fake(): FakeWeasyPrint
+  {
+    $fake = new FakeWeasyPrint();
+
+    static::swap($fake);
+
+    return $fake;
+  }
+
   public static function getFacadeAccessor(): string
   {
     return Contract::class;
