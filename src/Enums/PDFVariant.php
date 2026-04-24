@@ -12,7 +12,6 @@ enum PDFVariant: string
   case PDF_A_1B = 'pdf/a-1b';
   case PDF_A_2B = 'pdf/a-2b';
   case PDF_A_3B = 'pdf/a-3b';
-  case PDF_A_4B = 'pdf/a-4b';
 
   // PDF/A - Accessibility conformance (requires tagged structure)
   case PDF_A_1A = 'pdf/a-1a';
