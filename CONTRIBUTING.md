@@ -51,6 +51,6 @@ $ just fix
 
 #### Commit Messages
 
-Your commit message should be clear and concise. If you’re fixing a bug, start the message with `bugfix:`. If it’s a feature: `feature:`. If it’s a chore, like formatting code: `chore:`.
+Keep commit messages short and to the point - for example, "fix timeout handling when binary is unresponsive" or "add support for PDF/UA-2 variant". Long messages are strongly discouraged. Avoid generic messages like "fix bug" or "update code".
 
-If you’d simply like to report a bug or request a feature, simply [open an issue](https://gitlab.com/mikerockett/weasyprint/issues).
+If you’d simply like to report a bug or request a feature, simply [open an issue](https://github.com/mikerockett/weasyprint/issues).
