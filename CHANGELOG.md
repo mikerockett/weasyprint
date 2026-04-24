@@ -50,6 +50,7 @@ ___
 - `10.2.0` - Versioning: Adds support for WeasyPrint 65.
 - `10.3.0` - Corrects base `stream()` method signatures to make `StreamMode::INLINE` the default `$mode` as it is declared after `$headers = []` (see #13)
 - `10.4.0` - Versioning: Adds support for WeasyPrint 66 and Rockett\Pipeline 4.0.
+- `10.5.0` - Versioning: Adds support for Laravel 13.
 
 ### Patch Releases
 
