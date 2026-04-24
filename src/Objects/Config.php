@@ -36,11 +36,8 @@ final class Config implements Arrayable
    * relative URLs in the HTML input.
    *
    * @param array $stylesheets Stylesheets to use alongside the
-   * HTML input. Each stylesheet may the absolute path to a
+   * HTML input. Each stylesheet may be the absolute path to a
    * file, or a URL.
-   *
-   * **NOTE:** It is recommended to set this at runtime
-   * using the `addStylesheet` method.
    *
    * @param array $processEnvironment The environment variables
    * passed to Symfony Process when executing the WeasyPrint binary.
