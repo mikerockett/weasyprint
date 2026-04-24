@@ -1,0 +1,11 @@
+services:
+  wp:
+    build:
+      context: .
+      args:
+        WEASYPRINT_VERSION: 68.0
+    environment:
+      COMPOSER_ROOT_VERSION: 11.x-dev
+    volumes:
+      - .:/app
+    working_dir: /app

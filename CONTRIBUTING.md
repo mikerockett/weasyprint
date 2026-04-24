@@ -7,6 +7,27 @@ If you’d like to make a contribution to WeasyPrint for PHP, you’re more than
 
 Your request should be as detailed as possible, unless it’s a trivial change.
 
+#### Development Environment
+
+This package uses Docker for local development. You don’t need PHP, Composer, or WeasyPrint installed on your machine - everything runs inside the container.
+
+> [!NOTE]
+> A [justfile](https://github.com/casey/just) is provided for convenience. If you don’t have Just installed, you can substitute `just <recipe>` with the equivalent `docker compose run --rm wp <command>`.
+
+To get started, make sure you have Docker installed and then build the image:
+
+```shell
+$ just build
+```
+
+Then install dependencies:
+
+```shell
+$ just composer install
+```
+
+You can run any Composer command via `just composer <args>`.
+
 #### Tests
 
 Should it be required, please make sure that any impacted tests are updated, or new tests are created.
@@ -17,7 +38,7 @@ Should it be required, please make sure that any impacted tests are updated, or 
 Then run the tests before opening your merge request:
 
 ```shell
-$ composer run test
+$ just test
 ```
 
 #### Formatting
@@ -25,7 +46,7 @@ $ composer run test
 This package uses PHP CS Fixer to auto-format code. Before committing your code, please run a format over all files:
 
 ```shell
-$ composer fix
+$ just fix
 ```
 
 #### Commit Messages
