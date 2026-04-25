@@ -20,10 +20,10 @@ You'll need to update all imports to use the new class names:
 ++ use WeasyPrint\Integration\Laravel\WeasyPrintServiceProvider;
 
 -- use WeasyPrint\Service;
-++ use WeasyPrint\WeasyPrintService;
+++ use WeasyPrint\WeasyPrintFactory;
 
 -- use WeasyPrint\Contracts\Factory;
-++ use WeasyPrint\Contracts\WeasyPrintFactory;
+++ use WeasyPrint\Contracts\WeasyPrint;
 
 -- use WeasyPrint\PDF;
 ++ use WeasyPrint\Integration\Laravel\PDF;
@@ -37,7 +37,7 @@ Previously, the package provided a `Service::instance()` helper method, intended
 
 In the spirit of going framework-agnostic, this has been removed.
 
-The other two methods are still available in Laravel environments, but you'll want to use your own container or just direct invocation (`new Service($config)`) outside of Laravel.
+The other two methods are still available in Laravel environments, but you'll want to use your own container or just direct invocation (`new WeasyPrintFactory($config)`) outside of Laravel.
 
 ### Removal of `putFile`
 
@@ -55,7 +55,7 @@ Storage::put($path, $output);
 
 ### Drops old versions
 
-The package now requires PHP 8.3+ and WeasyPrint v66+.
+The package now requires PHP 8.3+, WeasyPrint v67+, and Laravel 12+ (if using the Laravel integration).
 
 While best attempts to support WeasyPrint versions for as long as possible are made, unsupported versions are dropped whenever a new major release is made, which could be due to an internal change like this or due to an API change in WeasyPrint itself.
 

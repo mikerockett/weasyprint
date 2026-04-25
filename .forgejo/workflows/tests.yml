@@ -15,16 +15,27 @@ jobs:
     container:
       image: php:${{ matrix.php-version }}-cli-alpine
     steps:
-      - name: Install system dependencies
-        run: apk -q add nodejs py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
-
       - name: Checkout code
         uses: actions/checkout@v6
 
+      - name: Check for skip tests
+        id: skip
+        run: |
+          MESSAGE=$(git log -1 --format=%s)
+          if echo "$MESSAGE" | grep -qF '[skip tests]'; then
+            echo "skip=true" >> "$FORGEJO_OUTPUT"
+          fi
+
+      - name: Install system dependencies
+        if: steps.skip.outputs.skip != 'true'
+        run: apk -q add nodejs py3-pip py3-pillow py3-cffi py3-brotli gcc musl-dev python3-dev pango fontconfig-dev font-noto
+
       - name: Install Composer
+        if: steps.skip.outputs.skip != 'true'
         run: curl -sS https://getcomposer.org/installer | php
 
       - name: Restore cached vendor directory
+        if: steps.skip.outputs.skip != 'true'
         uses: actions/cache@v4
         with:
           path: vendor/
@@ -33,10 +44,13 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Install PHP dependencies
+        if: steps.skip.outputs.skip != 'true'
         run: php composer.phar install -qo
 
       - name: Install and verify WeasyPrint
+        if: steps.skip.outputs.skip != 'true'
         run: pip3 -q install weasyprint==${{ matrix.weasyprint-version }} --break-system-packages && weasyprint --info
 
       - name: Run tests
+        if: steps.skip.outputs.skip != 'true'
         run: ./vendor/bin/pest --profile
