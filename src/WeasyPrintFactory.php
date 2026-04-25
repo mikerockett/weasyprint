@@ -23,6 +23,7 @@ class WeasyPrintFactory implements WeasyPrint
 
   private Config $config;
   private Source $source;
+  private array $xmpMetadata = [];
 
   public function __construct(array|Config $config = [])
   {
@@ -78,8 +79,6 @@ class WeasyPrintFactory implements WeasyPrint
   {
     return $this->source;
   }
-
-  private array $xmpMetadata = [];
 
   public function addXmpMetadata(string $path): WeasyPrint
   {
