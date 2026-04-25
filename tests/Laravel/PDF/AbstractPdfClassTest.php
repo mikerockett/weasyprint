@@ -79,7 +79,7 @@ describe('abstract PDF class', function (): void {
   test('config callback is invoked', function (): void {
     $configTapped = false;
 
-    $pdf = new class($configTapped) extends PDF {
+    $pdf = new class ($configTapped) extends PDF {
       public function __construct(private bool &$tapped) {}
 
       public function source(): Renderable

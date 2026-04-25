@@ -73,7 +73,7 @@ class BuildTraveler
       return;
     }
 
-    rescue(fn () => unlink($path));
+    rescue(fn() => unlink($path));
   }
 
   public function cleanupInputPath(): void

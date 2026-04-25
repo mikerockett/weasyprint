@@ -20,7 +20,7 @@ trait FindsBinary
       '/opt/homebrew/bin/weasyprint',
       '/opt/local/bin/weasyprint',
     ])->first(
-      fn (string $path): bool => is_executable($path),
+      fn(string $path): bool => is_executable($path),
       $this->whichBinary(),
     );
   }
