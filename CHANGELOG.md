@@ -23,6 +23,7 @@ While it maintains Laravel compatibility, core functionality can now be used ind
 - Formatting is now done with PHP CS Fixer directly, using `@PER-CS2x0` with some extra rules for strictness (including strict-types).
 - Tests are now split: one suite for the core package, another for Laravel integration testing.
 - Versioning: Drops support for PHP < 8.3.
+- Versioning: Drops support for Laravel 11.
 - Versioning: Requires WeasyPrint 67.
 
 ___
