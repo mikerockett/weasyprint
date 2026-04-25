@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use WeasyPrint\Commands\VersionCommand;
 use WeasyPrint\Contracts\WeasyPrint;
 use WeasyPrint\Enums\StreamMode;
-use WeasyPrint\Exceptions\MissingSourceException;
+use WeasyPrint\Exceptions\SourceNotSetException;
 use WeasyPrint\Objects\Config;
 use WeasyPrint\Objects\Output;
 use WeasyPrint\Objects\Source;
@@ -95,8 +95,8 @@ class WeasyPrintFactory implements WeasyPrint
 
   public function addAttachment(string $pathToAttachment, ?string $relationship = null): WeasyPrint
   {
-    if (!$this->source) {
-      throw new MissingSourceException();
+    if (!isset($this->source)) {
+      throw new SourceNotSetException();
     }
 
     $this->source->addAttachment($pathToAttachment, $relationship);

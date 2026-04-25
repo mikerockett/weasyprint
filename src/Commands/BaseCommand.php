@@ -17,11 +17,16 @@ abstract class BaseCommand implements Command
   {
     $key = "--$key";
 
+    if ($value === null || $value === false) {
+      return;
+    }
+
     if ($value === true) {
       $this->arguments->push($key);
-    } elseif ($value) {
-      $this->arguments->push($key, $value);
+      return;
     }
+
+    $this->arguments->push($key, $value);
   }
 
   public function execute(): string

@@ -61,7 +61,7 @@ describe('attachments', function (): void {
   test('throws exception when adding attachment without source', function (): void {
     $service = new WeasyPrintFactory();
     $service->addAttachment('/some/file.txt');
-  })->throws(Error::class, 'must not be accessed before initialization');
+  })->throws(SourceNotSetException::class);
 
   test('throws exception when source not set on build', function (): void {
     $service = new WeasyPrintFactory();

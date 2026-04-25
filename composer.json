@@ -57,7 +57,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "WeasyPrint\\Provider"
+        "WeasyPrint\\Integration\\Laravel\\WeasyPrintServiceProvider"
       ]
     }
   }
