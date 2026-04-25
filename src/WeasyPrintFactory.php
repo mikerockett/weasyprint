@@ -106,7 +106,7 @@ class WeasyPrintFactory implements WeasyPrint
 
   public function build(): Output
   {
-    return (new PipelineBuilder())
+    $pipeline = (new PipelineBuilder())
       ->add(new Pipes\AssertSupportedVersion())
       ->add(new Pipes\EnsureSourceIsSet())
       ->add(new Pipes\SetInputPath())
@@ -114,11 +114,27 @@ class WeasyPrintFactory implements WeasyPrint
       ->add(new Pipes\PersistTemporaryInput())
       ->add(new Pipes\PrepareBuildCommand())
       ->add(new Pipes\Execute())
-      ->add(new Pipes\UnlinkTemporaryInput())
       ->add(new Pipes\PrepareOutput())
-      ->build()
-      ->process(new BuildTraveler($this))
-      ->getOutput();
+      ->build();
+
+    $traveler = new BuildTraveler($this);
+
+    return rescue(
+      function () use ($pipeline, $traveler): Output {
+        $output = $pipeline
+          ->process($traveler)
+          ->getOutput();
+
+        $traveler->cleanupTemporaryPaths();
+
+        return $output;
+      },
+      function (\Throwable $e) use ($traveler): never {
+        $traveler->cleanupTemporaryPaths();
+        throw $e;
+      },
+      false,
+    );
   }
 
   public function stream(

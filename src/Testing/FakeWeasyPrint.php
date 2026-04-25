@@ -9,6 +9,7 @@ use PHPUnit\Framework\Assert;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use WeasyPrint\Contracts\WeasyPrint;
 use WeasyPrint\Enums\StreamMode;
+use WeasyPrint\Exceptions\SourceNotSetException;
 use WeasyPrint\Objects\Config;
 use WeasyPrint\Objects\Output;
 use WeasyPrint\Objects\Source;
@@ -93,7 +94,11 @@ class FakeWeasyPrint implements WeasyPrint
 
   public function addAttachment(string $pathToAttachment, ?string $relationship = null): self
   {
-    $this->source?->addAttachment($pathToAttachment, $relationship);
+    if ($this->source === null) {
+      throw new SourceNotSetException();
+    }
+
+    $this->source->addAttachment($pathToAttachment, $relationship);
     $this->recordCall('addAttachment', [
       'path' => $pathToAttachment,
       'relationship' => $relationship,

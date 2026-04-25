@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use WeasyPrint\Contracts\WeasyPrint;
 use WeasyPrint\Enums\StreamMode;
+use WeasyPrint\Exceptions\SourceNotSetException;
 use WeasyPrint\Integration\Laravel\WeasyPrint as WeasyPrintFacade;
 use WeasyPrint\Testing\FakeWeasyPrint;
 
@@ -116,6 +117,12 @@ describe('fake weasyprint', function (): void {
     $fake->assertAttachmentAdded();
     $fake->assertAttachmentAdded('/path/to/file.xml');
   });
+
+  test('addAttachment throws SourceNotSetException when source is missing', function (): void {
+    $fake = WeasyPrintFacade::fake();
+
+    $fake->addAttachment('/path/to/file.xml');
+  })->throws(SourceNotSetException::class);
 
   test('assertXmpMetadataAdded passes when xmp metadata was added', function (): void {
     $fake = WeasyPrintFacade::fake();

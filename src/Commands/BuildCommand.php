@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WeasyPrint\Commands;
 
 use WeasyPrint\Exceptions\AttachmentNotFoundException;
+use WeasyPrint\Exceptions\BinaryNotFoundException;
 use WeasyPrint\Objects\Attachment;
 use WeasyPrint\Objects\Config;
 
@@ -22,12 +23,25 @@ final class BuildCommand extends BaseCommand
     $this->config = $config;
 
     $this->arguments = collect([
-      $config->binary ?? $this->findBinary(),
+      $this->resolveBinary(),
       $inputPath,
       $outputPath,
     ]);
 
     $this->prepareArguments();
+  }
+
+  private function resolveBinary(): string
+  {
+    if ($this->config->binary !== null) {
+      if (!is_executable($this->config->binary)) {
+        throw new BinaryNotFoundException($this->config->binary);
+      }
+
+      return $this->config->binary;
+    }
+
+    return $this->findBinary();
   }
 
   private function prepareArguments(): void

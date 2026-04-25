@@ -10,8 +10,8 @@ use WeasyPrint\WeasyPrintFactory;
 
 class BuildTraveler
 {
-  private string $inputPath;
-  private string $outputPath;
+  private ?string $inputPath = null;
+  private ?string $outputPath = null;
   private BuildCommand $command;
   private Output $output;
 
@@ -65,5 +65,30 @@ class BuildTraveler
   public function getOutput(): Output
   {
     return $this->output;
+  }
+
+  private function cleanupPath(?string $path): void
+  {
+    if ($path === null || !is_file($path)) {
+      return;
+    }
+
+    rescue(fn () => unlink($path));
+  }
+
+  public function cleanupInputPath(): void
+  {
+    $this->cleanupPath($this->inputPath);
+  }
+
+  public function cleanupOutputPath(): void
+  {
+    $this->cleanupPath($this->outputPath);
+  }
+
+  public function cleanupTemporaryPaths(): void
+  {
+    $this->cleanupInputPath();
+    $this->cleanupOutputPath();
   }
 }
