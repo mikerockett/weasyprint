@@ -5,7 +5,7 @@ declare(strict_types=1);
 use WeasyPrint\WeasyPrintFactory;
 
 describe('version', function (): void {
-  test('getWeasyPrintVersion returns a version string', function (): void {
+  it('returns a version string', function (): void {
     $service = new WeasyPrintFactory();
     $version = $service->getWeasyPrintVersion();
 
@@ -13,7 +13,7 @@ describe('version', function (): void {
     expect($version)->toMatch('/^\d+\.\d+/');
   });
 
-  test('getWeasyPrintVersion does not include prefix', function (): void {
+  it('does not include prefix in version string', function (): void {
     $service = new WeasyPrintFactory();
     $version = $service->getWeasyPrintVersion();
 

@@ -7,7 +7,7 @@ use WeasyPrint\Enums\PDFVersion;
 use WeasyPrint\Objects\Config;
 
 describe('config creation', function (): void {
-  test('can create with no parameters', function (): void {
+  it('can create with no parameters', function (): void {
     $config = new Config();
 
     expect($config)->toBeInstanceOf(Config::class);
@@ -16,7 +16,7 @@ describe('config creation', function (): void {
     expect($config->timeout)->toBe(60);
   });
 
-  test('can create with custom parameters', function (): void {
+  it('can create with custom parameters', function (): void {
     $config = new Config(
       binary: '/usr/bin/weasyprint',
       timeout: 120,
@@ -28,7 +28,7 @@ describe('config creation', function (): void {
     expect($config->dpi)->toBe(300);
   });
 
-  test('toArray returns expected structure', function (): void {
+  it('converts to array with expected structure', function (): void {
     $config = new Config(
       binary: '/usr/bin/weasyprint',
       timeout: 90,
@@ -42,7 +42,7 @@ describe('config creation', function (): void {
     expect($array['cachePrefix'])->toBe('weasyprint_cache');
   });
 
-  test('expands enum from string values', function (): void {
+  it('expands enum from string values', function (): void {
     $config = new Config(
       pdfVariant: 'pdf/a-1b',
       pdfVersion: '1.7',

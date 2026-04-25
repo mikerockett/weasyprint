@@ -7,7 +7,7 @@ use WeasyPrint\Objects\Config;
 use WeasyPrint\WeasyPrintFactory;
 
 describe('config manipulation', function (): void {
-  test('can get config', function (): void {
+  it('can get config', function (): void {
     $service = new WeasyPrintFactory(['timeout' => 90]);
     $config = $service->getConfig();
 
@@ -15,7 +15,7 @@ describe('config manipulation', function (): void {
     expect($config->timeout)->toBe(90);
   });
 
-  test('can set config', function (): void {
+  it('can set config', function (): void {
     $service = new WeasyPrintFactory();
     $newConfig = new Config(binary: '/custom/path');
     $result = $service->setConfig($newConfig);
@@ -24,7 +24,7 @@ describe('config manipulation', function (): void {
     expect($service->getConfig()->binary)->toBe('/custom/path');
   });
 
-  test('can tap config', function (): void {
+  it('can tap config', function (): void {
     $service = new WeasyPrintFactory();
 
     $result = $service->tapConfig(function (Config $config) {
@@ -37,12 +37,12 @@ describe('config manipulation', function (): void {
     expect($service->getConfig()->timeout)->toBe(45);
   });
 
-  test('setConfig runs assertions', function (): void {
+  it('runs assertions when setting config', function (): void {
     $service = new WeasyPrintFactory();
     $service->setConfig(new Config(dpi: -10));
   })->throws(InvalidConfigValueException::class);
 
-  test('tapConfig runs assertions', function (): void {
+  it('runs assertions when tapping config', function (): void {
     $service = new WeasyPrintFactory();
 
     $service->tapConfig(function (Config $config) {

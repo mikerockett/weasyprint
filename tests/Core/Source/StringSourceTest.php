@@ -7,7 +7,7 @@ use WeasyPrint\WeasyPrintFactory;
 use WeasyPrint\Tests\Fixtures\SampleHtml;
 
 describe('string sources', function (): void {
-  test('can prepare from source instance', function (): void {
+  it('can prepare from source instance', function (): void {
     $service = new WeasyPrintFactory();
     $source = new Source(SampleHtml::simple());
     $service->prepareSource($source);
@@ -17,7 +17,7 @@ describe('string sources', function (): void {
     expect($service->getSource()->get())->toBeString();
   });
 
-  test('can prepare from string argument', function (): void {
+  it('can prepare from string argument', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
 
@@ -26,7 +26,7 @@ describe('string sources', function (): void {
     expect($service->getSource()->get())->toBe(SampleHtml::simple());
   });
 
-  test('source render() returns string content', function (): void {
+  it('renders source to string content', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::withStyles());
     $rendered = $service->getSource()->render();
@@ -35,7 +35,7 @@ describe('string sources', function (): void {
     expect($rendered)->toContain('Styled PDF content');
   });
 
-  test('prepareSource returns self for fluent interface', function (): void {
+  it('returns self from prepareSource for fluent chaining', function (): void {
     $service = new WeasyPrintFactory();
     $result = $service->prepareSource('test content');
 

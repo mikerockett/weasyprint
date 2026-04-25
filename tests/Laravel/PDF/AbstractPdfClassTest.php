@@ -9,7 +9,7 @@ use WeasyPrint\Objects\Config;
 use WeasyPrint\Tests\Fixtures\TestPDF;
 
 describe('abstract PDF class', function (): void {
-  test('can download via class', function (): void {
+  it('can download via class', function (): void {
     $response = (new TestPDF())->download();
 
     $this->runOutputAssertions(
@@ -19,7 +19,7 @@ describe('abstract PDF class', function (): void {
     );
   });
 
-  test('can inline via class', function (): void {
+  it('can inline via class', function (): void {
     $response = (new TestPDF())->inline();
 
     $this->runOutputAssertions(
@@ -29,7 +29,7 @@ describe('abstract PDF class', function (): void {
     );
   });
 
-  test('can override default stream mode', function (): void {
+  it('can override default stream mode', function (): void {
     $response = (new TestPDF())->stream(StreamMode::DOWNLOAD);
 
     $this->runOutputAssertions(
@@ -39,7 +39,7 @@ describe('abstract PDF class', function (): void {
     );
   });
 
-  test('toResponse uses defaultStreamMode', function (): void {
+  it('uses default stream mode in toResponse', function (): void {
     $response = (new TestPDF())->toResponse(request());
 
     $this->runOutputAssertions(
@@ -49,7 +49,7 @@ describe('abstract PDF class', function (): void {
     );
   });
 
-  test('toResponse respects overridden defaultStreamMode', function (): void {
+  it('respects overridden default stream mode in toResponse', function (): void {
     $pdf = new class extends PDF {
       public function source(): Renderable
       {
@@ -76,7 +76,7 @@ describe('abstract PDF class', function (): void {
     );
   });
 
-  test('config callback is invoked', function (): void {
+  it('invokes the config callback', function (): void {
     $configTapped = false;
 
     $pdf = new class ($configTapped) extends PDF {
@@ -103,7 +103,7 @@ describe('abstract PDF class', function (): void {
     expect($configTapped)->toBeTrue();
   });
 
-  test('respects custom headers', function (): void {
+  it('respects custom headers', function (): void {
     $pdf = new class extends PDF {
       public function source(): Renderable
       {

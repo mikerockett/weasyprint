@@ -7,7 +7,7 @@ use WeasyPrint\WeasyPrintFactory;
 use WeasyPrint\Tests\Fixtures\SampleHtml;
 
 describe('data generation', function (): void {
-  test('can build and get data from string source', function (): void {
+  it('can build and get data from string source', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
 
@@ -17,7 +17,7 @@ describe('data generation', function (): void {
     $this->assertValidPdf($data);
   });
 
-  test('can build and get data from Source instance', function (): void {
+  it('can build and get data from Source instance', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(new Source(SampleHtml::withStyles()));
 
@@ -27,7 +27,7 @@ describe('data generation', function (): void {
     $this->assertValidPdf($data);
   });
 
-  test('can build and get data from URL', function (): void {
+  it('can build and get data from URL', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource('https://example.org');
 
@@ -37,7 +37,7 @@ describe('data generation', function (): void {
     $this->assertValidPdf($data);
   });
 
-  test('build() returns Output instance', function (): void {
+  it('returns an Output instance from build', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
 
@@ -46,12 +46,12 @@ describe('data generation', function (): void {
     expect($output)->toBeInstanceOf(WeasyPrint\Objects\Output::class);
   });
 
-  test('output data is immutable', function (): void {
+  it('keeps output data immutable', function (): void {
     $output = new WeasyPrint\Objects\Output('test');
     $output->data = 'changed';
   })->throws(Error::class);
 
-  test('getData() shorthand works', function (): void {
+  it('can get data via shorthand', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
 

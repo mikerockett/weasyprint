@@ -6,7 +6,7 @@ use WeasyPrint\WeasyPrintFactory;
 use WeasyPrint\Tests\Fixtures\SampleHtml;
 
 describe('xmp metadata', function (): void {
-  test('can add xmp metadata', function (): void {
+  it('can add xmp metadata', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
     $result = $service->addXmpMetadata('/path/to/rdf.xml');
@@ -16,7 +16,7 @@ describe('xmp metadata', function (): void {
     expect($service->getXmpMetadata()[0])->toBe('/path/to/rdf.xml');
   });
 
-  test('can add multiple xmp metadata files', function (): void {
+  it('can add multiple xmp metadata files', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
 

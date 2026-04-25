@@ -8,7 +8,7 @@ use WeasyPrint\WeasyPrintFactory;
 use WeasyPrint\Tests\Fixtures\SampleHtml;
 
 describe('output streaming', function (): void {
-  test('factory stream() returns StreamedResponse', function (): void {
+  it('returns a StreamedResponse from stream', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
 
@@ -19,7 +19,7 @@ describe('output streaming', function (): void {
     expect($response->headers->get('content-disposition'))->toBe('inline; filename=test.pdf');
   });
 
-  test('factory download() returns attachment disposition', function (): void {
+  it('returns attachment disposition from download', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
 
@@ -28,7 +28,7 @@ describe('output streaming', function (): void {
     expect($response->headers->get('content-disposition'))->toBe('attachment; filename=test.pdf');
   });
 
-  test('factory inline() returns inline disposition', function (): void {
+  it('returns inline disposition from inline', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
 
@@ -37,7 +37,7 @@ describe('output streaming', function (): void {
     expect($response->headers->get('content-disposition'))->toBe('inline; filename=test.pdf');
   });
 
-  test('factory stream() accepts custom headers', function (): void {
+  it('accepts custom headers when streaming', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
 
@@ -46,7 +46,7 @@ describe('output streaming', function (): void {
     expect($response->headers->get('X-Custom'))->toBe('value');
   });
 
-  test('factory stream() accepts stream mode parameter', function (): void {
+  it('accepts stream mode parameter when streaming', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
 

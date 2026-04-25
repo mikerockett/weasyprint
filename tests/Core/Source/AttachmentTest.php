@@ -8,7 +8,7 @@ use WeasyPrint\WeasyPrintFactory;
 use WeasyPrint\Tests\Fixtures\SampleHtml;
 
 describe('attachments', function (): void {
-  test('can add attachment', function (): void {
+  it('can add attachment', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
     $attachmentPath = __DIR__ . '/../../attachments/test-attachment.txt';
@@ -23,7 +23,7 @@ describe('attachments', function (): void {
     expect($attachment->relationship)->toBeNull();
   });
 
-  test('can add attachment with relationship', function (): void {
+  it('can add attachment with relationship', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
     $attachmentPath = __DIR__ . '/../../attachments/test-attachment.txt';
@@ -34,7 +34,7 @@ describe('attachments', function (): void {
     expect($attachment->relationship)->toBe('Data');
   });
 
-  test('can add multiple attachments', function (): void {
+  it('can add multiple attachments', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
     $attachmentPath = __DIR__ . '/../../attachments/test-attachment.txt';
@@ -46,24 +46,24 @@ describe('attachments', function (): void {
     expect($service->getSource()->getAttachments())->toHaveCount(2);
   });
 
-  test('hasAttachments() returns false when no attachments', function (): void {
+  it('reports no attachments when none are added', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
 
     expect($service->getSource()->hasAttachments())->toBeFalse();
   });
 
-  test('attachment is immutable', function (): void {
+  it('keeps attachments immutable', function (): void {
     $attachment = new Attachment('/path/to/file.txt', 'Data');
     $attachment->path = '/other/path';
   })->throws(Error::class);
 
-  test('throws exception when adding attachment without source', function (): void {
+  it('throws exception when adding attachment without source', function (): void {
     $service = new WeasyPrintFactory();
     $service->addAttachment('/some/file.txt');
   })->throws(SourceNotSetException::class);
 
-  test('throws exception when source not set on build', function (): void {
+  it('throws exception when source not set on build', function (): void {
     $service = new WeasyPrintFactory();
     $service->build();
   })->throws(SourceNotSetException::class);

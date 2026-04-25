@@ -6,7 +6,7 @@ use WeasyPrint\Enums\PDFVariant;
 use WeasyPrint\Enums\PDFVersion;
 
 describe('environment config', function (): void {
-  test('PDFVariant::fromEnvironment() returns enum from env', function (): void {
+  it('resolves PDFVariant enum from environment', function (): void {
     $this->scopeEnv(
       envKey: 'WEASYPRINT_PDF_VARIANT',
       envValue: 'pdf/a-1b',
@@ -16,11 +16,11 @@ describe('environment config', function (): void {
     );
   });
 
-  test('PDFVariant::fromEnvironment() returns null when env not set', function (): void {
+  it('returns null for PDFVariant when env not set', function (): void {
     expect(PDFVariant::fromEnvironment('NON_EXISTENT_KEY'))->toBeNull();
   });
 
-  test('PDFVersion::fromEnvironment() returns enum from env', function (): void {
+  it('resolves PDFVersion enum from environment', function (): void {
     $this->scopeEnv(
       envKey: 'WEASYPRINT_PDF_VERSION',
       envValue: '1.7',
@@ -30,7 +30,7 @@ describe('environment config', function (): void {
     );
   });
 
-  test('PDFVersion::fromEnvironment() returns null when env not set', function (): void {
+  it('returns null for PDFVersion when env not set', function (): void {
     expect(PDFVersion::fromEnvironment('NON_EXISTENT_KEY'))->toBeNull();
   });
 });

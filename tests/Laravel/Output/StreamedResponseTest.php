@@ -5,7 +5,7 @@ declare(strict_types=1);
 use WeasyPrint\Contracts\WeasyPrint;
 
 describe('streamed responses', function (): void {
-  test('download via build()->download()', function (): void {
+  it('can download via build then download', function (): void {
     $response = app(WeasyPrint::class)
       ->prepareSource(view('test-pdf'))
       ->build()
@@ -18,7 +18,7 @@ describe('streamed responses', function (): void {
     );
   });
 
-  test('download via shorthand download()', function (): void {
+  it('can download via shorthand', function (): void {
     $response = app(WeasyPrint::class)
       ->prepareSource(view('test-pdf'))
       ->download('test.pdf');
@@ -30,7 +30,7 @@ describe('streamed responses', function (): void {
     );
   });
 
-  test('inline via build()->inline()', function (): void {
+  it('can inline via build then inline', function (): void {
     $response = app(WeasyPrint::class)
       ->prepareSource(view('test-pdf'))
       ->build()
@@ -43,7 +43,7 @@ describe('streamed responses', function (): void {
     );
   });
 
-  test('inline via shorthand inline()', function (): void {
+  it('can inline via shorthand', function (): void {
     $response = app(WeasyPrint::class)
       ->prepareSource(view('test-pdf'))
       ->inline('test.pdf');

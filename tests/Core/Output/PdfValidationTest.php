@@ -8,7 +8,7 @@ use WeasyPrint\WeasyPrintFactory;
 use WeasyPrint\Tests\Fixtures\SampleHtml;
 
 describe('pdf validation', function (): void {
-  test('pdf has correct mime type', function (): void {
+  it('produces a pdf with correct mime type', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
     $data = $service->getData();
@@ -21,7 +21,7 @@ describe('pdf validation', function (): void {
     unlink($tempFile);
   });
 
-  test('pdf contains producer metadata', function (): void {
+  it('includes producer metadata in pdf', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
     $data = $service->getData();
@@ -35,7 +35,7 @@ describe('pdf validation', function (): void {
     unlink($tempFile);
   });
 
-  test('can set pdf version', function (): void {
+  it('can set pdf version', function (): void {
     $service = new WeasyPrintFactory();
     $service->setConfig(new Config(pdfVersion: PDFVersion::VERSION_1_7));
     $service->prepareSource(SampleHtml::simple());

@@ -7,7 +7,7 @@ use WeasyPrint\Objects\Config;
 use WeasyPrint\WeasyPrintFactory;
 
 describe('direct instantiation', function (): void {
-  test('can instantiate with no config', function (): void {
+  it('can instantiate with no config', function (): void {
     $service = new WeasyPrintFactory();
 
     expect($service)->toBeInstanceOf(WeasyPrintFactory::class);
@@ -15,7 +15,7 @@ describe('direct instantiation', function (): void {
     expect($service->getConfig())->toBeInstanceOf(Config::class);
   });
 
-  test('can instantiate with config array', function (): void {
+  it('can instantiate with config array', function (): void {
     $service = new WeasyPrintFactory([
       'binary' => '/usr/bin/weasyprint',
       'timeout' => 120,
@@ -28,13 +28,13 @@ describe('direct instantiation', function (): void {
     expect($service->getConfig()->dpi)->toBe(300);
   });
 
-  test('implements factory interface', function (): void {
+  it('implements factory interface', function (): void {
     $service = new WeasyPrintFactory();
 
     expect($service)->toBeInstanceOf(WeasyPrint::class);
   });
 
-  test('config is initialized on construction', function (): void {
+  it('initializes config on construction', function (): void {
     $service = new WeasyPrintFactory(['cachePrefix' => 'custom_prefix']);
     $config = $service->getConfig();
 

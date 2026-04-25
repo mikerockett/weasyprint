@@ -7,19 +7,19 @@ use WeasyPrint\WeasyPrintFactory;
 use WeasyPrint\Tests\Fixtures\SampleHtml;
 
 describe('output stringable', function (): void {
-  test('implements Stringable', function (): void {
+  it('implements Stringable', function (): void {
     $output = new Output('test data');
 
     expect($output)->toBeInstanceOf(Stringable::class);
   });
 
-  test('__toString returns data', function (): void {
+  it('returns data when cast to string', function (): void {
     $output = new Output('test data');
 
     expect((string) $output)->toBe('test data');
   });
 
-  test('can be cast to string from build output', function (): void {
+  it('can be cast to string from build output', function (): void {
     $service = new WeasyPrintFactory();
     $service->prepareSource(SampleHtml::simple());
 
