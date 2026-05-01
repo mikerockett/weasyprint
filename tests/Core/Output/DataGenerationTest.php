@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use WeasyPrint\Objects\Output;
 use WeasyPrint\Objects\Source;
 use WeasyPrint\WeasyPrintFactory;
 use WeasyPrint\Tests\Fixtures\SampleHtml;
@@ -43,11 +44,11 @@ describe('data generation', function (): void {
 
     $output = $service->build();
 
-    expect($output)->toBeInstanceOf(WeasyPrint\Objects\Output::class);
+    expect($output)->toBeInstanceOf(Output::class);
   });
 
   it('keeps output data immutable', function (): void {
-    $output = new WeasyPrint\Objects\Output('test');
+    $output = new Output('test');
     $output->data = 'changed';
   })->throws(Error::class);
 

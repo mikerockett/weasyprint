@@ -16,6 +16,7 @@ use WeasyPrint\Objects\Output;
 use WeasyPrint\Objects\Source;
 use WeasyPrint\Pipeline\BuildTraveler;
 use WeasyPrint\Pipeline\Stages as Pipes;
+use Throwable;
 
 class WeasyPrintFactory implements WeasyPrint
 {
@@ -129,7 +130,7 @@ class WeasyPrintFactory implements WeasyPrint
 
         return $output;
       },
-      function (\Throwable $e) use ($traveler): never {
+      function (Throwable $e) use ($traveler): never {
         $traveler->cleanupTemporaryPaths();
         throw $e;
       },

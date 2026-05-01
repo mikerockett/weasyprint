@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Smalot\PdfParser\Parser;
 use WeasyPrint\Enums\PDFVersion;
 use WeasyPrint\Objects\Config;
 use WeasyPrint\WeasyPrintFactory;
@@ -28,7 +29,7 @@ describe('pdf validation', function (): void {
 
     // Use PDF parser to verify producer
     $tempFile = $this->writeTempFile($data);
-    $parser = new Smalot\PdfParser\Parser();
+    $parser = new Parser();
     $document = $parser->parseFile($tempFile);
 
     expect($document->getDetails()['Producer'])->toStartWith('WeasyPrint');

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use WeasyPrint\Commands\BuildCommand;
+use WeasyPrint\Exceptions\InvalidConfigValueException;
 use WeasyPrint\Objects\Config;
 
 describe('argument injection resistance', function (): void {
@@ -48,19 +49,19 @@ describe('argument injection resistance', function (): void {
 
   it('rejects mediaType values that are not in the enum', function (): void {
     new Config(mediaType: '--verbose');
-  })->throws(\WeasyPrint\Exceptions\InvalidConfigValueException::class);
+  })->throws(InvalidConfigValueException::class);
 
   it('rejects cachePrefix with path separators', function (): void {
     new Config(cachePrefix: '../etc/passwd');
-  })->throws(\WeasyPrint\Exceptions\InvalidConfigValueException::class);
+  })->throws(InvalidConfigValueException::class);
 
   it('rejects cachePrefix with null bytes', function (): void {
     new Config(cachePrefix: "prefix\0suffix");
-  })->throws(\WeasyPrint\Exceptions\InvalidConfigValueException::class);
+  })->throws(InvalidConfigValueException::class);
 
   it('does not allow flag-like strings in inputEncoding', function (): void {
     new Config(inputEncoding: '--help');
-  })->throws(\WeasyPrint\Exceptions\InvalidConfigValueException::class);
+  })->throws(InvalidConfigValueException::class);
 
   it('handles special characters in base URL safely', function (): void {
     $args = buildArguments(['baseUrl' => 'https://example.com/path?q=1&b=2']);
@@ -136,7 +137,7 @@ describe('fuzz: enum-validated fields reject arbitrary strings', function (): vo
   foreach ($injectionAttempts as $label => $attempt) {
     it("rejects mediaType injection attempt ({$label})", function () use ($attempt): void {
       expect(fn() => new Config(mediaType: $attempt))
-        ->toThrow(\WeasyPrint\Exceptions\InvalidConfigValueException::class);
+        ->toThrow(InvalidConfigValueException::class);
     });
   }
 });
