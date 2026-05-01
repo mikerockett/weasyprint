@@ -1,0 +1,23 @@
+version = "1"
+php-version = "8.3"
+
+[source]
+paths = ["src", "tests"]
+excludes = ["vendor/**", "node_modules/**"]
+
+[formatter]
+excludes = ["src/**", "tests/**"]
+
+[linter]
+integrations = ["pest", "laravel"]
+baseline = "linter-baseline.toml"
+
+[linter.rules]
+tainted-data-to-sink = { enabled = true, level = "error" }
+sensitive-parameter = { enabled = true, level = "error" }
+no-insecure-comparison = { enabled = true, level = "error" }
+no-eval = { enabled = true, level = "error" }
+no-shell-execute-string = { enabled = true, level = "error" }
+
+[analyzer]
+baseline = "analyzer-baseline.toml"

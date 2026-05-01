@@ -1,0 +1,199 @@
+variant = "loose"
+
+[[issues]]
+file = "src/Commands/FindsBinary.php"
+code = "prefer-first-class-callable"
+message = "Use first-class callable syntax `...` instead of a arrow function."
+count = 1
+
+[[issues]]
+file = "src/Commands/FindsBinary.php"
+code = "prefer-static-closure"
+message = "This arrow function does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "src/Contracts/WeasyPrint.php"
+code = "too-many-methods"
+message = "Interface has too many methods."
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/WeasyPrintServiceProvider.php"
+code = "literal-named-argument"
+message = "Literal argument `'config.weasyprint'` should be passed as a named argument for clarity."
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/WeasyPrintServiceProvider.php"
+code = "prefer-static-closure"
+message = "This arrow function does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "literal-named-argument"
+message = "Literal argument `'60'` should be passed as a named argument for clarity."
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "literal-named-argument"
+message = "Literal argument `'en_US.UTF-8'` should be passed as a named argument for clarity."
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "literal-named-argument"
+message = "Literal argument `'utf-8'` should be passed as a named argument for clarity."
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "literal-named-argument"
+message = "Literal argument `'weasyprint_cache'` should be passed as a named argument for clarity."
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "literal-named-argument"
+message = "Literal argument `false` should be passed as a named argument for clarity."
+count = 9
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "literal-named-argument"
+message = "Literal argument `null` should be passed as a named argument for clarity."
+count = 2
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "literal-named-argument"
+message = "Literal argument `true` should be passed as a named argument for clarity."
+count = 1
+
+[[issues]]
+file = "src/Objects/Config.php"
+code = "excessive-parameter-list"
+message = "Parameter list is too long."
+count = 1
+
+[[issues]]
+file = "src/Objects/Config.php"
+code = "literal-named-argument"
+message = "Literal argument `true` should be passed as a named argument for clarity."
+count = 1
+
+[[issues]]
+file = "src/Objects/Config.php"
+code = "prefer-static-closure"
+message = "This arrow function does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "src/Objects/Output.php"
+code = "literal-named-argument"
+message = "Literal argument `''` should be passed as a named argument for clarity."
+count = 1
+
+[[issues]]
+file = "src/Pipeline/BuildTraveler.php"
+code = "literal-named-argument"
+message = "Literal argument `0o600` should be passed as a named argument for clarity."
+count = 1
+
+[[issues]]
+file = "src/Pipeline/BuildTraveler.php"
+code = "prefer-static-closure"
+message = "This arrow function does not use `$this` and should be declared static."
+count = 1
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "literal-named-argument"
+message = "Literal argument `''` should be passed as a named argument for clarity."
+count = 1
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "prefer-static-closure"
+message = "This arrow function does not use `$this` and should be declared static."
+count = 2
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "too-many-methods"
+message = "Class has too many methods."
+count = 1
+
+[[issues]]
+file = "src/WeasyPrintFactory.php"
+code = "literal-named-argument"
+message = "Literal argument `''` should be passed as a named argument for clarity."
+count = 1
+
+[[issues]]
+file = "src/WeasyPrintFactory.php"
+code = "literal-named-argument"
+message = "Literal argument `false` should be passed as a named argument for clarity."
+count = 1
+
+[[issues]]
+file = "src/WeasyPrintFactory.php"
+code = "no-isset"
+message = "Use of the `isset` construct."
+count = 2
+
+[[issues]]
+file = "src/WeasyPrintFactory.php"
+code = "prefer-static-closure"
+message = "This closure does not use `$this` and should be declared static."
+count = 2
+
+[[issues]]
+file = "src/WeasyPrintFactory.php"
+code = "too-many-methods"
+message = "Class has too many methods."
+count = 1
+
+[[issues]]
+file = "tests/Core/Security/ArgumentInjectionTest.php"
+code = "assert-description"
+message = "Missing description in assert function."
+count = 5
+
+[[issues]]
+file = "tests/Core/Security/ArgumentInjectionTest.php"
+code = "function-name"
+message = "Function name `buildArguments` should be in snake case."
+count = 1
+
+[[issues]]
+file = "tests/Core/Security/ArgumentInjectionTest.php"
+code = "literal-named-argument"
+message = "Literal argument `true` should be passed as a named argument for clarity."
+count = 6
+
+[[issues]]
+file = "tests/Core/Security/ArgumentInjectionTest.php"
+code = "prefer-early-continue"
+message = "Consider using early continue pattern to reduce nesting."
+count = 1
+
+[[issues]]
+file = "tests/Core/Support/PdfAssertions.php"
+code = "literal-named-argument"
+message = "Literal argument `'weasyprint_test_'` should be passed as a named argument for clarity."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Support/LaravelTestCase.php"
+code = "use-simpler-expectation"
+message = "Use `toBeInstanceOf()` instead of `instanceof` with `toBeTrue()`."
+count = 1
+
+[[issues]]
+file = "tests/Pest.php"
+code = "prefer-arrow-function"
+message = "This closure can be simplified to a more concise arrow function."
+count = 1

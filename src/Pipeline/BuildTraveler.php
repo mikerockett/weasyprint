@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WeasyPrint\Pipeline;
 
 use WeasyPrint\Commands\BuildCommand;
+use WeasyPrint\Exceptions\TemporaryFileException;
 use WeasyPrint\Objects\Output;
 use WeasyPrint\WeasyPrintFactory;
 
@@ -19,16 +20,18 @@ class BuildTraveler
     public WeasyPrintFactory $service,
   ) {}
 
-  public function makeTemporaryFilename(): string|false
+  public function makeTemporaryFilename(): string
   {
     $path = tempnam(
       directory: sys_get_temp_dir(),
       prefix: $this->service->getConfig()->cachePrefix,
     );
 
-    if ($path !== false) {
-      chmod($path, 0600);
+    if ($path === false) {
+      throw new TemporaryFileException(sys_get_temp_dir(), 'failed to create temporary file');
     }
+
+    chmod($path, 0o600);
 
     return $path;
   }

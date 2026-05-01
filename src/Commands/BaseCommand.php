@@ -15,7 +15,7 @@ abstract class BaseCommand implements Command
 
   public function maybePushArgument(string $key, mixed $value): void
   {
-    $key = "--$key";
+    $key = "--{$key}";
 
     if ($value === null || $value === false) {
       return;

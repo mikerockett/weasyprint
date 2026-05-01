@@ -53,7 +53,7 @@ final class Source
 
     $tempDir = realpath(sys_get_temp_dir());
 
-    if (!str_starts_with($inputPath, $tempDir)) {
+    if ($tempDir === false || !str_starts_with($inputPath, $tempDir)) {
       throw new TemporaryFileException($inputPath, 'path must be within the system temp directory');
     }
 

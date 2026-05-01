@@ -23,7 +23,7 @@ describe('argument injection resistance', function (): void {
     $args = buildArguments();
 
     $separatorIndex = array_search('--', $args, true);
-    expect($separatorIndex)->not->toBeFalse();
+    assert($separatorIndex !== false);
 
     $afterSeparator = array_slice($args, $separatorIndex + 1);
     expect($afterSeparator)->toBe(['/tmp/test_input.html', '/tmp/test_output.pdf']);
@@ -37,6 +37,7 @@ describe('argument injection resistance', function (): void {
     ]);
 
     $separatorIndex = array_search('--', $args, true);
+    assert($separatorIndex !== false);
 
     for ($i = 1; $i < $separatorIndex; $i++) {
       if (str_starts_with((string) $args[$i], '--')) {
@@ -69,6 +70,7 @@ describe('argument injection resistance', function (): void {
 
     $separatorIndex = array_search('--', $args, true);
     $baseUrlIndex = array_search('https://example.com/path?q=1&b=2', $args, true);
+    assert($separatorIndex !== false && $baseUrlIndex !== false);
     expect($baseUrlIndex)->toBeLessThan($separatorIndex);
   });
 
@@ -76,11 +78,11 @@ describe('argument injection resistance', function (): void {
     $args = buildArguments(['dpi' => 300, 'jpegQuality' => 85]);
 
     $dpiIndex = array_search('--dpi', $args, true);
-    expect($dpiIndex)->not->toBeFalse();
+    assert($dpiIndex !== false);
     expect($args[$dpiIndex + 1])->toBe(300);
 
     $jpegIndex = array_search('--jpeg-quality', $args, true);
-    expect($jpegIndex)->not->toBeFalse();
+    assert($jpegIndex !== false);
     expect($args[$jpegIndex + 1])->toBe(85);
   });
 

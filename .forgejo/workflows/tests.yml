@@ -56,6 +56,14 @@ jobs:
             php composer.phar install -qo
           fi
 
+      - name: Run Mago lint
+        if: steps.skip.outputs.skip != 'true'
+        run: ./vendor/bin/mago lint
+
+      - name: Run Mago analyze
+        if: steps.skip.outputs.skip != 'true'
+        run: ./vendor/bin/mago analyze
+
       - name: Install and verify WeasyPrint
         if: steps.skip.outputs.skip != 'true'
         run: pip3 -q install weasyprint==${{ matrix.weasyprint-version }} --break-system-packages && weasyprint --info

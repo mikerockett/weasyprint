@@ -76,7 +76,7 @@ class FakeWeasyPrint implements WeasyPrint
 
   public function getSource(): Source
   {
-    return $this->source;
+    return $this->source ?? throw new SourceNotSetException();
   }
 
   public function addXmpMetadata(string $path): self

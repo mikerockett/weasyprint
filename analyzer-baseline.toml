@@ -1,0 +1,1483 @@
+variant = "loose"
+
+[[issues]]
+file = "src/Commands/BaseCommand.php"
+code = "impossible-assignment"
+message = "Invalid assignment: the right-hand side has type `never` and cannot produce a value."
+count = 1
+
+[[issues]]
+file = "src/Commands/BaseCommand.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Support\Collection)`).'
+count = 3
+
+[[issues]]
+file = "src/Commands/BaseCommand.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `WeasyPrint\Commands\BaseCommand::execute`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Commands/BaseCommand.php"
+code = "non-existent-class"
+message = 'Class `Symfony\Component\Process\Process` not found.'
+count = 1
+
+[[issues]]
+file = "src/Commands/BaseCommand.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Support\Collection`.'
+count = 1
+
+[[issues]]
+file = "src/Commands/BuildCommand.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Support\Collection)`).'
+count = 1
+
+[[issues]]
+file = "src/Commands/BuildCommand.php"
+code = "invalid-property-access"
+message = "Attempting to access a property on a non-object type (`string`)."
+count = 3
+
+[[issues]]
+file = "src/Commands/BuildCommand.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "src/Commands/BuildCommand.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 4
+
+[[issues]]
+file = "src/Commands/BuildCommand.php"
+code = "mixed-property-type-coercion"
+message = 'A value with a less specific type `mixed` is being assigned to property `$$arguments` (unknown-ref(Illuminate\Support\Collection)).'
+count = 1
+
+[[issues]]
+file = "src/Commands/BuildCommand.php"
+code = "non-existent-function"
+message = 'Could not find definition for function `WeasyPrint\Commands\collect` (also tried as `collect` in a broader scope).'
+count = 5
+
+[[issues]]
+file = "src/Commands/FindsBinary.php"
+code = "impossible-assignment"
+message = "Invalid assignment: the right-hand side has type `never` and cannot produce a value."
+count = 1
+
+[[issues]]
+file = "src/Commands/FindsBinary.php"
+code = "mixed-argument"
+message = "Invalid argument type for argument #1 of `trim`: expected `string`, but found `mixed`."
+count = 1
+
+[[issues]]
+file = "src/Commands/FindsBinary.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 1
+
+[[issues]]
+file = "src/Commands/FindsBinary.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `WeasyPrint\Commands\FindsBinary::findBinary`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Commands/FindsBinary.php"
+code = "non-existent-class"
+message = 'Class `Symfony\Component\Process\Process` not found.'
+count = 1
+
+[[issues]]
+file = "src/Commands/FindsBinary.php"
+code = "non-existent-function"
+message = 'Could not find definition for function `WeasyPrint\Commands\collect` (also tried as `collect` in a broader scope).'
+count = 1
+
+[[issues]]
+file = "src/Commands/VersionCommand.php"
+code = "non-existent-class"
+message = 'Class `Illuminate\Support\Collection` not found.'
+count = 1
+
+[[issues]]
+file = "src/Enums/DerivesFromEnvironment.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "src/Enums/DerivesFromEnvironment.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `WeasyPrint\Enums\DerivesFromEnvironment::fromEnvironment`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Enums/DerivesFromEnvironment.php"
+code = "non-existent-function"
+message = 'Could not find definition for function `WeasyPrint\Enums\env` (also tried as `env` in a broader scope).'
+count = 2
+
+[[issues]]
+file = "src/Enums/DerivesFromEnvironment.php"
+code = "non-existent-method"
+message = 'Method `tryFrom` does not exist on type `WeasyPrint\Enums\DerivesFromEnvironment`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/PDF.php"
+code = "non-existent-class-like"
+message = 'Class `WeasyPrint\Integration\Laravel\PDF` cannot implement unknown type `Responsable`'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/WeasyPrint.php"
+code = "non-existent-class-like"
+message = 'Class `WeasyPrint\Integration\Laravel\WeasyPrint` cannot extend unknown type `Facade`'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/WeasyPrintServiceProvider.php"
+code = "non-existent-class-like"
+message = 'Class `WeasyPrint\Integration\Laravel\WeasyPrintServiceProvider` cannot extend unknown type `ServiceProvider`'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "invalid-type-cast"
+message = 'Object of type `WeasyPrint\Objects\Config` cast to `array`. Property visibility (public, protected, private) affects the resulting array.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #1 of `WeasyPrint\Objects\Config::__construct`: expected `null|string`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #12 of `WeasyPrint\Objects\Config::__construct`: expected `bool`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #13 of `WeasyPrint\Objects\Config::__construct`: expected `bool`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #14 of `WeasyPrint\Objects\Config::__construct`: expected `bool`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #15 of `WeasyPrint\Objects\Config::__construct`: expected `bool`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #16 of `WeasyPrint\Objects\Config::__construct`: expected `bool`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #17 of `WeasyPrint\Objects\Config::__construct`: expected `bool`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #18 of `WeasyPrint\Objects\Config::__construct`: expected `int|null`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #19 of `WeasyPrint\Objects\Config::__construct`: expected `int|null`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #2 of `WeasyPrint\Objects\Config::__construct`: expected `string`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #20 of `WeasyPrint\Objects\Config::__construct`: expected `bool`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #21 of `WeasyPrint\Objects\Config::__construct`: expected `bool`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #22 of `WeasyPrint\Objects\Config::__construct`: expected `bool`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #4 of `WeasyPrint\Objects\Config::__construct`: expected `string`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #5 of `WeasyPrint\Objects\Config::__construct`: expected `bool`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #7 of `WeasyPrint\Objects\Config::__construct`: expected `null|string`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "non-existent-function"
+message = "Function `env` could not be found."
+count = 18
+
+[[issues]]
+file = "src/Objects/Config.php"
+code = "non-existent-class-like"
+message = 'Class `WeasyPrint\Objects\Config` cannot implement unknown type `Arrayable`'
+count = 1
+
+[[issues]]
+file = "src/Objects/Config.php"
+code = "unused-method"
+message = "Method `expandenums()` is never used."
+count = 1
+
+[[issues]]
+file = "src/Objects/Output.php"
+code = "impossible-assignment"
+message = "Invalid assignment: the right-hand side has type `never` and cannot produce a value."
+count = 1
+
+[[issues]]
+file = "src/Objects/Output.php"
+code = "invalid-property-access"
+message = "Attempting to access a property on a non-object type (`never`)."
+count = 1
+
+[[issues]]
+file = "src/Objects/Output.php"
+code = "method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 2
+
+[[issues]]
+file = "src/Objects/Output.php"
+code = "never-return"
+message = "Cannot return value with type 'never' from this function."
+count = 1
+
+[[issues]]
+file = "src/Objects/Output.php"
+code = "non-existent-class"
+message = 'Class `Symfony\Component\HttpFoundation\StreamedResponse` not found.'
+count = 1
+
+[[issues]]
+file = "src/Objects/Output.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Symfony\Component\HttpFoundation\StreamedResponse`.'
+count = 3
+
+[[issues]]
+file = "src/Objects/Source.php"
+code = "invalid-method-access"
+message = "Attempting to access a method on a non-object type (`string`)."
+count = 1
+
+[[issues]]
+file = "src/Objects/Source.php"
+code = "invalid-method-access"
+message = 'Attempting to access a method on a non-object type (`unknown-ref(Illuminate\Contracts\Support\Renderable)`).'
+count = 1
+
+[[issues]]
+file = "src/Objects/Source.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `WeasyPrint\Objects\Source::render`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Objects/Source.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Contracts\Support\Renderable`.'
+count = 2
+
+[[issues]]
+file = "src/Objects/Source.php"
+code = "non-existent-class-like"
+message = 'Class, Interface, or Trait `Illuminate\Contracts\Support\Renderable` does not exist.'
+count = 1
+
+[[issues]]
+file = "src/Pipeline/BuildTraveler.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `WeasyPrint\Pipeline\BuildTraveler::getInputPath`: expected `string`, but found `null|string`.'
+count = 1
+
+[[issues]]
+file = "src/Pipeline/BuildTraveler.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `WeasyPrint\Pipeline\BuildTraveler::getOutputPath`: expected `string`, but found `null|string`.'
+count = 1
+
+[[issues]]
+file = "src/Pipeline/BuildTraveler.php"
+code = "non-existent-function"
+message = 'Could not find definition for function `WeasyPrint\Pipeline\rescue` (also tried as `rescue` in a broader scope).'
+count = 1
+
+[[issues]]
+file = "src/Pipeline/BuildTraveler.php"
+code = "nullable-return-statement"
+message = 'Function `WeasyPrint\Pipeline\BuildTraveler::getInputPath` is declared to return `string` but possibly returns a nullable value (inferred as `null|string`).'
+count = 1
+
+[[issues]]
+file = "src/Pipeline/BuildTraveler.php"
+code = "nullable-return-statement"
+message = 'Function `WeasyPrint\Pipeline\BuildTraveler::getOutputPath` is declared to return `string` but possibly returns a nullable value (inferred as `null|string`).'
+count = 1
+
+[[issues]]
+file = "src/Pipeline/Stages/AssertSupportedVersion.php"
+code = "non-existent-method"
+message = 'Method `satisfies` does not exist on type `Composer\Semver\Semver`.'
+count = 1
+
+[[issues]]
+file = "src/Pipeline/Stages/SetInputPath.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #1 of `WeasyPrint\Pipeline\BuildTraveler::setInputPath`: expected `string`, but possibly received `string|unknown-ref(Illuminate\Contracts\Support\Renderable)`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "impossible-assignment"
+message = "Invalid assignment: the right-hand side has type `never` and cannot produce a value."
+count = 1
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "invalid-property-access"
+message = "Attempting to access a property on a non-object type (`never`)."
+count = 1
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "invalid-property-assignment-value"
+message = 'Invalid type for property `$source`: expected `WeasyPrint\Objects\Source|null`, but got `WeasyPrint\Objects\Source|string|unknown-ref(Illuminate\Contracts\Support\Renderable)`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "less-specific-nested-argument-type"
+message = "Argument type mismatch for argument #1 of `array_column`: expected `array<array-key, array<string('filename'), ('V.array_column() extends mixed)>|object>|list<array<string('filename'), ('V.array_column() extends mixed)>|object>`, but provided type `array<array-key, mixed>` is less specific."
+count = 3
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "less-specific-nested-argument-type"
+message = "Argument type mismatch for argument #1 of `array_column`: expected `array<array-key, array<string('mode'), ('V.array_column() extends mixed)>|object>|list<array<string('mode'), ('V.array_column() extends mixed)>|object>`, but provided type `array<array-key, mixed>` is less specific."
+count = 1
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "less-specific-nested-argument-type"
+message = "Argument type mismatch for argument #1 of `array_column`: expected `array<array-key, array<string('path'), ('V.array_column() extends mixed)>|object>|list<array<string('path'), ('V.array_column() extends mixed)>|object>`, but provided type `array<array-key, mixed>` is less specific."
+count = 2
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 2
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "mixed-array-access"
+message = "Unsafe array access on type `mixed`."
+count = 1
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "never-return"
+message = "Cannot return value with type 'never' from this function."
+count = 1
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "non-existent-class"
+message = 'Class `Symfony\Component\HttpFoundation\StreamedResponse` not found.'
+count = 1
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Contracts\Support\Renderable`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Symfony\Component\HttpFoundation\StreamedResponse`.'
+count = 4
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "non-existent-method"
+message = 'Method `assertContains` does not exist on type `PHPUnit\Framework\Assert`.'
+count = 6
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "non-existent-method"
+message = 'Method `assertCount` does not exist on type `PHPUnit\Framework\Assert`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "non-existent-method"
+message = 'Method `assertEmpty` does not exist on type `PHPUnit\Framework\Assert`.'
+count = 1
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "non-existent-method"
+message = 'Method `assertNotEmpty` does not exist on type `PHPUnit\Framework\Assert`.'
+count = 6
+
+[[issues]]
+file = "src/Testing/FakeWeasyPrint.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #1 of `WeasyPrint\Objects\Source::__construct`: expected `string|unknown-ref(Illuminate\Contracts\Support\Renderable)`, but possibly received `WeasyPrint\Objects\Source|string|unknown-ref(Illuminate\Contracts\Support\Renderable)`.'
+count = 1
+
+[[issues]]
+file = "src/WeasyPrintFactory.php"
+code = "invalid-property-assignment-value"
+message = 'Invalid type for property `$source`: expected `WeasyPrint\Objects\Source`, but got `WeasyPrint\Objects\Source|string|unknown-ref(Illuminate\Contracts\Support\Renderable)`.'
+count = 1
+
+[[issues]]
+file = "src/WeasyPrintFactory.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "src/WeasyPrintFactory.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 11
+
+[[issues]]
+file = "src/WeasyPrintFactory.php"
+code = "mixed-return-statement"
+message = "Could not infer a precise return type for function `14414109723335369803:2832`. Saw type `mixed`."
+count = 1
+
+[[issues]]
+file = "src/WeasyPrintFactory.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `WeasyPrint\WeasyPrintFactory::build`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/WeasyPrintFactory.php"
+code = "non-existent-class"
+message = 'Class `Rockett\Pipeline\Builder\PipelineBuilder` not found.'
+count = 1
+
+[[issues]]
+file = "src/WeasyPrintFactory.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Illuminate\Contracts\Support\Renderable`.'
+count = 1
+
+[[issues]]
+file = "src/WeasyPrintFactory.php"
+code = "non-existent-class-like"
+message = 'Cannot find class, interface, enum, or type alias `Symfony\Component\HttpFoundation\StreamedResponse`.'
+count = 3
+
+[[issues]]
+file = "src/WeasyPrintFactory.php"
+code = "non-existent-function"
+message = 'Could not find definition for function `WeasyPrint\rescue` (also tried as `rescue` in a broader scope).'
+count = 1
+
+[[issues]]
+file = "src/WeasyPrintFactory.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #1 of `WeasyPrint\Objects\Source::__construct`: expected `string|unknown-ref(Illuminate\Contracts\Support\Renderable)`, but possibly received `WeasyPrint\Objects\Source|string|unknown-ref(Illuminate\Contracts\Support\Renderable)`.'
+count = 1
+
+[[issues]]
+file = "tests/Core/Config/ConfigCreationTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 18
+
+[[issues]]
+file = "tests/Core/Config/ConfigCreationTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Core/Config/ConfigCreationTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 18
+
+[[issues]]
+file = "tests/Core/Config/ConfigCreationTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 5
+
+[[issues]]
+file = "tests/Core/Config/ConfigValidationTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 19
+
+[[issues]]
+file = "tests/Core/Config/ConfigValidationTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 6
+
+[[issues]]
+file = "tests/Core/Config/ConfigValidationTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 11
+
+[[issues]]
+file = "tests/Core/Config/ConfigValidationTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 19
+
+[[issues]]
+file = "tests/Core/Exceptions/ExceptionTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 19
+
+[[issues]]
+file = "tests/Core/Exceptions/ExceptionTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Core/Exceptions/ExceptionTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 19
+
+[[issues]]
+file = "tests/Core/Exceptions/ExceptionTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 7
+
+[[issues]]
+file = "tests/Core/Output/DataGenerationTest.php"
+code = "invalid-property-write"
+message = "Cannot modify a readonly property after initialization."
+count = 1
+
+[[issues]]
+file = "tests/Core/Output/DataGenerationTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 10
+
+[[issues]]
+file = "tests/Core/Output/DataGenerationTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Core/Output/DataGenerationTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 5
+
+[[issues]]
+file = "tests/Core/Output/DataGenerationTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 6
+
+[[issues]]
+file = "tests/Core/Output/DataGenerationTest.php"
+code = "undefined-variable"
+message = "Undefined variable: `$this`."
+count = 4
+
+[[issues]]
+file = "tests/Core/Output/PdfValidationTest.php"
+code = "impossible-assignment"
+message = "Invalid assignment: the right-hand side has type `never` and cannot produce a value."
+count = 1
+
+[[issues]]
+file = "tests/Core/Output/PdfValidationTest.php"
+code = "mixed-argument"
+message = "Invalid argument type for argument #1 of `unlink`: expected `string`, but found `mixed`."
+count = 2
+
+[[issues]]
+file = "tests/Core/Output/PdfValidationTest.php"
+code = "mixed-argument"
+message = "Invalid argument type for argument #2 of `finfo_file`: expected `string`, but found `mixed`."
+count = 1
+
+[[issues]]
+file = "tests/Core/Output/PdfValidationTest.php"
+code = "mixed-array-access"
+message = "Unsafe array access on type `mixed`."
+count = 1
+
+[[issues]]
+file = "tests/Core/Output/PdfValidationTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 3
+
+[[issues]]
+file = "tests/Core/Output/PdfValidationTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 6
+
+[[issues]]
+file = "tests/Core/Output/PdfValidationTest.php"
+code = "non-existent-class"
+message = 'Class `Smalot\PdfParser\Parser` not found.'
+count = 1
+
+[[issues]]
+file = "tests/Core/Output/PdfValidationTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Core/Output/PdfValidationTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 2
+
+[[issues]]
+file = "tests/Core/Output/PdfValidationTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 3
+
+[[issues]]
+file = "tests/Core/Output/PdfValidationTest.php"
+code = "possibly-false-argument"
+message = "Argument #1 of function `finfo_file` is possibly `false`, but parameter type `finfo` does not accept it."
+count = 1
+
+[[issues]]
+file = "tests/Core/Output/PdfValidationTest.php"
+code = "undefined-variable"
+message = "Undefined variable: `$this`."
+count = 3
+
+[[issues]]
+file = "tests/Core/Output/StreamingTest.php"
+code = "invalid-property-access"
+message = 'Attempting to access a property on a non-object type (`unknown-ref(Symfony\Component\HttpFoundation\StreamedResponse)`).'
+count = 5
+
+[[issues]]
+file = "tests/Core/Output/StreamingTest.php"
+code = "method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 6
+
+[[issues]]
+file = "tests/Core/Output/StreamingTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 7
+
+[[issues]]
+file = "tests/Core/Output/StreamingTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Core/Output/StreamingTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 7
+
+[[issues]]
+file = "tests/Core/Output/StreamingTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 5
+
+[[issues]]
+file = "tests/Core/Output/StringableTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 3
+
+[[issues]]
+file = "tests/Core/Output/StringableTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Core/Output/StringableTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 4
+
+[[issues]]
+file = "tests/Core/Output/StringableTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 3
+
+[[issues]]
+file = "tests/Core/Security/ArgumentInjectionTest.php"
+code = "invalid-operand"
+message = "Invalid type for left operand."
+count = 3
+
+[[issues]]
+file = "tests/Core/Security/ArgumentInjectionTest.php"
+code = "mixed-argument"
+message = "Invalid argument type for argument #2 of `array_slice`: expected `int`, but found `mixed`."
+count = 1
+
+[[issues]]
+file = "tests/Core/Security/ArgumentInjectionTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 17
+
+[[issues]]
+file = "tests/Core/Security/ArgumentInjectionTest.php"
+code = "mixed-return-statement"
+message = "Could not infer a precise return type for function `buildArguments`. Saw type `mixed`."
+count = 1
+
+[[issues]]
+file = "tests/Core/Security/ArgumentInjectionTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 3
+
+[[issues]]
+file = "tests/Core/Security/ArgumentInjectionTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 13
+
+[[issues]]
+file = "tests/Core/Security/ArgumentInjectionTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 11
+
+[[issues]]
+file = "tests/Core/Service/ConfigManipulationTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 9
+
+[[issues]]
+file = "tests/Core/Service/ConfigManipulationTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Core/Service/ConfigManipulationTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 7
+
+[[issues]]
+file = "tests/Core/Service/ConfigManipulationTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 5
+
+[[issues]]
+file = "tests/Core/Service/DirectInstantiationTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 11
+
+[[issues]]
+file = "tests/Core/Service/DirectInstantiationTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Core/Service/DirectInstantiationTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 11
+
+[[issues]]
+file = "tests/Core/Service/DirectInstantiationTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 4
+
+[[issues]]
+file = "tests/Core/Service/VersionTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 2
+
+[[issues]]
+file = "tests/Core/Service/VersionTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Core/Service/VersionTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 3
+
+[[issues]]
+file = "tests/Core/Service/VersionTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 2
+
+[[issues]]
+file = "tests/Core/Source/AttachmentTest.php"
+code = "invalid-property-write"
+message = "Cannot modify a readonly property after initialization."
+count = 1
+
+[[issues]]
+file = "tests/Core/Source/AttachmentTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "tests/Core/Source/AttachmentTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 13
+
+[[issues]]
+file = "tests/Core/Source/AttachmentTest.php"
+code = "mixed-property-access"
+message = "Attempting to access a property on a non-object type (`mixed`)."
+count = 4
+
+[[issues]]
+file = "tests/Core/Source/AttachmentTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Core/Source/AttachmentTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 10
+
+[[issues]]
+file = "tests/Core/Source/AttachmentTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 7
+
+[[issues]]
+file = "tests/Core/Source/StringSourceTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 9
+
+[[issues]]
+file = "tests/Core/Source/StringSourceTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Core/Source/StringSourceTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 9
+
+[[issues]]
+file = "tests/Core/Source/StringSourceTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 4
+
+[[issues]]
+file = "tests/Core/Source/UrlSourceTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 7
+
+[[issues]]
+file = "tests/Core/Source/UrlSourceTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Core/Source/UrlSourceTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 7
+
+[[issues]]
+file = "tests/Core/Source/UrlSourceTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 3
+
+[[issues]]
+file = "tests/Core/Source/XmpMetadataTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 4
+
+[[issues]]
+file = "tests/Core/Source/XmpMetadataTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Core/Source/XmpMetadataTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 4
+
+[[issues]]
+file = "tests/Core/Source/XmpMetadataTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 2
+
+[[issues]]
+file = "tests/Core/Support/CoreTestCase.php"
+code = "non-existent-class-like"
+message = 'Class `WeasyPrint\Tests\Core\Support\CoreTestCase` cannot extend unknown type `TestCase`'
+count = 1
+
+[[issues]]
+file = "tests/Core/Support/PdfAssertions.php"
+code = "falsable-return-statement"
+message = '''Function `WeasyPrint\Tests\Core\Support\PdfAssertions::writeTempFile` is declared to return `string` but possibly returns 'false' (inferred as `false|string`).'''
+count = 1
+
+[[issues]]
+file = "tests/Core/Support/PdfAssertions.php"
+code = "impossible-assignment"
+message = "Invalid assignment: the right-hand side has type `never` and cannot produce a value."
+count = 1
+
+[[issues]]
+file = "tests/Core/Support/PdfAssertions.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `WeasyPrint\Tests\Core\Support\PdfAssertions::writeTempFile`: expected `string`, but found `false|string`.'
+count = 1
+
+[[issues]]
+file = "tests/Core/Support/PdfAssertions.php"
+code = "mixed-array-access"
+message = "Unsafe array access on type `mixed`."
+count = 1
+
+[[issues]]
+file = "tests/Core/Support/PdfAssertions.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "tests/Core/Support/PdfAssertions.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 5
+
+[[issues]]
+file = "tests/Core/Support/PdfAssertions.php"
+code = "non-existent-class"
+message = 'Class `Smalot\PdfParser\Parser` not found.'
+count = 1
+
+[[issues]]
+file = "tests/Core/Support/PdfAssertions.php"
+code = "non-existent-function"
+message = 'Could not find definition for function `WeasyPrint\Tests\Core\Support\expect` (also tried as `expect` in a broader scope).'
+count = 6
+
+[[issues]]
+file = "tests/Core/Support/PdfAssertions.php"
+code = "possibly-false-argument"
+message = "Argument #1 of function `file_put_contents` is possibly `false`, but parameter type `string` does not accept it."
+count = 1
+
+[[issues]]
+file = "tests/Core/Support/PdfAssertions.php"
+code = "possibly-false-argument"
+message = "Argument #1 of function `finfo_file` is possibly `false`, but parameter type `finfo` does not accept it."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Config/ConfigLoadingTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 6
+
+[[issues]]
+file = "tests/Laravel/Config/ConfigLoadingTest.php"
+code = "non-existent-function"
+message = "Function `app` could not be found."
+count = 2
+
+[[issues]]
+file = "tests/Laravel/Config/ConfigLoadingTest.php"
+code = "non-existent-function"
+message = "Function `config` could not be found."
+count = 2
+
+[[issues]]
+file = "tests/Laravel/Config/ConfigLoadingTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Config/ConfigLoadingTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 3
+
+[[issues]]
+file = "tests/Laravel/Config/ConfigLoadingTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 3
+
+[[issues]]
+file = "tests/Laravel/Config/EnvConfigTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 6
+
+[[issues]]
+file = "tests/Laravel/Config/EnvConfigTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Config/EnvConfigTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 4
+
+[[issues]]
+file = "tests/Laravel/Config/EnvConfigTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 4
+
+[[issues]]
+file = "tests/Laravel/Config/EnvConfigTest.php"
+code = "undefined-variable"
+message = "Undefined variable: `$this`."
+count = 2
+
+[[issues]]
+file = "tests/Laravel/Integration/ContainerBindingTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "tests/Laravel/Integration/ContainerBindingTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 4
+
+[[issues]]
+file = "tests/Laravel/Integration/ContainerBindingTest.php"
+code = "mixed-property-access"
+message = "Attempting to access a property on a non-object type (`mixed`)."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Integration/ContainerBindingTest.php"
+code = "non-existent-function"
+message = "Function `app` could not be found."
+count = 3
+
+[[issues]]
+file = "tests/Laravel/Integration/ContainerBindingTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Integration/ContainerBindingTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 3
+
+[[issues]]
+file = "tests/Laravel/Integration/ContainerBindingTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 3
+
+[[issues]]
+file = "tests/Laravel/Integration/ContainerBindingTest.php"
+code = "undefined-variable"
+message = "Undefined variable: `$this`."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Integration/FacadeTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 2
+
+[[issues]]
+file = "tests/Laravel/Integration/FacadeTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Integration/FacadeTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 2
+
+[[issues]]
+file = "tests/Laravel/Integration/FacadeTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 2
+
+[[issues]]
+file = "tests/Laravel/Integration/FacadeTest.php"
+code = "non-existent-method"
+message = 'Method `getFacadeRoot` does not exist on type `WeasyPrint\Integration\Laravel\WeasyPrint`.'
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Integration/FacadeTest.php"
+code = "non-existent-method"
+message = 'Method `sourceIsSet` does not exist on type `WeasyPrint\Integration\Laravel\WeasyPrint`.'
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Integration/FacadeTest.php"
+code = "possibly-non-existent-method"
+message = "Call to documented magic method `prepareSource()` on a class that may not handle it."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Output/CastingTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "tests/Laravel/Output/CastingTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 4
+
+[[issues]]
+file = "tests/Laravel/Output/CastingTest.php"
+code = "non-existent-function"
+message = "Function `app` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Output/CastingTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Output/CastingTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Output/CastingTest.php"
+code = "non-existent-function"
+message = "Function `view` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Output/CastingTest.php"
+code = "non-existent-method"
+message = 'Method `disk` does not exist on type `Illuminate\Support\Facades\Storage`.'
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Output/CastingTest.php"
+code = "non-existent-method"
+message = 'Method `fake` does not exist on type `Illuminate\Support\Facades\Storage`.'
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Output/StreamedResponseTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 4
+
+[[issues]]
+file = "tests/Laravel/Output/StreamedResponseTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 14
+
+[[issues]]
+file = "tests/Laravel/Output/StreamedResponseTest.php"
+code = "non-existent-function"
+message = "Function `app` could not be found."
+count = 4
+
+[[issues]]
+file = "tests/Laravel/Output/StreamedResponseTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Output/StreamedResponseTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 4
+
+[[issues]]
+file = "tests/Laravel/Output/StreamedResponseTest.php"
+code = "non-existent-function"
+message = "Function `view` could not be found."
+count = 4
+
+[[issues]]
+file = "tests/Laravel/Output/StreamedResponseTest.php"
+code = "undefined-variable"
+message = "Undefined variable: `$this`."
+count = 4
+
+[[issues]]
+file = "tests/Laravel/PDF/AbstractPdfClassTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 7
+
+[[issues]]
+file = "tests/Laravel/PDF/AbstractPdfClassTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/PDF/AbstractPdfClassTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/PDF/AbstractPdfClassTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 7
+
+[[issues]]
+file = "tests/Laravel/PDF/AbstractPdfClassTest.php"
+code = "non-existent-function"
+message = "Function `request` could not be found."
+count = 2
+
+[[issues]]
+file = "tests/Laravel/PDF/AbstractPdfClassTest.php"
+code = "undefined-variable"
+message = "Undefined variable: `$this`."
+count = 6
+
+[[issues]]
+file = "tests/Laravel/Source/RenderableSourceTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "tests/Laravel/Source/RenderableSourceTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 13
+
+[[issues]]
+file = "tests/Laravel/Source/RenderableSourceTest.php"
+code = "non-existent-function"
+message = "Function `app` could not be found."
+count = 3
+
+[[issues]]
+file = "tests/Laravel/Source/RenderableSourceTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Source/RenderableSourceTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 3
+
+[[issues]]
+file = "tests/Laravel/Source/RenderableSourceTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 3
+
+[[issues]]
+file = "tests/Laravel/Source/RenderableSourceTest.php"
+code = "non-existent-function"
+message = "Function `view` could not be found."
+count = 3
+
+[[issues]]
+file = "tests/Laravel/Support/LaravelTestCase.php"
+code = "non-existent-class-like"
+message = 'Class `WeasyPrint\Tests\Laravel\Support\LaravelTestCase` cannot extend unknown type `OrchestraTestCase`'
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Testing/FakeWeasyPrintTest.php"
+code = "invalid-property-access"
+message = 'Attempting to access a property on a non-object type (`unknown-ref(Symfony\Component\HttpFoundation\StreamedResponse)`).'
+count = 3
+
+[[issues]]
+file = "tests/Laravel/Testing/FakeWeasyPrintTest.php"
+code = "method-access-on-null"
+message = "Attempting to call a method on `null`."
+count = 4
+
+[[issues]]
+file = "tests/Laravel/Testing/FakeWeasyPrintTest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 13
+
+[[issues]]
+file = "tests/Laravel/Testing/FakeWeasyPrintTest.php"
+code = "non-existent-function"
+message = "Function `app` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Testing/FakeWeasyPrintTest.php"
+code = "non-existent-function"
+message = "Function `describe` could not be found."
+count = 1
+
+[[issues]]
+file = "tests/Laravel/Testing/FakeWeasyPrintTest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 12
+
+[[issues]]
+file = "tests/Laravel/Testing/FakeWeasyPrintTest.php"
+code = "non-existent-function"
+message = "Function `it` could not be found."
+count = 19
+
+[[issues]]
+file = "tests/Pest.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 7
+
+[[issues]]
+file = "tests/Pest.php"
+code = "mixed-property-access"
+message = "Attempting to access a property on a non-object type (`mixed`)."
+count = 1
+
+[[issues]]
+file = "tests/Pest.php"
+code = "non-existent-function"
+message = "Function `expect` could not be found."
+count = 2
+
+[[issues]]
+file = "tests/Pest.php"
+code = "non-existent-function"
+message = "Function `uses` could not be found."
+count = 2
+
+[[issues]]
+file = "tests/Pest.php"
+code = "undefined-variable"
+message = "Undefined variable: `$this`."
+count = 4

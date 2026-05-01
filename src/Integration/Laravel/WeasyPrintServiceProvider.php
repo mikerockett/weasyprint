@@ -39,7 +39,7 @@ class WeasyPrintServiceProvider extends ServiceProvider
 
   protected function identifierFor(string $suffix): string
   {
-    return "{$this->name()}.$suffix";
+    return "{$this->name()}.{$suffix}";
   }
 
   protected function configFile(): string
