@@ -1,268 +1,293 @@
-# WeasyPrint for PHP - Changelog
+# Changelog
 
-## 11.x
+All notable changes to this project will be documented in this file.
 
-Version 11 refactors the package to be framework-agnostic.
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-As such, it has been renamed to **WeasyPrint for PHP** and Laravel-specific features are now organised under the `Integration\Laravel` namespace.
+## [Unreleased]
 
-While it maintains Laravel compatibility, core functionality can now be used independently of any framework.
+## [11.0.1] - 2026-04-30
 
-**⚠️ Breaking Changes:** Due to this shift, there are breaking changes in this release, specifically with regard to classes having been moved and renamed. Existing Laravel users will need to update their imports and configuration. Please refer to the [UPGRADING.md](UPGRADING.md) guide for detailed migration instructions.
+### Changed
 
-#### Changes
+- Argument injection resistance: `--` separator before positional args, array-form `Process` instead of `fromShellCommandline`.
+- `MediaType` enum replacing freeform string input, with validation on construction.
+- `cachePrefix` validation (rejects path separators and null bytes).
+- Temp file path confinement to `sys_get_temp_dir()`, with `chmod 0o600` and proper error handling on `tempnam` failure.
+- `WeasyPrintException` marker interface on all exception types.
+- `FakeWeasyPrint::getSource()` now throws `SourceNotSetException` instead of returning `null`.
+- Added Mago for linting and static analysis (baselines for incremental adoption).
+- CI: `--prefer-lowest` matrix entry, Mago lint/analyze steps.
+
+## [11.0.0] - 2026-04-25
+
+Version 11 refactors the package to be framework-agnostic. It has been renamed to **WeasyPrint for PHP** and Laravel-specific features are now organised under the `Integration\Laravel` namespace. While it maintains Laravel compatibility, core functionality can now be used independently of any framework.
+
+Please refer to the [UPGRADING.md](UPGRADING.md) guide for detailed migration instructions.
+
+### Added
+
+- PDF Variants: PDF/A-1a, PDF/A-2a, PDF/A-3a, PDF/A-4e, PDF/A-4f, PDF/UA-2, PDF/X-1a, PDF/X-3, PDF/X-4, PDF/X-5g, and debug.
+- `Output` is now `Stringable` (useful to pass to `Storage::put`).
+- Tests are now split: one suite for the core package, another for Laravel integration testing.
+
+### Changed
 
 - Core classes have been renamed, and Laravel-specific classes have been moved into `Integration\Laravel`.
-- `Service::instance` has been removed.
 - Default config file has been moved into `Integration\Laravel`.
-- Streamed responses now use Symfony's `StreamedResponse` directly instead of via Laravel’s `ResponseFactory::streamDownload`.
-- `Output::putFile` has been removed.
-- `Output` is now `Stringable` (useful to pass to `Storage::put`).
+- Streamed responses now use Symfony's `StreamedResponse` directly instead of via Laravel's `ResponseFactory::streamDownload`.
 - Internal pipeline now uses the latest package version, and is assembled with a `PipelineBuilder`.
-- PDF Variants: Adds support for PDF/A-1a, PDF/A-2a, PDF/A-3a, PDF/A-4e, PDF/A-4f, PDF/UA-2, PDF/X-1a, PDF/X-3, PDF/X-4, PDF/X-5g, and debug.
 - Formatting is now done with PHP CS Fixer directly, using `@PER-CS2x0` with some extra rules for strictness (including strict-types).
-- Tests are now split: one suite for the core package, another for Laravel integration testing.
-- Versioning: Drops support for PHP < 8.3.
-- Versioning: Drops support for Laravel 11.
-- Versioning: Requires WeasyPrint 67.
+- Requires WeasyPrint 67.
+- Requires PHP >= 8.3.
+- Requires Laravel >= 12.
 
-### Patch Releases
+### Removed
 
-- `11.0.1` - Security hardening and static analysis tooling.
-  - Argument injection resistance: `--` separator before positional args, array-form `Process` instead of `fromShellCommandline`.
-  - `MediaType` enum replacing freeform string input, with validation on construction.
-  - `cachePrefix` validation (rejects path separators and null bytes).
-  - Temp file path confinement to `sys_get_temp_dir()`, with `chmod 0o600` and proper error handling on `tempnam` failure.
-  - `WeasyPrintException` marker interface on all exception types.
-  - `FakeWeasyPrint::getSource()` now throws `SourceNotSetException` instead of returning `null`.
-  - Added Mago for linting and static analysis (baselines for incremental adoption).
-  - CI: `--prefer-lowest` matrix entry, Mago lint/analyze steps.
+- `Service::instance`.
+- `Output::putFile`.
 
-___
+---
 
-# WeasyPrint for Laravel - Changelog
+The entries below are from the previous **WeasyPrint for Laravel** package.
 
-## 10.x `Maintenance`
+## [10.7.0] - 2026-03-24
 
-#### Features and Enhancements
+### Added
 
-- Adds support for the `srgb` and `custom-metadata` boolean flags via Config (both default to `false`).
+- Support for Laravel 13 and Symfony 8.
 
-#### Changes
+## [10.6.0] - 2026-01-20
 
-- Documentation: Config property descriptions in the default config file have been moved into the Config class.
-- Versioning: Adds support for WeasyPrint **63.x** and **64.x** and drops support for older versions.
+### Changed
 
-#### Deprecations
+- Accepts WeasyPrint 68 (version constraint only; full support in 11.x).
 
+## [10.5.0] - 2025-12-12
+
+### Changed
+
+- Accepts WeasyPrint 67 (version constraint only; full support in 11.x).
+
+## [10.4.0] - 2025-08-19
+
+### Added
+
+- Support for WeasyPrint 66 and Rockett\Pipeline 4.0.
+
+## [10.3.0] - 2025-04-09
+
+### Fixed
+
+- Base `stream()` method signatures corrected to make `StreamMode::INLINE` the default `$mode` as it is declared after `$headers = []` (see #13).
+
+## [10.2.0] - 2025-04-04
+
+### Added
+
+- Support for WeasyPrint 65.
+
+## [10.1.0] - 2025-02-25
+
+### Added
+
+- Support for Laravel 12.
+
+## [10.0.1] - 2025-01-30
+
+### Fixed
+
+- `srgb` config env default.
+
+## [10.0.0] - 2025-01-30
+
+### Added
+
+- Support for the `srgb` and `custom-metadata` boolean flags via Config (both default to `false`).
+
+### Changed
+
+- Config property descriptions in the default config file have been moved into the Config class.
+- Support for WeasyPrint 63.x and 64.x; drops support for older versions.
 - The PDF/UA-1 variant deprecation has been reverted.
-
-### Minor Releases
-
-- `10.1.0` - Versioning: Adds support for Laravel 12.
-- `10.2.0` - Versioning: Adds support for WeasyPrint 65.
-- `10.3.0` - Corrects base `stream()` method signatures to make `StreamMode::INLINE` the default `$mode` as it is declared after `$headers = []` (see #13)
-- `10.4.0` - Versioning: Adds support for WeasyPrint 66 and Rockett\Pipeline 4.0.
-- `10.5.0` - Versioning: Adds support for Laravel 13.
-
-### Patch Releases
-
-- `10.0.1` - fix srgb config env default [37baef00]
 
 ---
 
 <details>
-<summary>Unsupported Versions</summary>
+<summary>Unsupported versions</summary>
 
-## 9.x (Major Release) `Unsupported`
+## [9.0.0] - 2024-05-01
 
-#### Features and Enhancements
+### Added
 
-- Adds support for [class-based sources](https://weasyprint.rockett.pw/class-instantiation.html).
-- Adds support for the **PDF/A-2u**, **PDF/A-3u** and **PDF/A-4u** variants.
-- Introduces a `StreamMode` enum to dynamically distinguish between `download()` and `inline()`. Alongside this, a `stream()` helper method is available, should you not want to use the `download()` or `inline()` helpers directly (these use `stream()` under the hood). ([docs](https://weasyprint.rockett.pw/output.html#stream-download-and-inline))
+- Support for [class-based sources](https://weasyprint.rockett.pw/v10/class-instantiation.html).
+- Support for the PDF/A-2u, PDF/A-3u and PDF/A-4u variants.
+- `StreamMode` enum to dynamically distinguish between `download()` and `inline()`. A `stream()` helper method is also available. ([docs](https://weasyprint.rockett.pw/v10/output.html#stream-download-and-inline))
 
-#### Changes
+### Changed
 
-- Internal: `Source::$source` is now private.
-- Versioning: Drops support for WeasyPrint < 61.0.
-- Versioning: Drops support for PHP < 8.2.
+- `Source::$source` is now private.
+- Drops support for WeasyPrint < 61.0.
+- Drops support for PHP < 8.2.
 
-#### Deprecations
+### Deprecated
 
-- The PDF/UA-1 variant is marked as deprecated as WeasyPrint’s source does not account for it.
+- The PDF/UA-1 variant is marked as deprecated as WeasyPrint's source does not account for it.
 
-## 8.1.0 (Minor Release) `Unsupported`
+## [8.1.0] - 2024-03-13
 
-This release adds support for Laravel 11 and WeasyPrint 61. Versions 61.0 and 61.1 are not supported due to a security issue noted [here](https://github.com/Kozea/WeasyPrint/releases/tag/v61.2).
+### Added
 
-Version 8 of the package will be the last to support PHP 8.1 and versions of WeasyPrint < 61.
+- Support for Laravel 11 and WeasyPrint 61.
 
-## 8.0.0 (Breaking Release) `Unsupported`
+Note: WeasyPrint 61.0 and 61.1 are not supported due to a [security issue](https://github.com/Kozea/WeasyPrint/releases/tag/v61.2). Version 8 of the package is the last to support PHP 8.1 and versions of WeasyPrint < 61.
 
-This release drops support for WeasyPrint < v59. If you are constrained to an older version, an older version of the package that supports that version will be required.
+## [8.0.0] - 2023-10-17
 
-Going forward, compatibility of this package against a particular WeasyPrint version will be based solely on CLI flags available in that version.
+This release drops support for WeasyPrint < v59. Compatibility is now based solely on CLI flags available in each WeasyPrint version.
 
-- If a CLI property is removed in a WeasyPrint release, then it will become unsupported in a new version of the package.
-- If one is added, then it will be unsupported until a new version of the package is released.
+### Added
 
-In general, only the latest major version of WeasyPrint and, by extension, the package will be supported at any given time. However, where CLI flags do not change between versions, and WeasyPrint only updates internal features in relation to rendering PDFs, then all such versions will continue to be supported. An example of this is WeasyPrint 59.0 → 60.0, where CLI flags did not change.
+- `skipCompression`, `optimizeImages`, `fullFonts`, `hinting`, `dpi`, `jpegQuality`, `pdfForms` config options.
+- Config option validation for `dpi`, `jpegQuality`, `mediaType`, and `inputEncoding`.
 
-If you are using an unsupported version of WeasyPrint, attempts to build a PDF will fail with an exception.
+### Changed
 
-### Changes:
+- Service instances may now only be resolved via the Service Container (`Service::new()` removed in favour of `Service::instance()`).
+- Default config is now class-based for type-safety.
+- Runtime config may now only be tapped (`tapConfig`) or overridden (`setConfig`).
+- Default `timeout` is now 60 seconds.
+- All tests moved to Pest 2.
 
-- Service instances may now only be resolved via the Service Container (`Service::new()` has been removed in favour of `Service::instance()`).
-- The default config is now class-based to introduce some type-safety.
-- Runtime config may now only be tapped (using `tapConfig`) or overridden (using `setConfig`).
-- The default `timeout` is now 60 seconds.
-- The `optimizeSize` config option has been removed.
-- The `skipCompression`, `optimizeImages`, `fullFonts`, `hinting`, `dpi`, `jpegQuality`, `pdfForms` config options have been added.
-- Some config options are now validated, including the new `dpi` and `jpegQuality` options, as well as existing `mediaType` and `inputEncoding` options. An exception will be thrown if these options are invalid.
-- All tests have been moved to Pest 2. Coverage removed for the time being.
+### Removed
 
-## 7.1.0 `Unsupported`
+- `optimizeSize` config option.
 
-This release adds support for WeasyPrint 58, along with two new configuration properties, `pdfVersion` and `pdfVariant`, which may only be used in versions 58 and greater. Custom meta-data has not been added in this release.
+## [7.1.0] - 2023-10-11
 
-> Note: Support for WeasyPrint 59 and 60 to come in the next major package release, which will drop support for older versions of WeasyPrint.
+### Added
 
-## 7.0.0 `Unsupported`
+- Support for WeasyPrint 58.
+- `pdfVersion` and `pdfVariant` configuration properties (requires WeasyPrint >= 58).
 
-This release adds support for Laravel 10 and drops support for Laravel 8. The minimum-required version of PHP is now 8.1. As there have been no significant API changes to WeasyPrint, this package continues to support v53+.
+## [7.0.0] - 2023-02-17
 
-## 6.1.0 `Unsupported`
+### Changed
 
-This release adds support for Laravel 9, and works just fine with WeasyPrint v54.
+- Adds support for Laravel 10, drops support for Laravel 8.
+- Minimum PHP version is now 8.1.
 
-## 6.0.0 (Breaking Release) `Unsupported`
+## [6.1.0] - 2022-02-20
 
-This version is specifically designed around WeasyPrint v53, which drops support for PNGs due to its new rendering engine. Overall, this simplifies things from an interface perspective – you only need to prepare the source, build the `Output`, and do what you need with it.
+### Added
 
-Over and above the changes noted below, the package now requires Laravel 8.47+, which adds support for [scoped singletons](https://laravel.com/docs/8.x/container#binding-scoped). In the previous version (v5) of this package, the singleton was immutable, which meant that every mutable-by-design method would actually return a cloned instance of the service.
+- Support for Laravel 9 and WeasyPrint v54.
 
-### What’s New
+## [6.0.0] - 2021-08-01
 
-- The configuration file now supports environment variables, which generally removes the need to publish it. See the [readme](readme.md#available-configuration-options) for a list of available options.
+This version targets WeasyPrint v53, which drops PNG support due to its new rendering engine. Requires Laravel 8.47+ for [scoped singletons](https://laravel.com/docs/8.x/container#binding-scoped).
 
-### Breaking Changes
+### Added
 
-- The `to()`, `toPdf()` and `toPng()` methods have been removed.
-- Likewise, the `OutputType` enumeration class has been removed. Under the hood, the `--format` flag has been removed.
-- The `optimizeImages` config option has been removed in favor of `optimizeSize`.
-- The `resolution` config option has been removed, due to lack of PNG support.
+- Configuration file now supports environment variables.
 
-### Other Changes
+### Changed
 
-- The `binary` config option previously declared a sensible default of `/usr/local/bin/weasyprint`. However, this may not always be the case as WeasyPrint may be installed in a virtual environment, which does not conform to that path. Additionally, some Linux distros place the binary elsewhere on the system. With the removal of this default, the package will attempt to locate the binary, which means it needs to be in your `PATH`. If it is not in your path, and you do not want it to be, simply set the absolute path to the binary in your environment using `WEASYPRINT_BINARY`.
-- Due to the addition of the scoped singleton, the service class is no longer immutable. Any method that previously cloned the service will no longer do so.
-- Internally, the package now uses a [pipeline](https://github.com/mikerockett/pipeline) to prepare everything and call the WeasyPrint binary.
+- The service class is no longer immutable (scoped singleton).
+- Internally uses a [pipeline](https://github.com/mikerockett/pipeline) to prepare and call the WeasyPrint binary.
+- `binary` config no longer has a default path; the package will attempt to locate the binary in `PATH`.
 
-## 5.0.0 (Paradigm Release) `Unsupported`
+### Removed
 
-### What’s New
+- `to()`, `toPdf()` and `toPng()` methods.
+- `OutputType` enumeration class.
+- `optimizeImages` config option (replaced by `optimizeSize`).
+- `resolution` config option (no PNG support).
 
-- Adds full support for the [Laravel Service Container](https://laravel.com/docs/container) with a new service-based architecture
-- [Laravel Octane](https://github.com/laravel/octane) compatibility
-- A new config-based setup, instead of fluent helpers
-- Adds the ability to pass the `--optimize-images` flag to WeasyPrint via the `optimizeImages` config option (requires v52 or greater)
-- Adds the ability to save output as a file using Laravel’s [Filesystem](https://laravel.com/docs/filesystem) through the `putFile` method on the new `Output` object
-- Improved explicit output types and implicit output type inference.
+## [5.0.0] - 2021-04-11
 
-### Breaking Changes
+### Added
 
-Given that v5 is a paradigm release, the following changes are considered breaking. Whilst upgrade steps are shown here, they are not detailed, and so an [upgrade guide](upgrading.md) is also available for you to work through.
+- Full support for the [Laravel Service Container](https://laravel.com/docs/container) with a service-based architecture.
+- [Laravel Octane](https://github.com/laravel/octane) compatibility.
+- Config-based setup replacing fluent helpers.
+- `--optimize-images` flag via `optimizeImages` config option (requires WeasyPrint >= 52).
+- `putFile` method on `Output` for saving via Laravel's [Filesystem](https://laravel.com/docs/filesystem).
 
-- The static `make` method is no longer available. Use `prepareSource($source)->build()` or `createFromSource($source)->build()` (when using [service-class instantiation](readme.me#option-1-service-class)) instead.
-- The `view` method is also gone, and the package therefore no longer accepts data to pass to a view on your behalf. Instead, pass a `Renderable` hydrated with data (such as a [Laravel View](https://laravel.com/docs/views)) to `prepareSource`.
-- Both `toPdf` and `toPng` no longer return the rendered data in raw form. They are merely shorthands for `to(OutputType::pdf())` and `to(OutputType::png())`, respectively. To get the data in raw form, call `build()->getData()`.
-- The `download` and `inline` methods now return an instance of `Symfony\Component\HttpFoundation\StreamedResponse` instead of `Illuminate\Http\Response`.
-- The `set*` and `add*` (except for `addAttachment`) configuration helpers are no longer available. Instead, pass the config into `new()` or `mergeConfig()`. The default config has been expanded to include all the possible options.
+### Changed
 
-### Other Changes
+- `download` and `inline` return `Symfony\Component\HttpFoundation\StreamedResponse` instead of `Illuminate\Http\Response`.
+- `download` and `inline` may be called on the service or on the output from `build()`.
 
-- The `download` and `inline` methods may now be called either on the service or on the output returned from `build()`. If it is called on the service, `build()` will be called for you, with the file type inferred from the extension, which defaults to `.pdf` if not provided.
+### Removed
 
-## 4.0.0 `Unsupported`
+- Static `make` method (use `prepareSource($source)->build()` instead).
+- `view` method (pass a `Renderable` to `prepareSource` instead).
+- `set*` and `add*` configuration helpers (except `addAttachment`).
 
-### Changes
+## [4.0.0] - 2020-09-09
 
-- Drops support for PHP < 7.3
-- Drops support for Laravel < 7.0
-- Upgrades `orchestra/testbench` to v6
-- Adds class coverage to test suite
+### Changed
 
-## 3.0.0 `Unsupported`
+- Drops support for PHP < 7.3 and Laravel < 7.0.
+- Upgrades `orchestra/testbench` to v6.
 
-### Changes
+## [3.0.0] - 2020-03-21
 
-- Adds support for `symfony/process` v5
+### Added
 
-## 2.0.1 `Unsupported`
+- Support for `symfony/process` v5.
 
-### Changes
+## [2.0.1] - 2020-03-21
 
-- Adds support for Laravel 7
+### Added
 
-## 2.0.0 (Major Breaking Release) `Unsupported`
+- Support for Laravel 7.
 
-### Breaking Changes
+## [2.0.0] - 2020-02-13
 
-- Drops the `convert` method in favor of only using `toPdf`, `toPng`, `download` or `inline`
+### Added
 
-### What’s New
+- `addAttachment`, `setResolution`, `setMediaType`, `setPresentationalHints`, `setOutputEncoding` fluent helpers.
+- `InvalidOutputModeException` when the output mode is invalid.
 
-- Adds more `set*` and `add*` fluent configuration helpers:
-  - `addAttachment` to add an `--attachment`
-  - `setResolution` to set the `--resolution`
-  - `setMediaType` to set the `--media-type`
-  - `setPresentationalHints` to toggle `--presentational-hints`
-  - `setOutputEncoding` to set the `--encoding`
-- Throws `InvalidOutputModeException` when the output mode is not `pdf` or `pdf`
+### Removed
 
-## 1.0.5 `Unsupported`
+- `convert` method (use `toPdf`, `toPng`, `download` or `inline` instead).
 
-### What’s New
+## [1.0.5] - 2020-02-09
 
-- Adds support for URLs
+### Added
 
-### Changes
+- Support for URLs.
+- `toPdf` and `toPng` shorthand helpers.
 
-- Does not re-convert if the output is already available
-- Adds the `toPdf` and `toPng` shorthand helpers
+### Changed
 
-## 1.0.4 `Unsupported`
+- Does not re-convert if the output is already available.
 
-### What’s New
+## [1.0.4] - 2019-09-17
 
-- Adds stylesheet support with `addStylesheet`
+### Added
 
-### Other Changes
+- Stylesheet support with `addStylesheet`.
 
-- [Internal] Adds a GitLab CI pipeline for testing the package
-- [Internal] Adds an ISC license file
-- [Readme] Documents the `download` and `inline` methods
+## [1.0.3] - 2019-09-17
 
-## 1.0.3 `Unsupported`
+### Added
 
-### What’s New
+- Base URL support with `setBaseUrl`.
+- `download` and `inline` helpers.
 
-- Adds support for setting a base URL with `setBaseUrl`
-- Adds `download` and `inline` helpers
+## [1.0.2] - 2019-09-17
 
-### Other Changes
+### Fixed
 
-- [Internal] Adds proper tests
+- `view` method is now correctly static.
 
-## 1.0.2 `Unsupported`
+## [1.0.0] - 2019-09-16
 
-### Fixes
-
-- Corrects the `view` method to be static, as intended
-
-## 1.0.0 `Unsupported`
-
-- Initial Release
+Initial release.
 
 </details>
