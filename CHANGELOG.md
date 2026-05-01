@@ -1,6 +1,6 @@
-# WeasyPrint for PHP — Changelog
+# WeasyPrint for PHP - Changelog
 
-## 11.x (Major Release) `Pending Release`
+## 11.x
 
 Version 11 refactors the package to be framework-agnostic.
 
@@ -26,11 +26,23 @@ While it maintains Laravel compatibility, core functionality can now be used ind
 - Versioning: Drops support for Laravel 11.
 - Versioning: Requires WeasyPrint 67.
 
+### Patch Releases
+
+- `11.0.1` - Security hardening and static analysis tooling.
+  - Argument injection resistance: `--` separator before positional args, array-form `Process` instead of `fromShellCommandline`.
+  - `MediaType` enum replacing freeform string input, with validation on construction.
+  - `cachePrefix` validation (rejects path separators and null bytes).
+  - Temp file path confinement to `sys_get_temp_dir()`, with `chmod 0o600` and proper error handling on `tempnam` failure.
+  - `WeasyPrintException` marker interface on all exception types.
+  - `FakeWeasyPrint::getSource()` now throws `SourceNotSetException` instead of returning `null`.
+  - Added Mago for linting and static analysis (baselines for incremental adoption).
+  - CI: `--prefer-lowest` matrix entry, Mago lint/analyze steps.
+
 ___
 
-# WeasyPrint for Laravel — Changelog
+# WeasyPrint for Laravel - Changelog
 
-## 10.x (Major Release) `Current`
+## 10.x `Maintenance`
 
 #### Features and Enhancements
 
