@@ -27,7 +27,7 @@ trait FindsBinary
 
   private function whichBinary(): string
   {
-    $process = Process::fromShellCommandline('which weasyprint');
+    $process = new Process(['which', 'weasyprint']);
     $process->run();
 
     if (!$process->isSuccessful()) {

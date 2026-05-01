@@ -11,6 +11,11 @@ jobs:
       matrix:
         php-version: ['8.3', '8.4', '8.5']
         weasyprint-version: ['67.0', '68.0']
+        composer-flags: ['']
+        include:
+          - php-version: '8.3'
+            weasyprint-version: '67.0'
+            composer-flags: '--prefer-lowest --prefer-stable'
     runs-on: ubuntu-latest
     container:
       image: php:${{ matrix.php-version }}-cli-alpine
@@ -34,7 +39,7 @@ jobs:
         run: curl -sS https://getcomposer.org/installer | php
 
       - name: Restore cached vendor directory
-        if: steps.skip.outputs.skip != 'true'
+        if: steps.skip.outputs.skip != 'true' && matrix.composer-flags == ''
         uses: actions/cache@v4
         with:
           path: vendor/
@@ -44,7 +49,12 @@ jobs:
 
       - name: Install PHP dependencies
         if: steps.skip.outputs.skip != 'true'
-        run: php composer.phar install -qo
+        run: |
+          if [ -n "${{ matrix.composer-flags }}" ]; then
+            php composer.phar update -qo ${{ matrix.composer-flags }}
+          else
+            php composer.phar install -qo
+          fi
 
       - name: Install and verify WeasyPrint
         if: steps.skip.outputs.skip != 'true'

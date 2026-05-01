@@ -2,10 +2,15 @@
 
 declare(strict_types=1);
 
-use WeasyPrint\Exceptions\UnsupportedVersionException;
-use WeasyPrint\Exceptions\TemporaryFileException;
-use WeasyPrint\Exceptions\OutputReadFailedException;
+use WeasyPrint\Exceptions\AttachmentNotFoundException;
+use WeasyPrint\Exceptions\BinaryNotFoundException;
+use WeasyPrint\Exceptions\InvalidConfigValueException;
 use WeasyPrint\Exceptions\MissingOutputFileException;
+use WeasyPrint\Exceptions\OutputReadFailedException;
+use WeasyPrint\Exceptions\SourceNotSetException;
+use WeasyPrint\Exceptions\TemporaryFileException;
+use WeasyPrint\Exceptions\UnsupportedVersionException;
+use WeasyPrint\Exceptions\WeasyPrintException;
 use WeasyPrint\WeasyPrintFactory;
 
 describe('exceptions', function (): void {
@@ -39,5 +44,23 @@ describe('exceptions', function (): void {
     expect(new TemporaryFileException('/tmp/x'))->toBeInstanceOf(RuntimeException::class);
     expect(new MissingOutputFileException('/tmp/x'))->toBeInstanceOf(RuntimeException::class);
     expect(new OutputReadFailedException('/tmp/x'))->toBeInstanceOf(RuntimeException::class);
+  });
+
+  it('implements WeasyPrintException interface for all exception types', function (): void {
+    expect(new AttachmentNotFoundException('/tmp/x'))->toBeInstanceOf(WeasyPrintException::class);
+    expect(new BinaryNotFoundException())->toBeInstanceOf(WeasyPrintException::class);
+    expect(new InvalidConfigValueException('key', 'val', 'exp'))->toBeInstanceOf(WeasyPrintException::class);
+    expect(new MissingOutputFileException('/tmp/x'))->toBeInstanceOf(WeasyPrintException::class);
+    expect(new OutputReadFailedException('/tmp/x'))->toBeInstanceOf(WeasyPrintException::class);
+    expect(new SourceNotSetException())->toBeInstanceOf(WeasyPrintException::class);
+    expect(new TemporaryFileException('/tmp/x'))->toBeInstanceOf(WeasyPrintException::class);
+    expect(new UnsupportedVersionException('1.0'))->toBeInstanceOf(WeasyPrintException::class);
+  });
+
+  it('includes reason in TemporaryFileException when provided', function (): void {
+    $exception = new TemporaryFileException('/tmp/x', 'path must be within the system temp directory');
+
+    expect($exception->getMessage())->toContain('path must be within the system temp directory');
+    expect($exception->getMessage())->toContain('/tmp/x');
   });
 });

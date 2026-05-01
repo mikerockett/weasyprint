@@ -107,6 +107,7 @@ class WeasyPrintFactory implements WeasyPrint
   {
     $pipeline = (new PipelineBuilder())
       ->add(new Pipes\AssertSupportedVersion())
+      ->add(new Pipes\AssertValidConfig())
       ->add(new Pipes\EnsureSourceIsSet())
       ->add(new Pipes\SetInputPath())
       ->add(new Pipes\SetOutputPath())

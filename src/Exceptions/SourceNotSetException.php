@@ -6,7 +6,7 @@ namespace WeasyPrint\Exceptions;
 
 use RuntimeException;
 
-class SourceNotSetException extends RuntimeException
+class SourceNotSetException extends RuntimeException implements WeasyPrintException
 {
   public function __construct()
   {

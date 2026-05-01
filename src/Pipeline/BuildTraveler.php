@@ -21,10 +21,16 @@ class BuildTraveler
 
   public function makeTemporaryFilename(): string|false
   {
-    return tempnam(
+    $path = tempnam(
       directory: sys_get_temp_dir(),
       prefix: $this->service->getConfig()->cachePrefix,
     );
+
+    if ($path !== false) {
+      chmod($path, 0600);
+    }
+
+    return $path;
   }
 
   public function setInputPath(string $inputPath): void

@@ -1,8 +1,19 @@
 {
   "name": "rockett/weasyprint",
-  "description": "A feature-rich Laravel wrapper for the WeasyPrint Document Factory.",
+  "description": "A feature-rich WeasyPrint wrapper for generating PDFs from HTML and CSS, with support for PDF/A, PDF/UA, attachments, and optional Laravel integration.",
   "type": "library",
   "license": "ISC",
+  "keywords": [
+    "weasyprint",
+    "pdf",
+    "pdf-a",
+    "pdf-ua",
+    "html-to-pdf",
+    "document",
+    "print",
+    "css",
+    "laravel"
+  ],
   "authors": [
     {
       "name": "Mike Rockett",

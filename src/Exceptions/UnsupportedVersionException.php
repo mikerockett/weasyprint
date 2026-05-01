@@ -7,7 +7,7 @@ namespace WeasyPrint\Exceptions;
 use RuntimeException;
 use WeasyPrint\WeasyPrintFactory;
 
-class UnsupportedVersionException extends RuntimeException
+class UnsupportedVersionException extends RuntimeException implements WeasyPrintException
 {
   public function __construct(string $installedVersion)
   {

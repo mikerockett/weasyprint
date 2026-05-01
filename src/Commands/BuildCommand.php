@@ -15,8 +15,8 @@ final class BuildCommand extends BaseCommand
 
   public function __construct(
     Config $config,
-    string $inputPath,
-    string $outputPath,
+    private string $inputPath,
+    private string $outputPath,
     protected array $attachments = [],
     protected array $xmpMetadata = [],
   ) {
@@ -24,11 +24,11 @@ final class BuildCommand extends BaseCommand
 
     $this->arguments = collect([
       $this->resolveBinary(),
-      $inputPath,
-      $outputPath,
     ]);
 
     $this->prepareArguments();
+
+    $this->arguments->push('--', $this->inputPath, $this->outputPath);
   }
 
   private function resolveBinary(): string
@@ -51,7 +51,7 @@ final class BuildCommand extends BaseCommand
       'encoding' => $this->config->inputEncoding,
       'presentational-hints' => $this->config->presentationalHints,
       'base-url' => $this->config->baseUrl,
-      'media-type' => $this->config->mediaType,
+      'media-type' => $this->config->mediaType?->value,
       'pdf-variant' => $this->config->pdfVariant?->value,
       'pdf-version' => $this->config->pdfVersion?->value,
       'uncompressed-pdf' => $this->config->skipCompression,

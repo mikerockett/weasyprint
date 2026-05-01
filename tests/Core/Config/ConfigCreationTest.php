@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use WeasyPrint\Enums\MediaType;
 use WeasyPrint\Enums\PDFVariant;
 use WeasyPrint\Enums\PDFVersion;
 use WeasyPrint\Objects\Config;
@@ -44,13 +45,23 @@ describe('config creation', function (): void {
 
   it('expands enum from string values', function (): void {
     $config = new Config(
+      mediaType: 'print',
       pdfVariant: 'pdf/a-1b',
       pdfVersion: '1.7',
     );
 
+    expect($config->mediaType)->toBeInstanceOf(MediaType::class);
+    expect($config->mediaType)->toBe(MediaType::PRINT);
     expect($config->pdfVariant)->toBeInstanceOf(PDFVariant::class);
     expect($config->pdfVariant)->toBe(PDFVariant::PDF_A_1B);
     expect($config->pdfVersion)->toBeInstanceOf(PDFVersion::class);
     expect($config->pdfVersion)->toBe(PDFVersion::VERSION_1_7);
+  });
+
+  it('serializes mediaType enum to string in toArray', function (): void {
+    $config = new Config(mediaType: MediaType::SCREEN);
+    $array = $config->toArray();
+
+    expect($array['mediaType'])->toBe('screen');
   });
 });

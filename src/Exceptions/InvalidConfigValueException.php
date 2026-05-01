@@ -6,7 +6,7 @@ namespace WeasyPrint\Exceptions;
 
 use RuntimeException;
 
-class InvalidConfigValueException extends RuntimeException
+class InvalidConfigValueException extends RuntimeException implements WeasyPrintException
 {
   public function __construct(string $key, string $value, string $expected)
   {

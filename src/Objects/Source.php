@@ -51,6 +51,12 @@ final class Source
       return;
     }
 
+    $tempDir = realpath(sys_get_temp_dir());
+
+    if (!str_starts_with($inputPath, $tempDir)) {
+      throw new TemporaryFileException($inputPath, 'path must be within the system temp directory');
+    }
+
     if (!file_put_contents($inputPath, $this->render())) {
       throw new TemporaryFileException($inputPath);
     }

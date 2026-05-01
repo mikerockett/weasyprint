@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WeasyPrint\Objects;
 
 use Illuminate\Contracts\Support\Arrayable;
+use WeasyPrint\Enums\MediaType;
 use WeasyPrint\Enums\PDFVariant;
 use WeasyPrint\Enums\PDFVersion;
 use WeasyPrint\Exceptions\InvalidConfigValueException;
@@ -29,7 +30,7 @@ final class Config implements Arrayable
    * @param bool $presentationalHints Enable or disable HTML
    * Presentational Hints.
    *
-   * @param string|null $mediaType Optionally set the media type to
+   * @param MediaType|string|null $mediaType Optionally set the media type to
    * use for CSS [at]media. Defaults to `print` at binary-level.
    *
    * @param string|null $baseUrl Optionally set the base URL for
@@ -82,7 +83,7 @@ final class Config implements Arrayable
     public int $timeout = 60,
     public string $inputEncoding = 'utf-8',
     public bool $presentationalHints = true,
-    public string|null $mediaType = null,
+    public MediaType|string|null $mediaType = null,
     public string|null $baseUrl = null,
     public array $stylesheets = [],
     public array $processEnvironment = ['LC_ALL' => 'en_US.UTF-8'],
@@ -106,7 +107,7 @@ final class Config implements Arrayable
 
   public function runAssertions(): void
   {
-    if ($this->dpi && $this->dpi < 0) {
+    if ($this->dpi !== null && $this->dpi < 0) {
       throw new InvalidConfigValueException(
         key: 'dpi',
         value: (string) $this->dpi,
@@ -114,7 +115,7 @@ final class Config implements Arrayable
       );
     }
 
-    if ($this->jpegQuality && ($this->jpegQuality < 0 || $this->jpegQuality > 95)) {
+    if ($this->jpegQuality !== null && ($this->jpegQuality < 0 || $this->jpegQuality > 95)) {
       throw new InvalidConfigValueException(
         key: 'jpegQuality',
         value: (string) $this->jpegQuality,
@@ -131,6 +132,22 @@ final class Config implements Arrayable
         expected: collect($validEncodings)->join(', '),
       );
     }
+
+    if (is_string($this->mediaType) && MediaType::tryFrom($this->mediaType) === null) {
+      throw new InvalidConfigValueException(
+        key: 'mediaType',
+        value: $this->mediaType,
+        expected: collect(MediaType::cases())->map(fn(MediaType $case) => $case->value)->join(', '),
+      );
+    }
+
+    if (str_contains($this->cachePrefix, DIRECTORY_SEPARATOR) || str_contains($this->cachePrefix, "\0")) {
+      throw new InvalidConfigValueException(
+        key: 'cachePrefix',
+        value: $this->cachePrefix,
+        expected: 'a string without path separators or null bytes',
+      );
+    }
   }
 
   public function toArray(): array
@@ -141,7 +158,7 @@ final class Config implements Arrayable
       'timeout' => $this->timeout,
       'inputEncoding' => $this->inputEncoding,
       'presentationalHints' => $this->presentationalHints,
-      'mediaType' => $this->mediaType,
+      'mediaType' => $this->mediaType?->value,
       'baseUrl' => $this->baseUrl,
       'stylesheets' => $this->stylesheets,
       'processEnvironment' => $this->processEnvironment,
@@ -163,6 +180,10 @@ final class Config implements Arrayable
 
   private function expandEnums(): void
   {
+    if (is_string($this->mediaType)) {
+      $this->mediaType = MediaType::tryFrom($this->mediaType);
+    }
+
     if (is_string($this->pdfVariant)) {
       $this->pdfVariant = PDFVariant::tryFrom($this->pdfVariant);
     }

@@ -6,7 +6,7 @@ namespace WeasyPrint\Exceptions;
 
 use RuntimeException;
 
-class BinaryNotFoundException extends RuntimeException
+class BinaryNotFoundException extends RuntimeException implements WeasyPrintException
 {
   public function __construct(?string $binaryPath = null)
   {

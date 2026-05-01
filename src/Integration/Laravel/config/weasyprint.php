@@ -8,7 +8,9 @@ return (array) new \WeasyPrint\Objects\Config(
   timeout: (int) env('WEASYPRINT_TIMEOUT', '60'),
   inputEncoding: env('WEASYPRINT_INPUT_ENCODING', 'utf-8'),
   presentationalHints: env('WEASYPRINT_PRESENTATIONAL_HINTS', true),
-  mediaType: env('WEASYPRINT_MEDIA_TYPE'),
+  mediaType: \WeasyPrint\Enums\MediaType::fromEnvironment(
+    'WEASYPRINT_MEDIA_TYPE',
+  ),
   baseUrl: env('WEASYPRINT_BASE_URL'),
   stylesheets: [],
   processEnvironment: [

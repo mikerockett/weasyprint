@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use WeasyPrint\Enums\MediaType;
 use WeasyPrint\Exceptions\InvalidConfigValueException;
 use WeasyPrint\Objects\Config;
 
@@ -60,6 +61,46 @@ describe('config validation', function (): void {
 
     it('rejects invalid encoding', function (): void {
       new Config(inputEncoding: 'non-existent');
+    })->throws(InvalidConfigValueException::class);
+  });
+
+  describe('media type validation', function (): void {
+    it('accepts valid media type as string', function (): void {
+      $config = new Config(mediaType: 'print');
+      expect($config->mediaType)->toBe(MediaType::PRINT);
+    });
+
+    it('accepts valid media type as enum', function (): void {
+      $config = new Config(mediaType: MediaType::SCREEN);
+      expect($config->mediaType)->toBe(MediaType::SCREEN);
+    });
+
+    it('accepts null media type', function (): void {
+      $config = new Config(mediaType: null);
+      expect($config->mediaType)->toBeNull();
+    });
+
+    it('rejects invalid media type string', function (): void {
+      new Config(mediaType: 'invalid');
+    })->throws(InvalidConfigValueException::class);
+
+    it('rejects flag-like media type string', function (): void {
+      new Config(mediaType: '--verbose');
+    })->throws(InvalidConfigValueException::class);
+  });
+
+  describe('cache prefix validation', function (): void {
+    it('accepts valid cache prefix', function (): void {
+      $config = new Config(cachePrefix: 'my_app_cache');
+      expect($config->cachePrefix)->toBe('my_app_cache');
+    });
+
+    it('rejects cache prefix with path separators', function (): void {
+      new Config(cachePrefix: '../evil');
+    })->throws(InvalidConfigValueException::class);
+
+    it('rejects cache prefix with null bytes', function (): void {
+      new Config(cachePrefix: "prefix\0suffix");
     })->throws(InvalidConfigValueException::class);
   });
 });

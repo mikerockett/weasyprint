@@ -6,7 +6,7 @@ namespace WeasyPrint\Exceptions;
 
 use RuntimeException;
 
-class AttachmentNotFoundException extends RuntimeException
+class AttachmentNotFoundException extends RuntimeException implements WeasyPrintException
 {
   public function __construct(string $attachmentPath)
   {

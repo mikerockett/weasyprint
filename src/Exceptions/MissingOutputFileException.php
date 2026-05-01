@@ -6,7 +6,7 @@ namespace WeasyPrint\Exceptions;
 
 use RuntimeException;
 
-class MissingOutputFileException extends RuntimeException
+class MissingOutputFileException extends RuntimeException implements WeasyPrintException
 {
   public function __construct(string $outputFilePath)
   {
