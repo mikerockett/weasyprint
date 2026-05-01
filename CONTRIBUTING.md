@@ -41,6 +41,24 @@ Then run the tests before opening your merge request:
 $ just test
 ```
 
+#### Linting and Static Analysis
+
+This package uses [Mago](https://mago.carthage.software/) for linting and static analysis. Both commands should pass before a pull request will be merged:
+
+```shell
+$ just lint
+$ just analyze
+```
+
+Mago uses baseline files to track pre-existing issues. If you fix an existing issue (or your change causes the baseline to drift), regenerate the baselines:
+
+```shell
+$ just lint --baseline linter-baseline.toml --generate-baseline
+$ just analyze --baseline analyzer-baseline.toml --generate-baseline
+```
+
+Please do not fix unrelated baseline issues in the same PR - keep baseline changes scoped to your work.
+
 #### Formatting
 
 This package uses PHP CS Fixer to auto-format code. Before committing your code, please run a format over all files:

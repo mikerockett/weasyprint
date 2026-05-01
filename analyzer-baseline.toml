@@ -507,7 +507,7 @@ count = 11
 [[issues]]
 file = "src/WeasyPrintFactory.php"
 code = "mixed-return-statement"
-message = "Could not infer a precise return type for function `14414109723335369803:2832`. Saw type `mixed`."
+message = "Could not infer a precise return type for function `14414109723335369803:2847`. Saw type `mixed`."
 count = 1
 
 [[issues]]
