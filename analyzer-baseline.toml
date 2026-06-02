@@ -67,6 +67,12 @@ message = 'Could not find definition for function `WeasyPrint\Commands\collect` 
 count = 5
 
 [[issues]]
+file = "src/Commands/BuildCommand.php"
+code = "non-existent-method"
+message = 'Method `satisfies` does not exist on type `Composer\Semver\Semver`.'
+count = 1
+
+[[issues]]
 file = "src/Commands/FindsBinary.php"
 code = "impossible-assignment"
 message = "Invalid assignment: the right-hand side has type `never` and cannot produce a value."
@@ -183,7 +189,7 @@ count = 1
 [[issues]]
 file = "src/Integration/Laravel/config/weasyprint.php"
 code = "mixed-argument"
-message = 'Invalid argument type for argument #15 of `WeasyPrint\Objects\Config::__construct`: expected `bool`, but found `mixed`.'
+message = 'Invalid argument type for argument #15 of `WeasyPrint\Objects\Config::__construct`: expected `null|string`, but found `mixed`.'
 count = 1
 
 [[issues]]
@@ -201,7 +207,7 @@ count = 1
 [[issues]]
 file = "src/Integration/Laravel/config/weasyprint.php"
 code = "mixed-argument"
-message = 'Invalid argument type for argument #18 of `WeasyPrint\Objects\Config::__construct`: expected `int|null`, but found `mixed`.'
+message = 'Invalid argument type for argument #18 of `WeasyPrint\Objects\Config::__construct`: expected `bool`, but found `mixed`.'
 count = 1
 
 [[issues]]
@@ -219,7 +225,7 @@ count = 1
 [[issues]]
 file = "src/Integration/Laravel/config/weasyprint.php"
 code = "mixed-argument"
-message = 'Invalid argument type for argument #20 of `WeasyPrint\Objects\Config::__construct`: expected `bool`, but found `mixed`.'
+message = 'Invalid argument type for argument #20 of `WeasyPrint\Objects\Config::__construct`: expected `int|null`, but found `mixed`.'
 count = 1
 
 [[issues]]
@@ -232,6 +238,12 @@ count = 1
 file = "src/Integration/Laravel/config/weasyprint.php"
 code = "mixed-argument"
 message = 'Invalid argument type for argument #22 of `WeasyPrint\Objects\Config::__construct`: expected `bool`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Integration/Laravel/config/weasyprint.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #23 of `WeasyPrint\Objects\Config::__construct`: expected `bool`, but found `mixed`.'
 count = 1
 
 [[issues]]
@@ -256,7 +268,7 @@ count = 1
 file = "src/Integration/Laravel/config/weasyprint.php"
 code = "non-existent-function"
 message = "Function `env` could not be found."
-count = 18
+count = 19
 
 [[issues]]
 file = "src/Objects/Config.php"
@@ -507,7 +519,7 @@ count = 11
 [[issues]]
 file = "src/WeasyPrintFactory.php"
 code = "mixed-return-statement"
-message = "Could not infer a precise return type for function `14414109723335369803:2847`. Saw type `mixed`."
+message = "Could not infer a precise return type for function `14414109723335369803:2853`. Saw type `mixed`."
 count = 1
 
 [[issues]]
@@ -550,7 +562,7 @@ count = 1
 file = "tests/Core/Config/ConfigCreationTest.php"
 code = "mixed-method-access"
 message = "Attempting to access a method on a non-object type (`mixed`)."
-count = 18
+count = 19
 
 [[issues]]
 file = "tests/Core/Config/ConfigCreationTest.php"
@@ -562,7 +574,7 @@ count = 1
 file = "tests/Core/Config/ConfigCreationTest.php"
 code = "non-existent-function"
 message = "Function `expect` could not be found."
-count = 18
+count = 19
 
 [[issues]]
 file = "tests/Core/Config/ConfigCreationTest.php"
@@ -574,25 +586,25 @@ count = 5
 file = "tests/Core/Config/ConfigValidationTest.php"
 code = "mixed-method-access"
 message = "Attempting to access a method on a non-object type (`mixed`)."
-count = 19
+count = 21
 
 [[issues]]
 file = "tests/Core/Config/ConfigValidationTest.php"
 code = "non-existent-function"
 message = "Function `describe` could not be found."
-count = 6
+count = 7
 
 [[issues]]
 file = "tests/Core/Config/ConfigValidationTest.php"
 code = "non-existent-function"
 message = "Function `expect` could not be found."
-count = 11
+count = 13
 
 [[issues]]
 file = "tests/Core/Config/ConfigValidationTest.php"
 code = "non-existent-function"
 message = "Function `it` could not be found."
-count = 19
+count = 20
 
 [[issues]]
 file = "tests/Core/Exceptions/ExceptionTest.php"
@@ -800,9 +812,15 @@ count = 1
 
 [[issues]]
 file = "tests/Core/Security/ArgumentInjectionTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "tests/Core/Security/ArgumentInjectionTest.php"
 code = "mixed-method-access"
 message = "Attempting to access a method on a non-object type (`mixed`)."
-count = 17
+count = 24
 
 [[issues]]
 file = "tests/Core/Security/ArgumentInjectionTest.php"
@@ -820,13 +838,13 @@ count = 3
 file = "tests/Core/Security/ArgumentInjectionTest.php"
 code = "non-existent-function"
 message = "Function `expect` could not be found."
-count = 13
+count = 20
 
 [[issues]]
 file = "tests/Core/Security/ArgumentInjectionTest.php"
 code = "non-existent-function"
 message = "Function `it` could not be found."
-count = 11
+count = 14
 
 [[issues]]
 file = "tests/Core/Service/ConfigManipulationTest.php"
