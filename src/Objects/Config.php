@@ -12,6 +12,8 @@ use WeasyPrint\Exceptions\InvalidConfigValueException;
 
 final class Config implements Arrayable
 {
+  public string|null $weasyPrintVersion = null;
+
   /**
    * @param string|null $binary The path to the WeasyPrint binary on
    * your system. If it is available on your system globally, the

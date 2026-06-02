@@ -20,7 +20,6 @@ final class BuildCommand extends BaseCommand
     private string $outputPath,
     protected array $attachments = [],
     protected array $xmpMetadata = [],
-    private string|null $weasyPrintVersion = null,
   ) {
     $this->config = $config;
 
@@ -108,7 +107,7 @@ final class BuildCommand extends BaseCommand
 
   private function usesOutputIntentOption(): bool
   {
-    return $this->weasyPrintVersion !== null
-      && Semver::satisfies($this->weasyPrintVersion, '>=69.0');
+    return $this->config->weasyPrintVersion !== null
+      && Semver::satisfies($this->config->weasyPrintVersion, '>=69.0');
   }
 }

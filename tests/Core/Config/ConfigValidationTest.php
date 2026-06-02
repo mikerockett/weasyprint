@@ -106,8 +106,8 @@ describe('config validation', function (): void {
 
   describe('output intent validation', function (): void {
     it('accepts output intents', function (): void {
-      expect(new Config(outputIntent: 'srgb')->outputIntent)->toBe('srgb');
-      expect(new Config(outputIntent: 'device-cmyk')->outputIntent)->toBe('device-cmyk');
+      expect((new Config(outputIntent: 'srgb'))->outputIntent)->toBe('srgb');
+      expect((new Config(outputIntent: 'device-cmyk'))->outputIntent)->toBe('device-cmyk');
     });
   });
 });

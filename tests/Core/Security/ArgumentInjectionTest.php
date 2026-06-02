@@ -103,11 +103,13 @@ describe('argument injection resistance', function (): void {
   });
 
   it('uses output-intent for srgb on v69', function (): void {
+    $config = new Config(srgb: true);
+    $config->weasyPrintVersion = '69.0';
+
     $command = new BuildCommand(
-      config: new Config(srgb: true),
+      config: $config,
       inputPath: '/tmp/test_input.html',
       outputPath: '/tmp/test_output.pdf',
-      weasyPrintVersion: '69.0',
     );
 
     $reflection = new ReflectionProperty($command, 'arguments');
@@ -119,11 +121,13 @@ describe('argument injection resistance', function (): void {
   });
 
   it('passes explicit output intent on v69', function (): void {
+    $config = new Config(outputIntent: 'device-cmyk');
+    $config->weasyPrintVersion = '69.0';
+
     $command = new BuildCommand(
-      config: new Config(outputIntent: 'device-cmyk'),
+      config: $config,
       inputPath: '/tmp/test_input.html',
       outputPath: '/tmp/test_output.pdf',
-      weasyPrintVersion: '69.0',
     );
 
     $reflection = new ReflectionProperty($command, 'arguments');

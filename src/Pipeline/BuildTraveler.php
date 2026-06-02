@@ -13,7 +13,6 @@ class BuildTraveler
 {
   private ?string $inputPath = null;
   private ?string $outputPath = null;
-  private ?string $weasyPrintVersion = null;
   private BuildCommand $command;
   private Output $output;
 
@@ -47,11 +46,6 @@ class BuildTraveler
     $this->outputPath = $this->makeTemporaryFilename();
   }
 
-  public function setWeasyPrintVersion(string $version): void
-  {
-    $this->weasyPrintVersion = $version;
-  }
-
   public function setCommand(BuildCommand $command): void
   {
     $this->command = $command;
@@ -70,11 +64,6 @@ class BuildTraveler
   public function getOutputPath(): string
   {
     return $this->outputPath;
-  }
-
-  public function getWeasyPrintVersion(): ?string
-  {
-    return $this->weasyPrintVersion;
   }
 
   public function getCommand(): BuildCommand
