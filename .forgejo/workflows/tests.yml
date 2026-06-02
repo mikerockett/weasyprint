@@ -11,7 +11,7 @@ jobs:
       image: php:8.5-cli-alpine
     steps:
       - name: Install system dependencies
-        run: apk -q add git
+        run: apk -q add git nodejs
 
       - name: Checkout code
         uses: actions/checkout@v6
