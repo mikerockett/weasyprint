@@ -57,11 +57,11 @@ jobs:
           fi
 
       - name: Run Mago lint
-        if: steps.skip.outputs.skip != 'true'
+        if: steps.skip.outputs.skip != 'true' && matrix.php-version == '8.5' && matrix.weasyprint-version == '69.0' && matrix.composer-flags == ''
         run: ./vendor/bin/mago lint
 
       - name: Run Mago analyze
-        if: steps.skip.outputs.skip != 'true'
+        if: steps.skip.outputs.skip != 'true' && matrix.php-version == '8.5' && matrix.weasyprint-version == '69.0' && matrix.composer-flags == ''
         run: ./vendor/bin/mago analyze
 
       - name: Install and verify WeasyPrint
