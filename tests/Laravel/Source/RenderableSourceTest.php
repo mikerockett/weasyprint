@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Illuminate\Contracts\Support\Renderable;
 use WeasyPrint\Contracts\WeasyPrint;
 use WeasyPrint\Exceptions\AttachmentNotFoundException;
 
@@ -12,7 +11,7 @@ describe('renderable sources', function (): void {
     $service->prepareSource(view('test-pdf'));
 
     expect($service->sourceIsSet())->toBeTrue();
-    expect($service->getSource()->get())->toBeInstanceOf(Renderable::class);
+    expect($service->getSource()->get())->toBeInstanceOf('Illuminate\Contracts\Support\Renderable');
   });
 
   it('can render view to PDF', function (): void {

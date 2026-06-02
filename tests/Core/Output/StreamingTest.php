@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use WeasyPrint\Enums\StreamMode;
 use WeasyPrint\WeasyPrintFactory;
 use WeasyPrint\Tests\Fixtures\SampleHtml;
@@ -14,7 +13,7 @@ describe('output streaming', function (): void {
 
     $response = $service->stream('test.pdf');
 
-    expect($response)->toBeInstanceOf(StreamedResponse::class);
+    expect($response)->toBeInstanceOf('Symfony\Component\HttpFoundation\StreamedResponse');
     expect($response->headers->get('content-type'))->toBe('application/pdf');
     expect($response->headers->get('content-disposition'))->toBe('inline; filename=test.pdf');
   });

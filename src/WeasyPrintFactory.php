@@ -126,6 +126,11 @@ class WeasyPrintFactory implements WeasyPrint
           ->process($traveler)
           ->getOutput();
 
+        assert(
+          $output instanceof Output,
+          description: 'Pipeline output must be an Output instance.',
+        );
+
         $traveler->cleanupTemporaryPaths();
 
         return $output;
