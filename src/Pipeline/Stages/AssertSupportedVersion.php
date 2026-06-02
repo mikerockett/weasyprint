@@ -20,7 +20,7 @@ class AssertSupportedVersion implements BuildStage
       throw new UnsupportedVersionException($installed);
     }
 
-    $container->service->getConfig()->weasyPrintVersion = $installed;
+    $container->service->getConfig()->setWeasyPrintVersion($installed);
 
     return $container;
   }

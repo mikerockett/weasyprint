@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WeasyPrint\Objects;
 
 use Illuminate\Contracts\Support\Arrayable;
+use WeakMap;
 use WeasyPrint\Enums\MediaType;
 use WeasyPrint\Enums\PDFVariant;
 use WeasyPrint\Enums\PDFVersion;
@@ -12,7 +13,24 @@ use WeasyPrint\Exceptions\InvalidConfigValueException;
 
 final class Config implements Arrayable
 {
-  public string|null $weasyPrintVersion = null;
+  private static WeakMap|null $_weasyPrintVersions = null;
+
+  public function setWeasyPrintVersion(string $version): void
+  {
+    self::_weasyPrintVersions()->offsetSet($this, $version);
+  }
+
+  public function getWeasyPrintVersion(): string|null
+  {
+    return self::_weasyPrintVersions()->offsetExists($this)
+      ? self::_weasyPrintVersions()->offsetGet($this)
+      : null;
+  }
+
+  private static function _weasyPrintVersions(): WeakMap
+  {
+    return self::$_weasyPrintVersions ??= new WeakMap();
+  }
 
   /**
    * @param string|null $binary The path to the WeasyPrint binary on

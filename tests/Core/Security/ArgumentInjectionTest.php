@@ -104,7 +104,7 @@ describe('argument injection resistance', function (): void {
 
   it('uses output-intent for srgb on v69', function (): void {
     $config = new Config(srgb: true);
-    $config->weasyPrintVersion = '69.0';
+    $config->setWeasyPrintVersion('69.0');
 
     $command = new BuildCommand(
       config: $config,
@@ -122,7 +122,7 @@ describe('argument injection resistance', function (): void {
 
   it('passes explicit output intent on v69', function (): void {
     $config = new Config(outputIntent: 'device-cmyk');
-    $config->weasyPrintVersion = '69.0';
+    $config->setWeasyPrintVersion('69.0');
 
     $command = new BuildCommand(
       config: $config,

@@ -107,7 +107,7 @@ final class BuildCommand extends BaseCommand
 
   private function usesOutputIntentOption(): bool
   {
-    return $this->config->weasyPrintVersion !== null
-      && Semver::satisfies($this->config->weasyPrintVersion, '>=69.0');
+    return $this->config->getWeasyPrintVersion() !== null
+      && Semver::satisfies($this->config->getWeasyPrintVersion(), '>=69.0');
   }
 }

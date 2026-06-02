@@ -3,6 +3,52 @@ name: Run Tests
 on: [pull_request]
 
 jobs:
+  qc:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    container:
+      image: php:8.5-cli-alpine
+    steps:
+      - name: Install system dependencies
+        run: apk -q add git
+
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Check for skip tests
+        id: skip
+        run: |
+          MESSAGE=$(git log -1 --format=%s)
+          if echo "$MESSAGE" | grep -qF '[skip tests]'; then
+            echo "skip=true" >> "$FORGEJO_OUTPUT"
+          fi
+
+      - name: Install Composer
+        if: steps.skip.outputs.skip != 'true'
+        run: curl -sS https://getcomposer.org/installer | php
+
+      - name: Restore cached vendor directory
+        if: steps.skip.outputs.skip != 'true'
+        uses: actions/cache@v4
+        with:
+          path: vendor/
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install PHP dependencies
+        if: steps.skip.outputs.skip != 'true'
+        run: php composer.phar install -qo
+
+      - name: Run Mago lint
+        if: steps.skip.outputs.skip != 'true'
+        run: ./vendor/bin/mago lint
+
+      - name: Run Mago analyze
+        if: steps.skip.outputs.skip != 'true'
+        run: ./vendor/bin/mago analyze
+
   test:
     permissions:
       contents: read
@@ -55,14 +101,6 @@ jobs:
           else
             php composer.phar install -qo
           fi
-
-      - name: Run Mago lint
-        if: steps.skip.outputs.skip != 'true' && matrix.php-version == '8.5' && matrix.weasyprint-version == '69.0' && matrix.composer-flags == ''
-        run: ./vendor/bin/mago lint
-
-      - name: Run Mago analyze
-        if: steps.skip.outputs.skip != 'true' && matrix.php-version == '8.5' && matrix.weasyprint-version == '69.0' && matrix.composer-flags == ''
-        run: ./vendor/bin/mago analyze
 
       - name: Install and verify WeasyPrint
         if: steps.skip.outputs.skip != 'true'
