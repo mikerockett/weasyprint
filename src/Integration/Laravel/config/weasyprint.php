@@ -25,6 +25,7 @@ return (array) new \WeasyPrint\Objects\Config(
   skipCompression: env('WEASYPRINT_SKIP_COMPRESSION', false),
   customMetadata: env('WEASYPRINT_CUSTOM_METADATA', false),
   srgb: env('WEASYPRINT_SRGB', false),
+  outputIntent: env('WEASYPRINT_OUTPUT_INTENT'),
   optimizeImages: env('WEASYPRINT_OPTIMIZE_IMAGES', false),
   fullFonts: env('WEASYPRINT_FULL_FONTS', false),
   hinting: env('WEASYPRINT_HINTING', false),

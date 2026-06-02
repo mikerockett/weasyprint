@@ -94,6 +94,44 @@ describe('argument injection resistance', function (): void {
     expect($args)->toContain('--encoding');
     expect($args)->toContain('utf-8');
   });
+
+  it('keeps srgb on the legacy flag without a v69 version', function (): void {
+    $args = buildArguments(['srgb' => true]);
+
+    expect($args)->toContain('--srgb');
+    expect($args)->not->toContain('--output-intent');
+  });
+
+  it('uses output-intent for srgb on v69', function (): void {
+    $command = new BuildCommand(
+      config: new Config(srgb: true),
+      inputPath: '/tmp/test_input.html',
+      outputPath: '/tmp/test_output.pdf',
+      weasyPrintVersion: '69.0',
+    );
+
+    $reflection = new ReflectionProperty($command, 'arguments');
+    $args = $reflection->getValue($command)->toArray();
+
+    expect($args)->toContain('--output-intent');
+    expect($args)->toContain('srgb');
+    expect($args)->not->toContain('--srgb');
+  });
+
+  it('passes explicit output intent on v69', function (): void {
+    $command = new BuildCommand(
+      config: new Config(outputIntent: 'device-cmyk'),
+      inputPath: '/tmp/test_input.html',
+      outputPath: '/tmp/test_output.pdf',
+      weasyPrintVersion: '69.0',
+    );
+
+    $reflection = new ReflectionProperty($command, 'arguments');
+    $args = $reflection->getValue($command)->toArray();
+
+    expect($args)->toContain('--output-intent');
+    expect($args)->toContain('device-cmyk');
+  });
 });
 
 describe('fuzz: config values with shell metacharacters', function (): void {

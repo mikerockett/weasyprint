@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WeasyPrint\Commands;
 
+use Composer\Semver\Semver;
 use WeasyPrint\Exceptions\AttachmentNotFoundException;
 use WeasyPrint\Exceptions\BinaryNotFoundException;
 use WeasyPrint\Objects\Attachment;
@@ -19,6 +20,7 @@ final class BuildCommand extends BaseCommand
     private string $outputPath,
     protected array $attachments = [],
     protected array $xmpMetadata = [],
+    private string|null $weasyPrintVersion = null,
   ) {
     $this->config = $config;
 
@@ -56,7 +58,7 @@ final class BuildCommand extends BaseCommand
       'pdf-version' => $this->config->pdfVersion?->value,
       'uncompressed-pdf' => $this->config->skipCompression,
       'custom-metadata' => $this->config->customMetadata,
-      'srgb' => $this->config->srgb,
+      $this->colorIntentArgumentName() => $this->colorIntentArgumentValue(),
       'optimize-images' => $this->config->optimizeImages,
       'full-fonts' => $this->config->fullFonts,
       'hinting' => $this->config->hinting,
@@ -89,5 +91,24 @@ final class BuildCommand extends BaseCommand
     collect($this->config->stylesheets)->each(
       fn(string $path) => $this->maybePushArgument('stylesheet', $path),
     );
+  }
+
+  private function colorIntentArgumentName(): string
+  {
+    return $this->usesOutputIntentOption() ? 'output-intent' : 'srgb';
+  }
+
+  private function colorIntentArgumentValue(): bool|string|null
+  {
+    return match ($this->usesOutputIntentOption()) {
+      true => $this->config->outputIntent ?? ($this->config->srgb ? 'srgb' : null),
+      false => $this->config->srgb || $this->config->outputIntent === 'srgb',
+    };
+  }
+
+  private function usesOutputIntentOption(): bool
+  {
+    return $this->weasyPrintVersion !== null
+      && Semver::satisfies($this->weasyPrintVersion, '>=69.0');
   }
 }

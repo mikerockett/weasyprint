@@ -76,6 +76,8 @@ final class Config implements Arrayable
    * @param bool $noHttpRedirects Disable HTTP redirect following.
    *
    * @param bool $failOnHttpErrors Abort on HTTP errors.
+   *
+   * @param string|null $outputIntent Set the PDF output intent.
    */
   public function __construct(
     public string|null $binary = null,
@@ -100,6 +102,7 @@ final class Config implements Arrayable
     public bool $pdfForms = false,
     public bool $noHttpRedirects = false,
     public bool $failOnHttpErrors = false,
+    public string|null $outputIntent = null,
   ) {
     $this->runAssertions();
     $this->expandEnums();
@@ -167,6 +170,7 @@ final class Config implements Arrayable
       'skipCompression' => $this->skipCompression,
       'customMetadata' => $this->customMetadata,
       'srgb' => $this->srgb,
+      'outputIntent' => $this->outputIntent,
       'optimizeImages' => $this->optimizeImages,
       'fullFonts' => $this->fullFonts,
       'hinting' => $this->hinting,

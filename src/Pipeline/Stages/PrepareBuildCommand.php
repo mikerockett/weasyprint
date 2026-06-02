@@ -18,6 +18,7 @@ class PrepareBuildCommand implements BuildStage
       config: $service->getConfig(),
       inputPath: $container->getInputPath(),
       outputPath: $container->getOutputPath(),
+      weasyPrintVersion: $container->getWeasyPrintVersion(),
       attachments: $service->getSource()->getAttachments(),
       xmpMetadata: $service->getXmpMetadata(),
     ));

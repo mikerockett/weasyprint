@@ -103,4 +103,11 @@ describe('config validation', function (): void {
       new Config(cachePrefix: "prefix\0suffix");
     })->throws(InvalidConfigValueException::class);
   });
+
+  describe('output intent validation', function (): void {
+    it('accepts output intents', function (): void {
+      expect(new Config(outputIntent: 'srgb')->outputIntent)->toBe('srgb');
+      expect(new Config(outputIntent: 'device-cmyk')->outputIntent)->toBe('device-cmyk');
+    });
+  });
 });

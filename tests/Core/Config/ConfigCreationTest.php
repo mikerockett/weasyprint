@@ -41,6 +41,7 @@ describe('config creation', function (): void {
     expect($array['binary'])->toBe('/usr/bin/weasyprint');
     expect($array['timeout'])->toBe(90);
     expect($array['cachePrefix'])->toBe('weasyprint_cache');
+    expect($array['outputIntent'])->toBeNull();
   });
 
   it('expands enum from string values', function (): void {
