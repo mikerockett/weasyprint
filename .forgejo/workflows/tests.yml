@@ -16,20 +16,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Check for skip tests
-        id: skip
-        run: |
-          MESSAGE=$(git log -1 --format=%s)
-          if echo "$MESSAGE" | grep -qF '[skip tests]'; then
-            echo "skip=true" >> "$FORGEJO_OUTPUT"
-          fi
-
       - name: Install Composer
-        if: steps.skip.outputs.skip != 'true'
         run: curl -sS https://getcomposer.org/installer | php
 
       - name: Restore cached vendor directory
-        if: steps.skip.outputs.skip != 'true'
         uses: actions/cache@v4
         with:
           path: vendor/
@@ -38,15 +28,12 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Install PHP dependencies
-        if: steps.skip.outputs.skip != 'true'
         run: php composer.phar install -qo
 
       - name: Run Mago lint
-        if: steps.skip.outputs.skip != 'true'
         run: ./vendor/bin/mago lint
 
       - name: Run Mago analyze
-        if: steps.skip.outputs.skip != 'true'
         run: ./vendor/bin/mago analyze
 
   test:
@@ -72,20 +59,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Check for skip tests
-        id: skip
-        run: |
-          MESSAGE=$(git log -1 --format=%s)
-          if echo "$MESSAGE" | grep -qF '[skip tests]'; then
-            echo "skip=true" >> "$FORGEJO_OUTPUT"
-          fi
-
       - name: Install Composer
-        if: steps.skip.outputs.skip != 'true'
         run: curl -sS https://getcomposer.org/installer | php
 
       - name: Restore cached vendor directory
-        if: steps.skip.outputs.skip != 'true' && matrix.composer-flags == ''
+        if: matrix.composer-flags == ''
         uses: actions/cache@v4
         with:
           path: vendor/
@@ -94,7 +72,6 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Install PHP dependencies
-        if: steps.skip.outputs.skip != 'true'
         run: |
           if [ -n "${{ matrix.composer-flags }}" ]; then
             php composer.phar update -qo ${{ matrix.composer-flags }}
@@ -103,9 +80,7 @@ jobs:
           fi
 
       - name: Install and verify WeasyPrint
-        if: steps.skip.outputs.skip != 'true'
         run: pip3 -q install weasyprint==${{ matrix.weasyprint-version }} --break-system-packages && weasyprint --info
 
       - name: Run tests
-        if: steps.skip.outputs.skip != 'true'
         run: ./vendor/bin/pest --profile
