@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [11.1.0] - 2026-07-04
+
+### Added
+
+- Support for WeasyPrint 69.
+- `outputIntent` config option for WeasyPrint 69's `--output-intent` CLI option.
+
+### Changed
+
+- `srgb` now uses `--output-intent srgb` when running against WeasyPrint 69 or newer.
+
 ## [11.0.1] - 2026-04-30
 
 ### Changed
