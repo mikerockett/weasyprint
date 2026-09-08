@@ -20,7 +20,7 @@ use Throwable;
 
 class WeasyPrintFactory implements WeasyPrint
 {
-  public const SUPPORTED_VERSIONS = '^67.0|^68.0|^69.0';
+  public const SUPPORTED_VERSIONS = '^67.0|^68.0|^69.0|^70.0';
 
   private Config $config;
   private Source $source;

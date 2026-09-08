@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [11.2.0] - 2026-09-08
+
+### Added
+
+- Support for WeasyPrint 70.
+
 ## [11.1.0] - 2026-07-04
 
 ### Added
